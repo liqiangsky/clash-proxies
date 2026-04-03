@@ -1,0 +1,24 @@
+name: Update Sub
+on:
+  schedule:
+    - cron: '0 */6 * * *' # 每6小时自动运行一次
+  workflow_dispatch:      # 允许你在 GitHub 网页上点击按钮手动运行
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with: {python-version: '3.10'}
+      - name: Run Merge
+        run: |
+          pip install requests pyyaml
+          python merge.py
+      - name: Push Changes
+        run: |
+          git config --local user.email "bot@github.com"
+          git config --local user.name "Bot"
+          git add all.yaml
+          git commit -m "Update nodes" || exit 0
+          git push
