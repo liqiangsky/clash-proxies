@@ -1,8 +1,7 @@
 import requests
 import yaml
-import base64
 
-# 你刚才提取出来的原始 URL 列表
+# 你的所有原始订阅地址
 urls = [
     "http://140.238.31.152:12580/clash/proxies",
     "https://pp.dcd.one/clash/proxies",
@@ -19,32 +18,25 @@ urls = [
     "http://xqz0.vip:15580/clash/proxies"
 ]
 
-def main():
+def merge_nodes():
     all_proxies = []
-    seen = set()  # 用于去重
-
+    seen = set()
+    
     for url in urls:
         try:
-            print(f"正在抓取: {url}")
-            resp = requests.get(url, timeout=15)
+            resp = requests.get(url, timeout=10)
             data = yaml.safe_load(resp.text)
-            
             if data and 'proxies' in data:
                 for p in data['proxies']:
-                    # 根据服务器地址和端口去重，防止改名白嫖
+                    # 关键去重：以服务器地址和端口作为唯一标识
                     fingerprint = f"{p.get('server')}:{p.get('port')}"
                     if fingerprint not in seen:
                         seen.add(fingerprint)
                         all_proxies.append(p)
-        except Exception as e:
-            print(f"抓取失败 {url}: {e}")
-
-    # 构造 Clash 格式
-    output = {"proxies": all_proxies}
-    
-    with open("sub.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(output, f, allow_unicode=True)
-    print(f"同步完成，共 {len(all_proxies)} 个唯一节点")
+        except: continue
+        
+    with open("all.yaml", "w", encoding="utf-8") as f:
+        yaml.dump({"proxies": all_proxies}, f, allow_unicode=True)
 
 if __name__ == "__main__":
-    main()
+    merge_nodes()
