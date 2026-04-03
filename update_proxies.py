@@ -1,5 +1,6 @@
 import requests
 import yaml
+import socket
 
 # 你的所有原始订阅地址
 urls = [
@@ -18,25 +19,52 @@ urls = [
     "http://xqz0.vip:15580/clash/proxies"
 ]
 
-def merge_nodes():
+def is_alive(server, port, timeout=3):
+    """简单的 TCP 握手测试，判断节点是否在线"""
+    try:
+        # 如果是域名，会自动解析 IP
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
+        sock.connect((server, int(port)))
+        sock.close()
+        return True
+    except:
+        return False
+
+def merge_and_filter():
     all_proxies = []
     seen = set()
-    
+    alive_count = 0
+    dead_count = 0
+
     for url in urls:
         try:
+            print(f"正在获取: {url}")
             resp = requests.get(url, timeout=10)
             data = yaml.safe_load(resp.text)
+            
             if data and 'proxies' in data:
                 for p in data['proxies']:
-                    # 关键去重：以服务器地址和端口作为唯一标识
-                    fingerprint = f"{p.get('server')}:{p.get('port')}"
+                    server = p.get('server')
+                    port = p.get('port')
+                    fingerprint = f"{server}:{port}"
+
                     if fingerprint not in seen:
                         seen.add(fingerprint)
-                        all_proxies.append(p)
-        except: continue
-        
+                        # 执行连通性过滤
+                        if is_alive(server, port):
+                            all_proxies.append(p)
+                            alive_count += 1
+                        else:
+                            dead_count += 1
+        except Exception as e:
+            print(f"跳过失效订阅源: {url}")
+
+    # 写入结果
     with open("all.yaml", "w", encoding="utf-8") as f:
         yaml.dump({"proxies": all_proxies}, f, allow_unicode=True)
+    
+    print(f"处理完成！有效节点: {alive_count}, 过滤死节点: {dead_count}")
 
 if __name__ == "__main__":
-    merge_nodes()
+    merge_and_filter()
