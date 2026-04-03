@@ -5,7 +5,7 @@ import socket
 # 你的所有原始订阅地址
 urls = [
     #"http://140.238.31.152:12580/clash/proxies",
-    "https://pp.dcd.one/clash/proxies",
+    #"https://pp.dcd.one/clash/proxies",
     #"https://open.tidnotes.top/clash/proxies",
     #"http://h3.g01.work:12580/clash/proxies",
     #"https://vc.majunfei.club:51/clash/proxies",
@@ -40,7 +40,14 @@ def merge_and_filter():
     for url in urls:
         try:
             print(f"正在获取: {url}")
+            # 找到原来的这一行：
             resp = requests.get(url, timeout=10)
+            
+            # 修改为（增加请求头并忽略证书）：
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
+            resp = requests.get(url, timeout=15, headers=headers, verify=False)
             data = yaml.safe_load(resp.text)
             
             if data and 'proxies' in data:
