@@ -5,18 +5,16 @@ import socket
 # 你的所有原始订阅地址
 urls = [
     #"http://140.238.31.152:12580/clash/proxies",
-    #"https://pp.dcd.one/clash/proxies",
-    #"https://open.tidnotes.top/clash/proxies",
+    "https://pp.dcd.one/clash/proxies",
     #"http://h3.g01.work:12580/clash/proxies",
     #"https://vc.majunfei.club:51/clash/proxies",
-    #"http://138.2.112.136:12580/clash/proxies",
+    "http://138.2.112.136:12580/clash/proxies",
     #"http://176.126.114.231:12580/clash/proxies",
     "https://fp.ethanyang.top/clash/proxies",
-    #"http://ql.ethanyang.top:12580/clash/proxies",
-    #"https://open.tidnotes.top:2083/clash/proxies",
-    #"http://107.172.0.114:12580/clash/proxies",
+    "http://ql.ethanyang.top:12580/clash/proxies",
+    "https://open.tidnotes.top:2083/clash/proxies",
     #"http://132.226.224.85:56852/clash/proxies",
-    #"http://xqz0.vip:15580/clash/proxies"
+    "http://xqz0.vip:15580/clash/proxies"
 ]
 
 def is_alive(server, port, timeout=3):
