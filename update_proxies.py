@@ -62,8 +62,8 @@ def merge_and_filter():
 
     # 写入结果
     with open("all.yaml", "w", encoding="utf-8") as f:
-    # 这样可以让 list 下的每个节点(dict) 保持在一行内
-    yaml.dump({"proxies": all_proxies}, f, allow_unicode=True, default_flow_style=None)
+        # 这样可以让 list 下的每个节点(dict) 保持在一行内
+        yaml.dump({"proxies": all_proxies}, f, allow_unicode=True, default_flow_style=None)
     
     print(f"处理完成！有效节点: {alive_count}, 过滤死节点: {dead_count}")
 
