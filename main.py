@@ -14,25 +14,25 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # 订阅地址列表
 URLS = [
     "https://165.154.105.225/clash/proxies",
-    #"https://pp.dcd.one/clash/proxies",
-    "https://vc.majunfei.club:51/clash/proxies",
-    "http://138.2.112.136:12580/clash/proxies",
-    "http://tmac.eu.org:12580/clash/proxies",
-    "http://ql.ethanyang.top:12580/clash/proxies",
-    "https://open.tidnotes.top:2083/clash/proxies",
-    "http://xqz0.vip:15580/clash/proxies",
-    #"https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    #"https://vahid.ehsandigik.ir/clash",
-    #"https://dy.reiasu.jp",
-    #"https://jd.zhujunlong.eu.org",
-    #"https://proxy.525168.xyz"
+    "https://pp.dcd.one/clash/proxies",
+    "https://vc.majunfei.club:51/clash/proxies",
+    "http://138.2.112.136:12580/clash/proxies",
+    "http://tmac.eu.org:12580/clash/proxies",
+    "http://ql.ethanyang.top:12580/clash/proxies",
+    "https://open.tidnotes.top:2083/clash/proxies",
+    "http://xqz0.vip:15580/clash/proxies",
+    "https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
+    "https://vahid.ehsandigik.ir/clash",
+    "https://dy.reiasu.jp",
+    "https://jd.zhujunlong.eu.org",
+    "https://proxy.525168.xyz"
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
 # 地区映射表：确保名字包含 ACL4SSR 识别的关键词
 COUNTRY_NAMES = {
-    "HK": "香港", "JP": "日本", "SG": "新加坡", "KR": "韩国", 
+    "HK": "香港", "JP": "日本", "SG": "新加坡", "KR": "韩国",
     "TW": "台湾", "US": "美国", "GB": "英国", "DE": "德国"
 }
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
@@ -158,7 +158,7 @@ def filter_proxies(proxies):
 
     # 仅保留测试通过的名字
     valid_names = {r[0] for r in results}
-    
+
     # 过滤列表，保持原名（不把延迟写进名字里！）
     out = [p for p in proxies if p["name"] in valid_names]
     return out
@@ -171,19 +171,19 @@ if __name__ == "__main__":
 
     save_for_clash(raw)
     clash_process = start_clash()
-    
+
     try:
         good_proxies = filter_proxies(raw)
-        
+
         # 修改点 2: 规范化输出。SubConverter 只需要 proxies 这一层
         os.makedirs("output", exist_ok=True)
         # 这种格式最利于订阅转换器解析
         final_data = {"proxies": good_proxies}
-        
+
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
             # 使用 sort_keys=False 保持国家顺序，不乱跳
             yaml.dump(final_data, f, allow_unicode=True, sort_keys=False)
-        
+
         print(f"成功筛选出 {len(good_proxies)} 个 Google 节点并保存。")
     finally:
         clash_process.terminate()
