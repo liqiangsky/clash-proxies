@@ -28,7 +28,9 @@ URLS = [
     #"https://dy.reiasu.jp",
     "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fdy.reiasu.jp&insert=false&clash.meta=true&filename=clash&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true",
     #"https://jd.zhujunlong.eu.org",
-    #"https://proxy.525168.xyz"
+    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fjd.zhujunlong.eu.org&insert=false&clash.meta=true&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&filename=clash&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true",
+    #"https://proxy.525168.xyz",
+    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fproxy.525168.xyz&insert=false&clash.meta=true&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&filename=clash&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true"
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
