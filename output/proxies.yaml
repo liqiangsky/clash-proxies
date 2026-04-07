@@ -18,13 +18,6 @@ proxies:
   port: 443
   password: shadowsocks
   cipher: aes-128-gcm
-- name: 韩国 01
-  server: 221.139.79.57
-  type: ss
-  port: 13979
-  udp: true
-  password: qwerREWQ@@
-  cipher: aes-256-cfb
 - name: 新加坡 01
   server: 95.173.218.203
   type: ss
@@ -79,243 +72,7 @@ proxies:
   h2-opts: {}
   ws-opts:
     path: /arki?ed=2048
-- name: 德国 01
-  server: 57.129.95.45
-  type: ss
-  country: 🇧🇪BE
-  port: 11201
-  password: 6675cbf62d6a3a4f
-  cipher: chacha20-ietf-poly1305
-- name: 德国 02
-  server: 57.129.69.122
-  type: ss
-  country: 🇧🇪BE
-  port: 27130
-  password: a3027c931ae07bce
-  cipher: chacha20-ietf-poly1305
-- name: 德国 03
-  server: 57.129.94.79
-  type: ss
-  country: 🇧🇪BE
-  port: 11206
-  password: 70c455c9f19aa3a5
-  cipher: chacha20-ietf-poly1305
-- name: 德国 04
-  server: 57.129.95.38
-  type: ss
-  country: 🇧🇪BE
-  port: 11201
-  password: f54cdee10f8b25ce
-  cipher: chacha20-ietf-poly1305
-- name: 德国 05
-  server: 57.129.35.242
-  type: ss
-  country: 🇧🇪BE
-  port: 11201
-  password: b2871db02e5f7e2f
-  cipher: chacha20-ietf-poly1305
-- name: 德国 06
-  server: 57.129.95.198
-  type: ss
-  country: 🇧🇪BE
-  port: 11201
-  password: d6b0973401858b29
-  cipher: chacha20-ietf-poly1305
-- name: 英国 02
-  server: 94.156.250.148
-  type: ss
-  country: 🇧🇬BG
-  port: 7001
-  password: RexnBgU7EV5ADxG
-  cipher: aes-256-gcm
-- name: 韩国 02
-  server: 154.90.62.168
-  type: ss
-  country: 🇧🇷 BR
-  port: 989
-  password: f8f7aCzcPKbsF8p3
-  cipher: aes-256-cfb
-- name: 美国 11
-  server: 108.181.0.177
-  type: ss
-  country: 🇨🇦CA
-  port: 8388
-  password: G5p6ww4o67HB
-  cipher: chacha20-ietf-poly1305
-- name: 香港 04
-  server: v35.hdacd.com
-  type: vmess
-  country: 🇨🇳CN
-  port: 30835
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 2
-  cipher: auto
-  network: tcp
-  servername: v35.hdacd.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 香港 05
-  server: v12.hdacd.com
-  type: vmess
-  country: 🇨🇳CN
-  port: 30812
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 0
-  cipher: auto
-  network: tcp
-  servername: v12.hdacd.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 香港 06
-  server: v4.hdacd.com
-  type: vmess
-  country: 🇨🇳CN
-  port: 30804
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 2
-  cipher: auto
-  network: tcp
-  servername: v4.hdacd.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 德国 07
-  server: 213.202.208.199
-  type: ss
-  country: 🇩🇪DE
-  port: 7001
-  password: RexnBgU7EV5ADxG
-  cipher: aes-256-gcm
-- name: 德国 08
-  server: 135.125.245.131
-  type: ss
-  country: 🇫🇷FR
-  port: 20939
-  password: 85d3d8ccba287d3e
-  cipher: chacha20-ietf-poly1305
-- name: 德国 09
-  server: 54.37.78.130
-  type: ss
-  country: 🇫🇷FR
-  port: 11201
-  password: d954bd6dd74a7f48
-  cipher: chacha20-ietf-poly1305
-- name: 英国 03
-  server: 51.75.168.50
-  type: ss
-  country: 🇫🇷FR
-  port: 13030
-  password: 6c815bb84c781da5
-  cipher: chacha20-ietf-poly1305
-- name: 德国 10
-  server: 141.95.109.94
-  type: ss
-  country: 🇫🇷FR
-  port: 11201
-  password: 10f90af92b6c1a74
-  cipher: chacha20-ietf-poly1305
-- name: 德国 11
-  server: 141.95.106.127
-  type: ss
-  country: 🇫🇷FR
-  port: 11201
-  password: 94aae0510188e8c5
-  cipher: chacha20-ietf-poly1305
-- name: 英国 04
-  server: 141.98.101.178
-  type: ss
-  country: 🇬🇧 GB
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 英国 05
-  server: 51.89.117.154
-  type: ss
-  country: 🇬🇧GB
-  port: 11201
-  password: 9bfee1388e960537
-  cipher: chacha20-ietf-poly1305
-- name: 英国 06
-  server: 46.250.254.174
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: Tqd9GppXpXB8rpc8
-  cipher: aes-256-gcm
-- name: 英国 07
-  server: 46.250.254.170
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: BedufgztHO3B5Kqe
-  cipher: aes-256-gcm
-- name: 英国 08
-  server: 46.250.254.170
-  type: ss
-  country: 🇬🇧GB
-  port: 80
-  password: BedufgztHO3B5Kqe
-  cipher: aes-256-gcm
-- name: 英国 09
-  server: 46.250.254.174
-  type: ss
-  country: 🇬🇧GB
-  port: 80
-  password: Tqd9GppXpXB8rpc8
-  cipher: aes-256-gcm
-- name: 英国 10
-  server: 141.98.101.181
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 英国 11
-  server: 146.70.61.37
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: 14fFPrbezE3HDZzsMOr6
-  cipher: rc4-md5
-- name: 英国 12
-  server: 141.98.101.182
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 韩国 03
-  server: cc0707a.iamnew2020.top
-  type: trojan
-  country: 🇬🇧GB
-  port: 99
-  password: 6d661a77e6534a8e
-  skip-cert-verify: true
-  udp: true
-- name: 香港 08
-  server: 112.213.102.188
-  type: ss
-  country: 🇭🇰HK
-  port: 41632
-  password: qwerREWQ@@
-  cipher: aes-256-cfb
-- name: 香港 09
-  server: 203.23.128.33
-  type: ss
-  country: 🇭🇰HK
-  port: 989
-  password: f8f7aCzcPKbsF8p3
-  cipher: aes-256-cfb
-- name: 香港 10
-  server: 203.23.128.92
-  type: ss
-  country: 🇭🇰HK
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 香港 67
+- name: 香港 11
   server: 47.243.135.74
   type: vmess
   country: 🇭🇰HK
@@ -329,7 +86,7 @@ proxies:
   skip-cert-verify: true
   ws-opts:
     path: /Notif_Chat
-- name: 香港 68
+- name: 香港 12
   server: 47.244.120.197
   type: vmess
   country: 🇭🇰HK
@@ -343,25 +100,7 @@ proxies:
   skip-cert-verify: true
   ws-opts:
     path: /arki?ed=2048
-- name: 香港 69
-  server: n1761296880.lie5d.cyou
-  type: vmess
-  country: 🇭🇰HK
-  port: 443
-  uuid: 1effac4a-cdb8-4717-a10c-da97263c802c
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: n1761296880.lie5d.cyou
-  http-opts: {}
-  h2-opts: {}
-  tls: true
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: n1761296880.lie5d.cyou
-- name: 台湾 04
+- name: 台湾 03
   server: 165.154.195.38
   type: vmess
   country: 🇭🇰HK
@@ -372,6 +111,23 @@ proxies:
   http-opts: {}
   h2-opts: {}
   skip-cert-verify: true
+- name: 香港 16
+  server: khk9527.vision.jp.eu.org
+  type: trojan
+  country: 🇭🇰HK
+  port: 99
+  password: 6d00fde742644d11
+  skip-cert-verify: true
+  udp: true
+- name: 香港 17
+  server: tj.oopscat.com
+  type: trojan
+  country: 🇭🇰HK
+  port: 7443
+  password: '88888888'
+  sni: tj.oopscat.com
+  skip-cert-verify: true
+  udp: true
 - name: 日本 02
   server: 103.106.228.175
   type: ss
@@ -379,7 +135,7 @@ proxies:
   port: 8009
   password: XKFKl2rULjIp74
   cipher: aes-256-gcm
-- name: 香港 72
+- name: 香港 18
   server: 151.242.180.91
   type: vmess
   country: 🇮🇷IR
@@ -392,35 +148,56 @@ proxies:
   http-opts: {}
   h2-opts: {}
   skip-cert-verify: true
-- name: 韩国 05
+- name: 日本 03
+  server: 172.111.146.64
+  type: vmess
+  country: 🇯🇵JP
+  port: 80
+  uuid: 05b8c783-7f59-47f9-9923-06a465679f6a
+  alterId: 0
+  cipher: auto
+  network: ws
+  http-opts: {}
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /vmess/
+- name: 韩国 03
+  server: 154.90.63.177
+  type: ss
+  country: 🇰🇷 KR
+  port: 989
+  password: f8f7aCzcPKbsF8p3
+  cipher: aes-256-cfb
+- name: 韩国 04
   server: 141.164.45.187
   type: ss
   country: 🇰🇷KR
   port: 6679
   password: TEzjfAYq2IjtuoS
   cipher: aes-256-gcm
-- name: 韩国 06
+- name: 韩国 05
   server: 141.164.45.187
   type: ss
   country: 🇰🇷KR
   port: 7001
   password: RexnBgU7EV5ADxG
   cipher: aes-256-gcm
-- name: 韩国 07
+- name: 韩国 06
   server: 141.164.45.187
   type: ss
   country: 🇰🇷KR
   port: 2376
   password: faBAoD54k87UJG7
   cipher: aes-256-gcm
-- name: 韩国 08
+- name: 韩国 07
   server: 141.164.45.187
   type: ss
   country: 🇰🇷KR
   port: 5498
   password: lGqs95QkFHo2NV
   cipher: aes-256-gcm
-- name: 韩国 09
+- name: 韩国 08
   server: 141.164.45.187
   type: ss
   country: 🇰🇷KR
@@ -428,18 +205,6 @@ proxies:
   password: TEzjfAYq2IjtuoS
   cipher: aes-256-gcm
 - name: 韩国 10
-  server: 146.56.112.110
-  type: vmess
-  country: 🇰🇷KR
-  port: 8888
-  uuid: e7c302f3-90d6-42dd-9d7d-94a3683a3707
-  alterId: 0
-  cipher: auto
-  network: tcp
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 韩国 11
   server: 140.238.2.250
   type: vmess
   country: 🇰🇷KR
@@ -451,113 +216,114 @@ proxies:
   http-opts: {}
   h2-opts: {}
   skip-cert-verify: true
-- name: 美国 12
-  server: 94.72.127.55
-  type: ss
-  country: 🇵🇱PL
+- name: 韩国 11
+  server: chuncheon03.zgjok.com
+  type: vmess
+  country: 🇰🇷KR
   port: 443
-  password: wlJSF0fC8uqB5Gm5
-  cipher: aes-256-gcm
-- name: 美国 13
-  server: 94.72.127.55
-  type: ss
-  country: 🇵🇱PL
-  port: 80
-  password: wlJSF0fC8uqB5Gm5
-  cipher: aes-256-gcm
-- name: 美国 14
-  server: 154.53.57.143
+  uuid: 81d5cac4-d039-4874-9a20-c391f580012d
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: chuncheon03.zgjok.com
+  http-opts: {}
+  h2-opts: {}
+  tls: true
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: chuncheon03.zgjok.com
+- name: 香港 19
+  server: v35.hdacd.com
+  type: vmess
+  port: 30835
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 2
+  cipher: auto
+  network: tcp
+  http-opts: {}
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 香港 20
+  server: v12.hdacd.com
+  type: vmess
+  country: 🇭🇰HK
+  port: 30812
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  network: tcp
+  http-opts: {}
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 香港 23
+  server: v4.hdacd.com
+  type: vmess
+  country: 🇭🇰HK
+  port: 30804
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 2
+  cipher: auto
+  network: tcp
+  http-opts: {}
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 美国 12
+  server: 156.146.38.170
   type: ss
   country: 🇺🇸US
-  port: 80
-  password: uwmRUOVM5ljNAtPj
-  cipher: aes-256-gcm
-- name: 美国 15
+  port: 443
+  password: shadowsocks
+  cipher: aes-128-gcm
+- name: 韩国 12
+  server: 154.90.62.168
+  type: ss
+  country: 🇺🇸US
+  port: 989
+  password: f8f7aCzcPKbsF8p3
+  cipher: aes-256-cfb
+- name: 美国 13
   server: 173.234.29.2
   type: ss
   country: 🇺🇸US
   port: 990
   password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
   cipher: chacha20-ietf-poly1305
-- name: 美国 16
-  server: 154.53.63.32
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: k6ruJuwgAUxIrkHb
-  cipher: aes-256-gcm
-- name: 美国 17
+- name: 美国 14
   server: 173.244.56.6
   type: ss
   country: 🇺🇸US
   port: 443
   password: shadowsocks
   cipher: aes-128-gcm
-- name: 德国 12
-  server: 2.58.81.221
+- name: 德国 01
+  server: 38.60.250.107
   type: ss
   country: 🇺🇸US
-  port: 80
-  password: 9dQS3geeylyrRth9
-  cipher: aes-256-gcm
-- name: 美国 18
-  server: 154.12.242.150
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: 7vZO55fXgXAJXa2F
-  cipher: aes-256-gcm
-- name: 英国 13
-  server: 149.102.149.207
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: umWwoQJEJGf74SLe
-  cipher: aes-256-gcm
-- name: 美国 19
+  port: 990
+  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
+  cipher: chacha20-ietf-poly1305
+- name: 美国 15
   server: 104.192.226.106
   type: ss
   country: 🇺🇸US
   port: 989
   password: f8f7aCzcPKbsF8p3
   cipher: aes-256-cfb
-- name: 韩国 12
-  server: 154.90.62.145
+- name: 美国 16
+  server: 156.146.38.167
   type: ss
   country: 🇺🇸US
-  port: 46578
-  password: 907e91edf84826c3
-  cipher: chacha20-ietf-poly1305
-- name: 美国 20
-  server: 144.126.158.195
-  type: ss
-  country: 🇺🇸US
-  port: 12053
-  password: b537ba3e4f4cda0c
-  cipher: chacha20-ietf-poly1305
-- name: 美国 23
-  server: 141.193.213.173
+  port: 443
+  password: shadowsocks
+  cipher: aes-128-gcm
+- name: 美国 17
+  server: 149.30.232.103
   type: vmess
   country: 🇺🇸US
-  port: 2086
-  uuid: 2c366360-0333-4738-9423-6d5b378e3594
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: er250901.bptimecsgo.xyz
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /4397hy/843uhbp
-    headers:
-      HOST: er250901.bptimecsgo.xyz
-- name: 美国 24
-  server: 173.249.209.146
-  type: vmess
-  country: 🇺🇸US
-  port: 20086
-  uuid: 3935c2dc-dbb0-43f7-b367-fe89abe87fdf
+  port: 18393
+  uuid: 2c1807ce-6a63-4451-9add-a778d2507160
   alterId: 0
   cipher: auto
   network: ws
@@ -565,8 +331,8 @@ proxies:
   h2-opts: {}
   skip-cert-verify: true
   ws-opts:
-    path: /
-- name: 美国 25
+    path: /arki?ed=2048
+- name: 美国 18
   server: 149.30.232.103
   type: vmess
   country: 🇺🇸US
@@ -580,19 +346,7 @@ proxies:
   skip-cert-verify: true
   ws-opts:
     path: /arki?ed=2048
-- name: 美国 26
-  server: 216.106.185.141
-  type: vmess
-  country: 🇺🇸US
-  port: 22324
-  uuid: 04621bae-ab36-11ec-b909-0242ac120002
-  alterId: 0
-  cipher: auto
-  network: tcp
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 27
+- name: 美国 19
   server: 149.30.232.103
   type: vmess
   country: 🇺🇸US
@@ -606,74 +360,7 @@ proxies:
   skip-cert-verify: true
   ws-opts:
     path: /arki?ed=2048
-- name: 美国 28
-  server: 141.193.213.62
-  type: vmess
-  country: 🇺🇸US
-  port: 2086
-  uuid: 2c366360-0333-4738-9423-6d5b378e3594
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: er250901.bptimecsgo.xyz
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /4397hy/843uhbp
-    headers:
-      HOST: er250901.bptimecsgo.xyz
-- name: 美国 29
-  server: usaapp1.jisuyun.top
-  type: vmess
-  country: 🇺🇸US
-  port: 2053
-  uuid: 4b80aa86-4354-40bb-d2a3-47126cff0bea
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: usaapp1.jisuyun.top
-  http-opts: {}
-  h2-opts: {}
-  tls: true
-  skip-cert-verify: true
-  ws-opts:
-    path: /usavm
-    headers:
-      HOST: usaapp1.jisuyun.top
-- name: 美国 30
-  server: 209.126.84.189
-  type: vmess
-  country: 🇺🇸US
-  port: 443
-  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: 209.126.84.189
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /vmessws
-    headers:
-      HOST: 209.126.84.189
-- name: 美国 31
-  server: 104.168.94.41
-  type: vmess
-  country: 🇺🇸US
-  port: 32301
-  uuid: a2235b72-fd9c-404f-be5a-53b2de0cb798
-  alterId: 0
-  cipher: auto
-  network: http
-  http-opts:
-    method: GET
-    path:
-    - /
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 32
+- name: 美国 20
   server: v2ray.codefyinc.com
   type: vmess
   country: 🇺🇸US
@@ -690,244 +377,16 @@ proxies:
     path: /vmessws
     headers:
       HOST: v2ray.codefyinc.com
-- name: 美国 33
-  server: 149.30.232.103
-  type: vmess
-  country: 🇺🇸US
-  port: 18393
-  uuid: 2c1807ce-6a63-4451-9add-a778d2507160
-  alterId: 0
-  cipher: auto
-  network: ws
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /arki?ed=2048
-- name: 英国 14
-  server: 66.163.117.58
-  type: vmess
-  country: 🇺🇸US
-  port: 22324
-  uuid: 04621bae-ab36-11ec-b909-0242ac120002
-  alterId: 0
-  cipher: auto
-  network: tcp
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 34
-  server: 64.94.95.117
-  type: trojan
-  country: 🇺🇸US
-  port: 57142
-  password: kkzh2prsyr2ik47as615
-  sni: static.rutube.ru
-  skip-cert-verify: true
-  udp: true
-- name: 美国 35
+- name: 美国 21
   server: 64.94.95.118
   type: trojan
   country: 🇺🇸US
   port: 57142
-  password: kkzh2prsyr2ik47as615
-  skip-cert-verify: true
   udp: true
-- name: 美国 36
-  server: 64.94.95.115
-  type: trojan
-  country: 🇺🇸US
-  port: 57142
   password: kkzh2prsyr2ik47as615
-  sni: static.rutube.ru
+  sni: 64.94.95.118
   skip-cert-verify: true
-  udp: true
-- name: 美国 37
-  server: 64.94.95.114
-  type: trojan
-  country: 🇺🇸US
-  port: 57142
-  password: kkzh2prsyr2ik47as615
-  sni: static.rutube.ru
-  skip-cert-verify: true
-  udp: true
-- name: 香港 73
-  server: v6.hdacd.com
-  type: vmess
-  country: 🇭🇰HK
-  port: 30806
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 2
-  cipher: auto
-  network: tcp
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 香港 74
-  server: bc655391-t70f40-tbpkla-1otc2.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 0114339c-488d-11ee-8792-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 75
-  server: bcc4c365-t70f40-tpaqgu-1smhu.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 76
-  server: 010ece56-t6r5s0-thd0h1-1rz5s.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 40e084d6-0316-11f0-90e2-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: 010ece56-t6r5s0-thd0h1-1rz5s.hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: 010ece56-t6r5s0-thd0h1-1rz5s.hkt.gotochinatown.net
-- name: 香港 77
-  server: 5804d996-t70f40-tonrmx-8n27.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 5dc6fa05-a601-aba6-7761-ecde22d2b0fc
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 78
-  server: bdf118f2-t6r5s0-t7hmka-1plv4.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 28213b50-7ed5-11ee-add6-f23c91369f2d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: bdf118f2-t6r5s0-t7hmka-1plv4.hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: bdf118f2-t6r5s0-t7hmka-1plv4.hkt.gotochinatown.net
-- name: 香港 79
-  server: d3cc8573-t70f40-tm3dx0-1r9dt.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: de003c72-0157-11ef-86da-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 80
-  server: 822d4c12-t70f40-tgzvop-hns7.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 6857f1bc-f27b-11ea-87ad-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 81
-  server: a475d0e9-t70f40-tphxte-1h5u7.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: e3fdbd22-8c17-11ee-ace4-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 美国 39
-  server: 156.146.38.170
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 德国 13
-  server: 38.60.250.107
-  type: ss
-  country: 🇺🇸US
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 韩国 13
-  server: 154.90.63.177
-  type: ss
-  country: 🇺🇸US
-  port: 989
-  password: f8f7aCzcPKbsF8p3
-  cipher: aes-256-cfb
-- name: 美国 40
-  server: 156.146.38.167
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 美国 41
+- name: 美国 22
   server: 165.140.216.141
   type: vmess
   country: 🏁ZZ
@@ -939,7 +398,7 @@ proxies:
   http-opts: {}
   h2-opts: {}
   skip-cert-verify: true
-- name: 美国 42
+- name: 美国 23
   server: 82.198.246.46
   type: vmess
   country: 🇬🇧 GB
@@ -952,7 +411,7 @@ proxies:
   http-opts: {}
   h2-opts: {}
   skip-cert-verify: true
-- name: 美国 43
+- name: 美国 24
   server: 82.198.246.250
   type: vmess
   country: 🇬🇧 GB
@@ -965,623 +424,17 @@ proxies:
   http-opts: {}
   h2-opts: {}
   skip-cert-verify: true
-- name: 香港 83
-  server: 27703551-t70f40-tnt75r-1k8ga.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰 HK
-  port: 80
-  uuid: f860f2da-5035-11ed-bb74-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  ws-path: /
-  servername: 27703551-t70f40-tnt75r-1k8ga.hkt.gotochinatown.net
-  ws-headers:
-    HOST: 27703551-t70f40-tnt75r-1k8ga.hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 香港 84
-  server: hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰 HK
-  port: 80
-  uuid: 0114339c-488d-11ee-8792-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  ws-path: /
-  servername: hkt.gotochinatown.net
-  ws-headers:
-    HOST: hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 香港 85
-  server: 545c50c6-t70f40-thiwul-1gcq2.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰 HK
-  port: 80
-  uuid: 759bf004-6137-11ec-bd7c-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  ws-path: /
-  servername: 545c50c6-t70f40-thiwul-1gcq2.hkt.gotochinatown.net
-  ws-headers:
-    HOST: 545c50c6-t70f40-thiwul-1gcq2.hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 44
+- name: 美国 25
   server: 98.94.81.104
   type: ss
   country: 🇺🇸 US
   port: 443
   password: amazonskr05
   cipher: aes-256-cfb
-- name: 台湾 06
-  server: r3mrcg007134n4g.cybervena.com
+- name: 英国 02
+  server: 141.98.101.182
   type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 台湾 07
-  server: r3mrcg007147vhp.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 台湾 08
-  server: r3mrcg007117fb8.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 美国 45
-  server: tinkered-pennies-puppies.freesocks.work
-  type: ss
-  country: 🇺🇸US
+  country: 🇬🇧GB
   port: 443
-  password: hbGrpfvNrJsUmKmPbR3iY2
-  cipher: chacha20-ietf-poly1305
-- name: 美国 46
-  server: 154.53.57.143
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: uwmRUOVM5ljNAtPj
-  cipher: aes-256-gcm
-- name: 美国 47
-  server: 154.38.176.7
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: nKeE2ZFWVaE4DyjR
-  cipher: aes-256-gcm
-- name: 美国 48
-  server: 94.72.127.58
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: jJHq807bQ7TM0yOh
-  cipher: aes-256-gcm
-- name: 香港 87
-  server: tj.oopscat.com
-  type: trojan
-  country: 🇭🇰HK
-  port: 7443
-  password: '88888888'
-  sni: tj.oopscat.com
-  skip-cert-verify: true
-  udp: true
-- name: 香港 88
-  server: 58.152.25.253
-  type: trojan
-  country: 🇭🇰HK
-  port: 443
-  password: BxceQaOe
-  sni: t.me/ripaojiedian
-  skip-cert-verify: true
-  udp: true
-- name: 香港 93
-  server: 6f65c092-t8wxs0-tighxj-12hj8.hkt.gotochinatown.net
-  type: vmess
-  port: 80
-  udp: true
-  uuid: 5acc7a7c-d7ea-11eb-8673-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      Host: 6f65c092-t8wxs0-tighxj-12hj8.hkt.gotochinatown.net
-- name: 香港 94
-  server: b69c884f-t8pj40-thv9l4-1jbj0.hkt.gotochinatown.net
-  type: vmess
-  port: 80
-  udp: true
-  uuid: b2c6384c-f63d-11ec-b1b3-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      Host: b69c884f-t8pj40-thv9l4-1jbj0.hkt.gotochinatown.net
-- name: 香港 95
-  server: fd5a0a4d-t8wxs0-te0v28-1mh67.hkt.gotochinatown.net
-  type: vmess
-  port: 80
-  udp: true
-  uuid: e1c7fbbc-96b6-11ef-8563-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  http-opts: {}
-  h2-opts: {}
-  ws-opts:
-    path: /
-    headers:
-      Host: broadcastlv.chat.bilibili.com
-- name: 香港 96
-  server: 1c13c28a-t8nog0-thntyd-1f596.hkt.gotochinatown.net
-  type: vmess
-  port: 80
-  uuid: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  http-opts: {}
-  h2-opts: {}
-  ws-opts:
-    path: /
-    headers:
-      Host: 1c13c28a-t8nog0-thntyd-1f596.hkt.gotochinatown.net
-- name: 香港 97
-  server: cf882171-t8v340-t8ygh3-81nv.hkt.gotochinatown.net
-  type: vmess
-  port: 80
-  udp: true
-  uuid: 47e91fb6-25b8-df52-bc18-3cdc8548192f
-  alterId: 2
-  cipher: auto
-  network: ws
-  http-opts: {}
-  h2-opts: {}
-  ws-opts:
-    path: /
-    headers:
-      Host: broadcastlv.chat.bilibili.com
-- name: 德国 14
-  server: 84.200.91.118
-  type: hysteria2
-  country: 🇩🇪DE
-  port: 443
-  udp: true
-  password: 0f771058-7892-4d46-b77e-a69e811b9cbc
-  sni: hls-svod.itunes.apple.com
-  skip-cert-verify: true
-- name: 德国 15
-  server: 84.201.25.156
-  type: hysteria2
-  country: 🇩🇪DE
-  port: 443
-  udp: true
-  password: 0f771058-7892-4d46-b77e-a69e811b9cbc
-  sni: hls-svod.itunes.apple.com
-  skip-cert-verify: true
-- name: 美国 49
-  server: 82.198.246.97
-  type: vmess
-  country: 🇬🇧 GB
-  port: 180
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  cipher: auto
-  network: tcp
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 新加坡 02
-  server: 103.36.91.32
-  type: ss
-  country: 🇭🇰 HK
-  port: 8388
-  password: asd123456
-  cipher: chacha20-ietf
-- name: 香港 98
-  server: 7d833b55-t8pj40-thd0h1-1rz5s.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 40e084d6-0316-11f0-90e2-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 99
-  server: 4a04bd31-t70f40-th9kx9-1os43.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 96c798f6-4645-11ee-b8a1-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 100
-  server: 0ccf3f69-tbdts0-tm23vf-1jk6u.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 45bc25b2-1a10-11ed-91c0-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 101
-  server: 9b1dcda4-t70f40-t7m3jq-1rnrp.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 102
-  server: b47d7c47-t6r5s0-tk5ls1-z7a1.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 3bd247a8-993e-11ec-a8bf-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 103
-  server: 22f6f969-t70f40-tkp3tl-1s09x.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 62b7824e-47dc-11ef-9f2d-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 104
-  server: e9c33324-t70f40-tcdlur-1qwom.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 8d0ec7cc-eefa-11ee-9b59-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 105
-  server: d08f5ae5-t70f40-t917sa-12ach.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 106
-  server: 1fe44ff6-t6r5s0-tasftf-duku.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 8e0f8ef2-5fe3-11ec-a8bf-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 107
-  server: 89d85c51-t7h340-t8xdfw-1m0fq.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: a698c4a6-c3c9-11ee-9693-f23c91cfbbc9
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 108
-  server: ebf93ea5-t70f40-t7d1t3-81nv.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 47e91fb6-25b8-df52-bc18-3cdc8548192f
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 110
-  server: ea900bd2-t6pb40-tonrmx-8n27.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 5dc6fa05-a601-aba6-7761-ecde22d2b0fc
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 111
-  server: 6e00b582-t6r5s0-t917sa-12ach.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 112
-  server: 955ed592-t70f40-tfpsin-1q3dm.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: c1785de0-212f-11ef-92aa-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 113
-  server: f307cee0-t70f40-tpftcp-13x18.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: e4499a62-0cfe-11eb-ad8c-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 114
-  server: 9f585d8c-t7bj40-tpw4i4-1pckg.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 526a1128-7487-11ee-9bca-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 115
-  server: 3831ba0a-t70f40-t8jzg2-1hd7v.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: f73c64bc-9e8c-11ec-bd7c-f23c913c8d2b
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 香港 116
-  server: eb8f27cc-t70f40-t80cbx-1k0yf.hkt.gotochinatown.net
-  type: vmess
-  country: 🇭🇰HK
-  port: 80
-  uuid: 9cc3c03e-21fd-11ee-a642-f23c91369f2d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: broadcastlv.chat.bilibili.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-- name: 新加坡 03
-  server: 128.199.224.50
-  type: vmess
-  country: 🇸🇬SG
-  port: 443
-  uuid: 1491462a-979a-4ac0-b5dd-7409a91e62fb
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: payload.xyz-my.eu.org
-  http-opts: {}
-  h2-opts: {}
-  tls: true
-  skip-cert-verify: true
-  ws-opts:
-    path: /vmess
-    headers:
-      HOST: payload.xyz-my.eu.org
-- name: 台湾 09
-  server: abm96f00fby3.jkhkgj.xyz
-  type: vmess
-  country: 🇹🇼TW
-  port: 80
-  uuid: 0f868002-5230-45fb-be23-0fd0ed9bbdc4
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: tms.dingtalk.com
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /market/jp1
-    headers:
-      HOST: tms.dingtalk.com
-- name: 香港 117
-  server: 040f3ec5-t70f40-ta64ri-1qzi1.hkt.gotochinatown.net
-  type: vmess
-  country: 🏁 ZZ
-  port: 80
-  uuid: 8f99107c-f091-11ee-9935-f23c9164ca5d
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: 040f3ec5-t70f40-ta64ri-1qzi1.hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: 040f3ec5-t70f40-ta64ri-1qzi1.hkt.gotochinatown.net
-- name: 香港 118
-  server: 451e6242-t70f40-t8kgw8-jjv2.hkt.gotochinatown.net
-  type: vmess
-  country: 🏁 ZZ
-  port: 80
-  uuid: 31676725-b0fd-fed2-c857-2da8ce5a6e4f
-  alterId: 2
-  cipher: auto
-  network: ws
-  servername: 451e6242-t70f40-t8kgw8-jjv2.hkt.gotochinatown.net
-  http-opts: {}
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: 451e6242-t70f40-t8kgw8-jjv2.hkt.gotochinatown.net
-- name: 台湾 11
-  server: fbxt0765gh0pielsss.ftisthebest.com
-  type: trojan
-  country: 🏁 ZZ
-  port: 56251
-  udp: true
-  password: e4895ea3-7b4a-3f46-ba5a-44ac4a691635
-  skip-cert-verify: true
+  password: shadowsocks
+  cipher: aes-128-gcm
