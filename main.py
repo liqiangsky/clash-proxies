@@ -24,7 +24,8 @@ URLS = [
     #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
     #"https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
     #"https://vahid.ehsandigik.ir/clash",
-    "https://api.wcc.best/sub?target=clash&url=https%3A%2F%2Fdy.reiasu.jp&insert=false&emoji=true&list=true&tfo=false&scv=true&fdn=false&expand=true&sort=false&new_name=true",
+    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fvahid.ehsandigik.ir%2Fclash&insert=false&clash.meta=true&emoji=true&list=true&scv=true&fdn=false&expand=true&sort=false&new_name=true",
+    #"https://api.wcc.best/sub?target=clash&url=https%3A%2F%2Fdy.reiasu.jp&insert=false&emoji=true&list=true&tfo=false&scv=true&fdn=false&expand=true&sort=false&new_name=true",
     #"https://jd.zhujunlong.eu.org",
     #"https://proxy.525168.xyz"
 ]
