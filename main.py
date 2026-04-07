@@ -13,25 +13,19 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # 订阅地址列表
 URLS = [
-    "https://165.154.105.225/clash/proxies",
-    "https://pp.dcd.one/clash/proxies",
-    "https://vc.majunfei.club:51/clash/proxies",
-    "http://138.2.112.136:12580/clash/proxies",
-    "http://tmac.eu.org:12580/clash/proxies",
-    "http://ql.ethanyang.top:12580/clash/proxies",
-    "https://open.tidnotes.top:2083/clash/proxies",
-    "http://xqz0.vip:15580/clash/proxies",
+"https://165.154.105.225/clash/proxies",
+    "https://pp.dcd.one/clash/proxies",
+    "https://vc.majunfei.club:51/clash/proxies",
+    "http://138.2.112.136:12580/clash/proxies",
+    "http://tmac.eu.org:12580/clash/proxies",
+    "http://ql.ethanyang.top:12580/clash/proxies",
+    "https://open.tidnotes.top:2083/clash/proxies",
+    "http://xqz0.vip:15580/clash/proxies",
     "https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
     "https://vahid.ehsandigik.ir/clash",
-    "https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
-    "https://raw.githubusercontent.com/vxiaov/free_proxies/main/clash/clash.provider.yaml",
-    "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml",
-    "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml",
-    "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml",
     "https://dy.reiasu.jp",
-    "https://ys.jiedianxielou.workers.dev",
-    "https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
-    "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml"
+    "https://jd.zhujunlong.eu.org",
+    "https://proxy.525168.xyz"
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
