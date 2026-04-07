@@ -13,7 +13,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # 订阅地址列表
 URLS = [
-"https://165.154.105.225/clash/proxies",
+    "https://165.154.105.225/clash/proxies",
     "https://pp.dcd.one/clash/proxies",
     "https://vc.majunfei.club:51/clash/proxies",
     "http://138.2.112.136:12580/clash/proxies",
