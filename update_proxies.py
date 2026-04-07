@@ -2,7 +2,12 @@ import requests
 import yaml
 import time
 import subprocess
+import socket
+import os
+import urllib3
 from concurrent.futures import ThreadPoolExecutor
+
+urllib3.disable_warnings()
 
 # 你的所有原始订阅地址
 URLS = [
@@ -22,9 +27,8 @@ URLS = [
     "http://xqz0.vip:15580/clash/proxies?speed=15,30"
 ]
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0"
-}
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+
 
 def fetch_proxies():
     all_proxies = []
@@ -38,21 +42,22 @@ def fetch_proxies():
 
             for p in data.get("proxies", []):
                 key = f"{p.get('server')}:{p.get('port')}"
-                if key not in seen:
-                    seen.add(key)
+                if key in seen:
+                    continue
+                seen.add(key)
 
-                    # 简单过滤垃圾节点
-                    if p.get("cipher") == "none":
-                        continue
-                    if "test" in p.get("name", "").lower():
-                        continue
+                # 过滤垃圾节点
+                if p.get("cipher") == "none":
+                    continue
+                if "test" in str(p.get("name", "")).lower():
+                    continue
 
-                    all_proxies.append(p)
+                all_proxies.append(p)
 
         except:
             print(f"跳过: {url}")
 
-    print(f"抓取完成: {len(all_proxies)} 个节点")
+    print(f"抓取完成: {len(all_proxies)}")
     return all_proxies
 
 
@@ -67,8 +72,21 @@ def save_for_clash(proxies):
 
 
 def start_clash():
+    print("当前文件:", os.listdir("."))
     print("启动 Clash...")
     return subprocess.Popen(["./clash", "-f", "run.yaml"])
+
+
+def wait_clash():
+    for _ in range(20):
+        try:
+            s = socket.create_connection(("127.0.0.1", 9090), timeout=1)
+            s.close()
+            print("Clash 已启动")
+            return True
+        except:
+            time.sleep(1)
+    return False
 
 
 def test_delay(name):
@@ -79,10 +97,9 @@ def test_delay(name):
             "timeout": 5000
         }
         r = requests.get(url, params=params, timeout=6)
-        data = r.json()
-        delay = data.get("delay", -1)
+        delay = r.json().get("delay", -1)
 
-        if delay > 0 and delay < 2000:
+        if 0 < delay < 2000:
             print(f"✅ {name} {delay}ms")
             return name
         else:
@@ -94,26 +111,27 @@ def test_delay(name):
 
 
 def filter_proxies(proxies):
-    print("等待 Clash 启动...")
-    time.sleep(5)
+    print("等待 Clash...")
+    if not wait_clash():
+        print("Clash 启动失败")
+        exit(1)
 
     names = [p["name"] for p in proxies]
 
-    good = []
     with ThreadPoolExecutor(max_workers=20) as ex:
         results = ex.map(test_delay, names)
 
     good_names = set(filter(None, results))
 
-    for p in proxies:
-        if p["name"] in good_names:
-            good.append(p)
+    good = [p for p in proxies if p["name"] in good_names]
 
     print(f"可用节点: {len(good)}")
     return good
 
 
 def save_output(proxies):
+    os.makedirs("output", exist_ok=True)
+
     with open("output/proxies.yaml", "w", encoding="utf-8") as f:
         yaml.dump({"proxies": proxies}, f, allow_unicode=True)
 
