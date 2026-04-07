@@ -23,8 +23,8 @@ URLS = [
     #"http://xqz0.vip:15580/clash/proxies",
     #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
     #"https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    "https://vahid.ehsandigik.ir/clash",
-    #"https://dy.reiasu.jp",
+    #"https://vahid.ehsandigik.ir/clash",
+    "https://dy.reiasu.jp",
     #"https://jd.zhujunlong.eu.org",
     #"https://proxy.525168.xyz"
 ]
