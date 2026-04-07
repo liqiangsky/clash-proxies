@@ -68,16 +68,36 @@ def fetch_proxies():
         print(f"正在获取: {url}")
         try:
             resp = requests.get(url, headers=HEADERS, timeout=15, verify=False)
-            data = yaml.safe_load(resp.text)
-            if not data or "proxies" not in data: continue
+            text = resp.text
+
+            # ❗ 过滤 HTML（Cloudflare等）
+            if "<html" in text.lower():
+                print(f"跳过（HTML页面）: {url}")
+                continue
+
+            # ❗ 必须包含 proxies
+            if "proxies:" not in text:
+                print(f"跳过（非clash配置）: {url}")
+                continue
+
+            try:
+                data = yaml.safe_load(text)
+            except Exception:
+                print(f"YAML解析失败: {url}")
+                continue
+
+            if not data or "proxies" not in data:
+                continue
 
             for p in data["proxies"]:
                 server = p.get("server")
                 port = p.get("port")
-                if not server or not port: continue
+                if not server or not port:
+                    continue
 
                 addr = f"{server}:{port}"
-                if addr in seen_addr: continue
+                if addr in seen_addr:
+                    continue
 
                 try:
                     ip = socket.gethostbyname(server)
@@ -88,7 +108,6 @@ def fetch_proxies():
                 if country not in ALLOW_COUNTRIES:
                     continue
 
-                # 修改点 1: 重命名为 ACL4SSR 喜欢的格式，不带特殊字符
                 p["name"] = make_unique_name(country, country_counters[country], None)
                 country_counters[country] += 1
 
