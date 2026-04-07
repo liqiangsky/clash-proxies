@@ -73,6 +73,7 @@ def fetch_proxies():
         print(f"正在获取: {url}")
         try:
             resp = requests.get(url, headers=HEADERS, timeout=15, verify=False)
+            resp.encoding = 'utf-8'
             text = resp.text
 
             # ❗ 过滤 HTML（Cloudflare等）
