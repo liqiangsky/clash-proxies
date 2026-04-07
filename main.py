@@ -21,7 +21,7 @@ URLS = [
     #"http://h3.g01.work:12580/clash/proxies",
     "https://vc.majunfei.club:51/clash/proxies",
     "http://138.2.112.136:12580/clash/proxies",
-    "http://tmac.eu.org:12580/clash/proxies"
+    "http://tmac.eu.org:12580/clash/proxies",
     #"http://176.126.114.231:12580/clash/proxies",
     "http://ql.ethanyang.top:12580/clash/proxies",
     "https://open.tidnotes.top:2083/clash/proxies",
