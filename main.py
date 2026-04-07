@@ -23,14 +23,10 @@ URLS = [
     #"http://xqz0.vip:15580/clash/proxies",
     #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
     #"https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    #"https://vahid.ehsandigik.ir/clash",
-    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fvahid.ehsandigik.ir%2Fclash&insert=false&clash.meta=true&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true",
-    #"https://dy.reiasu.jp",
-    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fdy.reiasu.jp&insert=false&clash.meta=true&filename=clash&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true",
-    #"https://jd.zhujunlong.eu.org",
-    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fjd.zhujunlong.eu.org&insert=false&clash.meta=true&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&filename=clash&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true",
-    #"https://proxy.525168.xyz",
-    "https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https%3A%2F%2Fproxy.525168.xyz&insert=false&clash.meta=true&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&filename=clash&append_type=true&emoji=true&list=true&scv=true&fdn=true&expand=true&sort=true&new_name=true"
+    "https://vahid.ehsandigik.ir/clash",
+    "https://dy.reiasu.jp",
+    "https://jd.zhujunlong.eu.org",
+    "https://proxy.525168.xyz",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
@@ -64,6 +60,44 @@ def make_unique_name(country_code, index, used_names):
     new_name = f"{base_name} {index:02d}"
     return new_name
 
+def manual_parse_proxies(text):
+    """
+    手动暴力提取节点信息（当 YAML 解析失败时作为兜底）
+    """
+    proxies = []
+    # 提取 vmess 核心字段
+    pattern = re.compile(r'- name: (.*?)\n\s+server: (.*?)\n\s+port: (\d+)\n\s+type: vmess\n\s+uuid: (.*?)\n', re.S)
+    
+    matches = pattern.findall(text)
+    for m in matches:
+        try:
+            name = m[0].strip()
+            # 在该节点名字后的 500 字符内寻找 path 和 host
+            search_range = text[text.find(name):text.find(name)+500]
+            path_match = re.search(r'path: (.*?)\n', search_range)
+            host_match = re.search(r'host: (.*?)\n', search_range)
+            
+            p = {
+                "name": name,
+                "server": m[1].strip(),
+                "port": int(m[2]),
+                "type": "vmess",
+                "uuid": m[3].strip(),
+                "alterId": 0,
+                "cipher": "auto",
+                "tls": True,
+                "network": "ws",
+                "udp": True,
+                "ws-opts": {
+                    "path": path_match.group(1).strip() if path_match else "/",
+                    "headers": {"Host": host_match.group(1).strip() if host_match else m[1].strip()}
+                }
+            }
+            proxies.append(p)
+        except:
+            continue
+    return proxies
+
 def fetch_proxies():
     all_proxies = []
     seen_addr = set()
@@ -73,29 +107,29 @@ def fetch_proxies():
         print(f"正在获取: {url}")
         try:
             resp = requests.get(url, headers=HEADERS, timeout=15, verify=False)
-            resp.encoding = 'utf-8'
+            resp.encoding = 'utf-8' # 强制 utf-8
             text = resp.text
 
-            # ❗ 过滤 HTML（Cloudflare等）
             if "<html" in text.lower():
                 print(f"跳过（HTML页面）: {url}")
                 continue
 
-            # ❗ 必须包含 proxies
-            if "proxies:" not in text:
-                print(f"跳过（非clash配置）: {url}")
-                continue
-
+            # 尝试标准 YAML 解析
+            current_source_proxies = []
             try:
+                # 先尝试清洗掉可能的 YAML 锚点错误
                 data = yaml.safe_load(text)
-            except Exception:
-                print(f"YAML解析失败: {url}")
+                if data and "proxies" in data:
+                    current_source_proxies = data["proxies"]
+            except Exception as e:
+                print(f"⚠️ YAML标准解析失败，启动暴力提取逻辑: {url}")
+                current_source_proxies = manual_parse_proxies(text)
+
+            if not current_source_proxies:
+                print(f"未能从源提取到任何节点: {url}")
                 continue
 
-            if not data or "proxies" not in data:
-                continue
-
-            for p in data["proxies"]:
+            for p in current_source_proxies:
                 server = p.get("server")
                 port = p.get("port")
                 if not server or not port:
@@ -114,6 +148,7 @@ def fetch_proxies():
                 if country not in ALLOW_COUNTRIES:
                     continue
 
+                # 保持你原来的改名逻辑
                 p["name"] = make_unique_name(country, country_counters[country], None)
                 country_counters[country] += 1
 
@@ -150,7 +185,7 @@ def save_for_clash(proxies):
         "rules": ["MATCH,test"]
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config, f, allow_unicode=True)
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
 def start_clash():
     # 确保 clash 有执行权限
