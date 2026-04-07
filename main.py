@@ -34,10 +34,30 @@ HEADERS = {
     "Accept": "*/*"
 }
 
-# ================= TCP检测 =================
-def tcp_check(server, port, timeout=3):
+
+# ================= 国家白名单 =================
+ALLOW_COUNTRIES = {"HK", "JP", "SG", "KR", "TW", "US", "GB", "DE"}
+# ================= IP缓存 =================
+
+ip_cache = {}
+
+def get_country(ip):
+    if ip in ip_cache:
+        return ip_cache[ip]
+
     try:
-        s = socket.create_connection((server, port), timeout=timeout)
+        r = requests.get(f"http://ip-api.com/json/{ip}", timeout=5)
+        data = r.json()
+        code = data.get("countryCode")
+        ip_cache[ip] = code
+        return code
+    except:
+        return None
+
+# ================= TCP检测 =================
+def tcp_check(server, port):
+    try:
+        s = socket.create_connection((server, port), timeout=3)
         s.close()
         return True
     except:
@@ -63,210 +83,147 @@ def fetch_proxies():
     name_used = set()
 
     for url in URLS:
-        print(f"正在获取: {url}")
-        success = False
+        print(f"获取: {url}")
+        try:
+            resp = requests.get(url, headers=HEADERS, timeout=15, verify=False)
+            data = yaml.safe_load(resp.text)
+            if not data or "proxies" not in data:
+                continue
 
-        for _ in range(3):
-            try:
-                resp = requests.get(url, headers=HEADERS, timeout=15, verify=False)
-                if resp.status_code == 200:
-                    data = yaml.safe_load(resp.text)
-                    if not data or "proxies" not in data:
-                        break
+            for p in data["proxies"]:
+                server = p.get("server")
+                port = p.get("port")
+                if not server or not port:
+                    continue
 
-                    for p in data["proxies"]:
-                        server = p.get("server")
-                        port = p.get("port")
+                addr = f"{server}:{port}"
+                if addr in seen_addr:
+                    continue
 
-                        if not server or not port:
-                            continue
+                # ========= 协议过滤 =========
+                ptype = p.get("type")
+                if ptype not in ["ss", "trojan", "vmess"]:
+                    continue
 
-                        addr = f"{server}:{port}"
-                        if addr in seen_addr:
-                            continue
+                # ========= 协议细化 =========
+                if ptype == "ss":
+                    cipher = str(p.get("cipher", "")).lower()
+                    if cipher not in ["aes-128-gcm", "aes-256-gcm", "chacha20-ietf-poly1305"]:
+                        continue
+                    if not p.get("password"):
+                        continue
 
-                        # ========= 协议过滤 =========
-                        ptype = p.get("type")
-                        if ptype not in ["ss", "trojan", "vmess"]:
-                            continue
+                elif ptype == "trojan":
+                    if not p.get("password"):
+                        continue
 
-                        # ========= 端口过滤 =========
-                        if not (80 <= int(port) <= 65535):
-                            continue
+                elif ptype == "vmess":
+                    if not p.get("uuid"):
+                        continue
 
-                        # ========= 名字垃圾过滤 =========
-                        bad_keywords = ["剩余", "过期", "流量", "测试", "官网"]
-                        if any(k in str(p.get("name", "")) for k in bad_keywords):
-                            continue
+                # ========= TCP检测 =========
+                if not tcp_check(server, port):
+                    continue
 
-                        # ========= 协议细化 =========
-                        if ptype == "ss":
-                            cipher = str(p.get("cipher", "")).lower()
-                            allow_ciphers = [
-                                "aes-128-gcm",
-                                "aes-256-gcm",
-                                "chacha20-ietf-poly1305"
-                            ]
-                            if cipher not in allow_ciphers:
-                                continue
-                            if not p.get("password"):
-                                continue
+                # ========= IP解析 =========
+                try:
+                    ip = socket.gethostbyname(server)
+                except:
+                    continue
 
-                        elif ptype == "trojan":
-                            if not p.get("password"):
-                                continue
-                            if not p.get("tls", True):
-                                continue
+                country = get_country(ip)
+                if country not in ALLOW_COUNTRIES:
+                    continue
 
-                        elif ptype == "vmess":
-                            if not p.get("uuid"):
-                                continue
-                            network = p.get("network", "")
-                            if network not in ["ws", "grpc"]:
-                                continue
+                # ========= 名字处理 =========
+                old_name = p.get("name") or f"{server}_{port}"
+                p["name"] = make_unique_name(f"{country}-{old_name}", name_used)
 
-                        # ========= TCP检测 =========
-                        if not tcp_check(server, port):
-                            continue
+                seen_addr.add(addr)
+                all_proxies.append(p)
 
-                        # ========= 名字处理 =========
-                        old_name = p.get("name") or f"{server}_{port}"
-                        p["name"] = make_unique_name(old_name, name_used)
+        except Exception as e:
+            print("错误:", e)
 
-                        seen_addr.add(addr)
-                        all_proxies.append(p)
-
-                    success = True
-                    break
-            except:
-                time.sleep(1)
-
-        if not success:
-            print(f"跳过源: {url}")
-
-    print(f"抓取完成，共 {len(all_proxies)} 个节点")
+    print(f"筛选后节点数: {len(all_proxies)}")
     return all_proxies
 
-# ================= 保存临时配置 =================
+# ================= Clash测试 =================
 def save_for_clash(proxies):
     config = {
         "mode": "global",
         "port": 7890,
-        "socks-port": 7891,
         "external-controller": "127.0.0.1:9090",
         "proxies": proxies,
-        "proxy-groups": [
-            {"name": "test", "type": "select", "proxies": [p["name"] for p in proxies]}
-        ],
+        "proxy-groups": [{"name": "test", "type": "select", "proxies": [p["name"] for p in proxies]}],
         "rules": ["MATCH,test"]
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+        yaml.dump(config, f, allow_unicode=True)
 
-# ================= 启动 Clash =================
 def start_clash():
-    print("启动 Clash...")
-    if os.name != 'nt':
-        os.chmod("./clash", 0o755)
-    return subprocess.Popen(
-        ["./clash", "-f", "run.yaml"],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
+    return subprocess.Popen(["./clash", "-f", "run.yaml"],
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL)
 
-# ================= 等待 Clash =================
 def wait_clash():
-    for _ in range(15):
+    for _ in range(10):
         try:
-            s = socket.create_connection(("127.0.0.1", 9090), timeout=1)
-            s.close()
+            socket.create_connection(("127.0.0.1", 9090), timeout=1)
             return True
         except:
             time.sleep(1)
     return False
 
-# ================= 延迟测试 =================
 def test_delay(name):
-    safe_name = urllib.parse.quote(name)
-    api_url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-    test_target = "https://www.gstatic.com/generate_204"
+    safe = urllib.parse.quote(name)
+    url = f"http://127.0.0.1:9090/proxies/{safe}/delay"
 
-    delays = []
-    for _ in range(3):
-        try:
-            r = requests.get(api_url, params={"url": test_target, "timeout": 5000}, timeout=6)
-            if r.status_code == 200:
-                d = r.json().get("delay", 0)
-                if 0 < d < 2000:
-                    delays.append(d)
-        except:
-            continue
-
-    if len(delays) >= 2:
-        avg = sum(delays) / len(delays)
-        if avg > 1200:
-            return None
-
-        print(f"✅ {name} - {int(avg)}ms")
-        return (name, avg)
-
+    try:
+        r = requests.get(url, params={"url": "https://www.gstatic.com/generate_204", "timeout": 5000}, timeout=5)
+        d = r.json().get("delay", 0)
+        if 0 < d < 1500:
+            return (name, d)
+    except:
+        pass
     return None
 
-# ================= 筛选 =================
 def filter_proxies(proxies):
     if not wait_clash():
-        print("Clash 未启动")
         return []
 
-    print("开始测速...")
     results = []
-    names = [p["name"] for p in proxies]
-
-    with ThreadPoolExecutor(max_workers=30) as executor:
-        for res in executor.map(test_delay, names):
-            if res:
-                results.append(res)
+    with ThreadPoolExecutor(max_workers=30) as ex:
+        for r in ex.map(test_delay, [p["name"] for p in proxies]):
+            if r:
+                results.append(r)
 
     results.sort(key=lambda x: x[1])
+    delay_map = dict(results)
 
-    delay_map = {name: int(delay) for name, delay in results}
-
-    new_list = []
+    out = []
     for p in proxies:
         if p["name"] in delay_map:
-            p["name"] = f"{p['name']} | {delay_map[p['name']]}ms"
-            new_list.append(p)
+            p["name"] += f" | {delay_map[p['name']]}ms"
+            out.append(p)
 
-    return new_list
+    return out
 
 # ================= 输出 =================
 def final_save(proxies):
     os.makedirs("output", exist_ok=True)
-
     with open("output/proxies.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(
-            {"proxies": proxies},
-            f,
-            allow_unicode=True,
-            default_flow_style=False,
-            sort_keys=False
-        )
-
-    print(f"✅ 已输出 proxies.yaml，共 {len(proxies)} 个节点")
+        yaml.dump({"proxies": proxies}, f, allow_unicode=True)
 
 # ================= 主程序 =================
 if __name__ == "__main__":
     raw = fetch_proxies()
-    if not raw:
-        print("没有节点")
-        exit()
-
     save_for_clash(raw)
-    clash = start_clash()
 
+    clash = start_clash()
     try:
         good = filter_proxies(raw)
         final_save(good)
+        print("完成:", len(good))
     finally:
         clash.terminate()
-        print("Clash 已关闭")
