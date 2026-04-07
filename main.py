@@ -29,10 +29,27 @@ URLS = [
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
+# ✅ 解决重名问题
+def make_unique_name(name, used):
+    name = str(name).strip() or "node"
+
+    if name not in used:
+        used.add(name)
+        return name
+
+    i = 1
+    while f"{name}_{i}" in used:
+        i += 1
+
+    new_name = f"{name}_{i}"
+    used.add(new_name)
+    return new_name
+
 
 def fetch_proxies():
     all_proxies = []
     seen = set()
+    name_used = set()
 
     for url in URLS:
         try:
@@ -41,16 +58,26 @@ def fetch_proxies():
             data = yaml.safe_load(resp.text)
 
             for p in data.get("proxies", []):
-                key = f"{p.get('server')}:{p.get('port')}"
+                server = p.get("server")
+                port = p.get("port")
+
+                if not server or not port:
+                    continue
+
+                key = f"{server}:{port}"
                 if key in seen:
                     continue
                 seen.add(key)
 
-                # 过滤垃圾节点
+                # ❌ 过滤垃圾节点
                 if p.get("cipher") == "none":
                     continue
                 if "test" in str(p.get("name", "")).lower():
                     continue
+
+                # ✅ 强制唯一名称（核心修复）
+                base_name = p.get("name") or f"{server}:{port}"
+                p["name"] = make_unique_name(base_name, name_used)
 
                 all_proxies.append(p)
 
@@ -77,6 +104,7 @@ def start_clash():
     return subprocess.Popen(["./clash", "-f", "run.yaml"])
 
 
+# ✅ 等待 Clash 启动
 def wait_clash():
     for _ in range(20):
         try:
@@ -89,6 +117,7 @@ def wait_clash():
     return False
 
 
+# ✅ 测速
 def test_delay(name):
     try:
         url = f"http://127.0.0.1:9090/proxies/{name}/delay"
@@ -112,9 +141,10 @@ def test_delay(name):
 
 def filter_proxies(proxies):
     print("等待 Clash...")
+
     if not wait_clash():
         print("Clash 启动失败")
-        exit(1)
+        return []
 
     names = [p["name"] for p in proxies]
 
@@ -132,9 +162,11 @@ def filter_proxies(proxies):
 def save_output(proxies):
     os.makedirs("output", exist_ok=True)
 
+    # 保存纯节点
     with open("output/proxies.yaml", "w", encoding="utf-8") as f:
         yaml.dump({"proxies": proxies}, f, allow_unicode=True)
 
+    # 保存完整订阅
     config = yaml.safe_load(open("clash.yaml", encoding="utf-8"))
     config["proxies"] = proxies
     config["proxy-groups"][0]["proxies"] = [p["name"] for p in proxies]
@@ -145,6 +177,10 @@ def save_output(proxies):
 
 if __name__ == "__main__":
     proxies = fetch_proxies()
+
+    if not proxies:
+        print("没有可用节点")
+        exit(1)
 
     save_for_clash(proxies)
 
