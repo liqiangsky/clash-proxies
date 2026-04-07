@@ -29,7 +29,7 @@ URLS = [
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
-# ✅ 解决重名问题
+# ✅ 唯一名称
 def make_unique_name(name, used):
     name = str(name).strip() or "node"
 
@@ -69,13 +69,21 @@ def fetch_proxies():
                     continue
                 seen.add(key)
 
-                # ❌ 过滤垃圾节点
+                name = str(p.get("name", "")).lower()
+
+                # ❌ 垃圾过滤
+                if name.startswith("_"):
+                    continue
+                if "test" in name:
+                    continue
                 if p.get("cipher") == "none":
                     continue
-                if "test" in str(p.get("name", "")).lower():
+
+                # ❌ 过滤低质量 ss（可选但推荐）
+                if p.get("type") == "ss" and p.get("cipher") in ["aes-128-gcm"]:
                     continue
 
-                # ✅ 强制唯一名称（核心修复）
+                # ✅ 唯一名称
                 base_name = p.get("name") or f"{server}:{port}"
                 p["name"] = make_unique_name(base_name, name_used)
 
@@ -99,12 +107,10 @@ def save_for_clash(proxies):
 
 
 def start_clash():
-    print("当前文件:", os.listdir("."))
     print("启动 Clash...")
     return subprocess.Popen(["./clash", "-f", "run.yaml"])
 
 
-# ✅ 等待 Clash 启动
 def wait_clash():
     for _ in range(20):
         try:
@@ -117,56 +123,71 @@ def wait_clash():
     return False
 
 
-# ✅ 测速
+# 🚀 核心：多次测速过滤
 def test_delay(name):
-    try:
-        url = f"http://127.0.0.1:9090/proxies/{name}/delay"
-        params = {
-            "url": "https://www.google.com/generate_204",
-            "timeout": 5000
-        }
-        r = requests.get(url, params=params, timeout=6)
-        delay = r.json().get("delay", -1)
+    delays = []
 
-        if 0 < delay < 2000:
-            print(f"✅ {name} {delay}ms")
-            return name
-        else:
-            print(f"❌ {name}")
-            return None
-    except:
-        print(f"❌ {name}")
+    for _ in range(3):  # 测3次
+        try:
+            url = f"http://127.0.0.1:9090/proxies/{name}/delay"
+            params = {
+                "url": "https://www.google.com/generate_204",
+                "timeout": 5000
+            }
+            r = requests.get(url, params=params, timeout=6)
+            delay = r.json().get("delay", -1)
+
+            if delay > 0:
+                delays.append(delay)
+        except:
+            pass
+
+    # ❌ 成功次数太少
+    if len(delays) < 2:
+        print(f"❌ {name} 不稳定")
         return None
+
+    avg = sum(delays) / len(delays)
+
+    # ❌ 延迟太高
+    if avg > 800:
+        print(f"❌ {name} {int(avg)}ms")
+        return None
+
+    print(f"✅ {name} 平均 {int(avg)}ms")
+    return (name, avg)
 
 
 def filter_proxies(proxies):
-    print("等待 Clash...")
-
     if not wait_clash():
         print("Clash 启动失败")
         return []
 
     names = [p["name"] for p in proxies]
 
+    results = []
     with ThreadPoolExecutor(max_workers=20) as ex:
-        results = ex.map(test_delay, names)
+        for r in ex.map(test_delay, names):
+            if r:
+                results.append(r)
 
-    good_names = set(filter(None, results))
+    # ✅ 按延迟排序
+    results.sort(key=lambda x: x[1])
+
+    good_names = [name for name, _ in results]
 
     good = [p for p in proxies if p["name"] in good_names]
 
-    print(f"可用节点: {len(good)}")
+    print(f"最终可用节点: {len(good)}")
     return good
 
 
 def save_output(proxies):
     os.makedirs("output", exist_ok=True)
 
-    # 保存纯节点
     with open("output/proxies.yaml", "w", encoding="utf-8") as f:
         yaml.dump({"proxies": proxies}, f, allow_unicode=True)
 
-    # 保存完整订阅
     config = yaml.safe_load(open("clash.yaml", encoding="utf-8"))
     config["proxies"] = proxies
     config["proxy-groups"][0]["proxies"] = [p["name"] for p in proxies]
@@ -179,7 +200,7 @@ if __name__ == "__main__":
     proxies = fetch_proxies()
 
     if not proxies:
-        print("没有可用节点")
+        print("没有节点")
         exit(1)
 
     save_for_clash(proxies)
