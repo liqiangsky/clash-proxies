@@ -77,6 +77,7 @@ def fetch_proxies():
                     for p in data["proxies"]:
                         server = p.get("server")
                         port = p.get("port")
+
                         if not server or not port:
                             continue
 
@@ -84,20 +85,51 @@ def fetch_proxies():
                         if addr in seen_addr:
                             continue
 
-                        # 协议过滤
-                        if p.get("type") not in ["ss", "trojan", "vmess"]:
+                        # ========= 协议过滤 =========
+                        ptype = p.get("type")
+                        if ptype not in ["ss", "trojan", "vmess"]:
                             continue
 
-                        # 加密过滤
-                        cipher = str(p.get("cipher", "")).lower()
-                        if cipher in ['rc4-md5', 'chacha20', 'aes-128-cfb', 'none']:
+                        # ========= 端口过滤 =========
+                        if not (80 <= int(port) <= 65535):
                             continue
 
-                        # TCP检测（关键）
+                        # ========= 名字垃圾过滤 =========
+                        bad_keywords = ["剩余", "过期", "流量", "测试", "官网"]
+                        if any(k in str(p.get("name", "")) for k in bad_keywords):
+                            continue
+
+                        # ========= 协议细化 =========
+                        if ptype == "ss":
+                            cipher = str(p.get("cipher", "")).lower()
+                            allow_ciphers = [
+                                "aes-128-gcm",
+                                "aes-256-gcm",
+                                "chacha20-ietf-poly1305"
+                            ]
+                            if cipher not in allow_ciphers:
+                                continue
+                            if not p.get("password"):
+                                continue
+
+                        elif ptype == "trojan":
+                            if not p.get("password"):
+                                continue
+                            if not p.get("tls", True):
+                                continue
+
+                        elif ptype == "vmess":
+                            if not p.get("uuid"):
+                                continue
+                            network = p.get("network", "")
+                            if network not in ["ws", "grpc"]:
+                                continue
+
+                        # ========= TCP检测 =========
                         if not tcp_check(server, port):
                             continue
 
-                        # 名字处理
+                        # ========= 名字处理 =========
                         old_name = p.get("name") or f"{server}_{port}"
                         p["name"] = make_unique_name(old_name, name_used)
 
@@ -117,7 +149,7 @@ def fetch_proxies():
 
 # ================= 保存临时配置 =================
 def save_for_clash(proxies):
-    base_config = {
+    config = {
         "mode": "global",
         "port": 7890,
         "socks-port": 7891,
@@ -129,16 +161,18 @@ def save_for_clash(proxies):
         "rules": ["MATCH,test"]
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(base_config, f, allow_unicode=True, sort_keys=False)
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
 # ================= 启动 Clash =================
 def start_clash():
     print("启动 Clash...")
     if os.name != 'nt':
         os.chmod("./clash", 0o755)
-    return subprocess.Popen(["./clash", "-f", "run.yaml"],
-                            stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL)
+    return subprocess.Popen(
+        ["./clash", "-f", "run.yaml"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
 
 # ================= 等待 Clash =================
 def wait_clash():
@@ -168,11 +202,8 @@ def test_delay(name):
         except:
             continue
 
-    # 至少成功2次
     if len(delays) >= 2:
         avg = sum(delays) / len(delays)
-
-        # 延迟限制
         if avg > 1200:
             return None
 
@@ -196,10 +227,8 @@ def filter_proxies(proxies):
             if res:
                 results.append(res)
 
-    # 排序
     results.sort(key=lambda x: x[1])
 
-    # 写入延迟到名字
     delay_map = {name: int(delay) for name, delay in results}
 
     new_list = []
@@ -210,7 +239,7 @@ def filter_proxies(proxies):
 
     return new_list
 
-# ================= 最终输出 =================
+# ================= 输出 =================
 def final_save(proxies):
     os.makedirs("output", exist_ok=True)
 
