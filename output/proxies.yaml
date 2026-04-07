@@ -1,1 +1,159 @@
-proxies: []
+proxies:
+- name: 英国 01
+  network: ws
+  port: 7443
+  server: 222.167.202.22
+  servername: 2026.hhhhh.eu.org
+  tls: true
+  type: vless
+  uuid: 06ef598c-1555-4887-b3f9-08214a2f6792
+  ws-opts:
+    headers:
+      Host: 2026.hhhhh.eu.org
+    path: /222.167.202.22:7443
+- name: 日本 01
+  network: ws
+  port: 443
+  server: 109.123.231.212
+  servername: glp2ul6ss5g0.fgfw.qzz.io
+  tls: true
+  type: vless
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  ws-opts:
+    headers:
+      Host: glp2ul6ss5g0.fgfw.qzz.io
+    path: /danfeng?ed=2560
+- client-fingerprint: chrome
+  grpc-opts:
+    grpc-mode: gun
+    grpc-service-name: violet
+  name: 美国 02
+  network: grpc
+  port: 15055
+  server: usrna.osaip.net
+  tls: true
+  type: vless
+  udp: true
+  uuid: fe5711b0-3732-44c0-9210-0bfd58e58958
+- name: 韩国 01
+  password: test.+
+  port: 30446
+  server: testkr3.ssv.vc
+  skip-cert-verify: true
+  tls: true
+  type: http
+  udp: true
+  username: test
+- client-fingerprint: chrome
+  name: 德国 01
+  network: tcp
+  port: 15891
+  reality-opts:
+    public-key: XX4FqSGIg5SsFouxBjPFHSG1SU1rPP5ek6D944aPjWc
+    short-id: ''
+  server: n20.948905.xyz
+  servername: www.python.org
+  tls: true
+  type: vless
+  udp: true
+  uuid: 2c5584e1-6546-4db2-811d-356d0c7b2028
+- name: 美国 05
+  type: vmess
+  server: 82.198.246.250
+  port: 180
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 香港 02
+  type: trojan
+  server: 58.152.25.253
+  port: 443
+  password: BxceQaOe
+  sni: t.me/ripaojiedian
+  skip-cert-verify: true
+  tls: true
+- name: 美国 06
+  type: vmess
+  server: 82.198.246.97
+  port: 180
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 美国 07
+  type: vmess
+  server: 82.198.246.46
+  port: 180
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 香港 04
+  type: vmess
+  server: v12.hdacd.com
+  port: 30812
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 香港 06
+  type: vmess
+  server: v30.hdacd.com
+  port: 30830
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 香港 07
+  type: trojan
+  server: khk9527.vision.jp.eu.org
+  port: 99
+  password: 6d00fde742644d11
+  sni: khk9527.vision.jp.eu.org
+  skip-cert-verify: true
+  tls: true
+- name: 香港 08
+  type: trojan
+  server: tj.oopscat.com
+  port: 7443
+  password: '88888888'
+  sni: tj.oopscat.com
+  skip-cert-verify: true
+  tls: true
+- name: 美国 08
+  type: vless
+  server: 77.110.122.205
+  port: 26946
+  uuid: 99f06929-4311-489c-91cc-ef1c582e5dfa
+  tls: false
+  client-fingerprint: chrome
+- name: 美国 09
+  type: vless
+  server: 202.155.11.137
+  port: 8443
+  uuid: f3a1017d-1ebf-11f1-8cae-c3845d39d2de
+  servername: www.apple.com
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: a1b2c3d4e5f6
+- name: 德国 03
+  type: vless
+  server: 81.19.141.91
+  port: 8443
+  uuid: f3a1017d-1ebf-11f1-8cae-c3845d39d2de
+  servername: www.apple.com
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: cafe01234567
