@@ -1,14 +1,11 @@
 import requests
 import yaml
-import socket
-import concurrent.futures
-import urllib3
-
-# 禁用 SSL 警告（因为你用了 verify=False）
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import time
+import subprocess
+from concurrent.futures import ThreadPoolExecutor
 
 # 你的所有原始订阅地址
-urls = [
+URLS = [
     "https://165.154.105.225/clash/proxies?speed=15,30",
     #"http://161.33.151.88:12580/clash/proxies",
     #"http://158.180.234.237:12580/clash/proxies",
@@ -25,73 +22,120 @@ urls = [
     "http://xqz0.vip:15580/clash/proxies?speed=15,30"
 ]
 
-def is_alive(proxy_item, timeout=3):
-    server = proxy_item.get('server')
-    port = proxy_item.get('port')
-    if not server or not port:
-        return False
+HEADERS = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+def fetch_proxies():
+    all_proxies = []
+    seen = set()
+
+    for url in URLS:
+        try:
+            print(f"获取: {url}")
+            resp = requests.get(url, headers=HEADERS, timeout=15, verify=False)
+            data = yaml.safe_load(resp.text)
+
+            for p in data.get("proxies", []):
+                key = f"{p.get('server')}:{p.get('port')}"
+                if key not in seen:
+                    seen.add(key)
+
+                    # 简单过滤垃圾节点
+                    if p.get("cipher") == "none":
+                        continue
+                    if "test" in p.get("name", "").lower():
+                        continue
+
+                    all_proxies.append(p)
+
+        except:
+            print(f"跳过: {url}")
+
+    print(f"抓取完成: {len(all_proxies)} 个节点")
+    return all_proxies
+
+
+def save_for_clash(proxies):
+    config = yaml.safe_load(open("clash.yaml", encoding="utf-8"))
+
+    config["proxies"] = proxies
+    config["proxy-groups"][0]["proxies"] = [p["name"] for p in proxies]
+
+    with open("run.yaml", "w", encoding="utf-8") as f:
+        yaml.dump(config, f, allow_unicode=True)
+
+
+def start_clash():
+    print("启动 Clash...")
+    return subprocess.Popen(["./clash", "-f", "run.yaml"])
+
+
+def test_delay(name):
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(timeout)
-        # connect_ex 返回 0 表示成功
-        result = sock.connect_ex((str(server), int(port)))
-        sock.close()
-        return result == 0
+        url = f"http://127.0.0.1:9090/proxies/{name}/delay"
+        params = {
+            "url": "https://www.google.com/generate_204",
+            "timeout": 5000
+        }
+        r = requests.get(url, params=params, timeout=6)
+        data = r.json()
+        delay = data.get("delay", -1)
+
+        if delay > 0 and delay < 2000:
+            print(f"✅ {name} {delay}ms")
+            return name
+        else:
+            print(f"❌ {name}")
+            return None
     except:
-        return False
+        print(f"❌ {name}")
+        return None
 
-def process_url(url):
-    proxies = []
-    headers = {'User-Agent': 'Clash/1.0'} 
-    try:
-        resp = requests.get(url, timeout=15, headers=headers, verify=False)
-        # 增加一步检查，确保返回的是有效的 YAML
-        data = yaml.safe_load(resp.text)
-        if isinstance(data, dict) and 'proxies' in data:
-            return data['proxies']
-    except Exception as e:
-        print(f"跳过失效源 {url}: {e}")
-    return proxies
 
-def merge_and_filter():
-    all_raw_proxies = []
-    seen_addr = set()
-    
-    # 1. 抓取并去重 (基于 IP:Port)
-    for url in urls:
-        raw_list = process_url(url)
-        if not raw_list: continue
-        for p in raw_list:
-            addr = f"{p.get('server')}:{p.get('port')}"
-            if addr not in seen_addr:
-                seen_addr.add(addr)
-                all_raw_proxies.append(p)
+def filter_proxies(proxies):
+    print("等待 Clash 启动...")
+    time.sleep(5)
 
-    print(f"抓取完成，唯一节点: {len(all_raw_proxies)}。开始多线程检测...")
+    names = [p["name"] for p in proxies]
 
-    # 2. 多线程检测
-    final_proxies = []
-    # max_workers 建议在 50-100 之间，Action 的 CPU 足以应付
-    with concurrent.futures.ThreadPoolExecutor(max_workers=60) as executor:
-        future_to_proxy = {executor.submit(is_alive, p): p for p in all_raw_proxies}
-        
-        # 给重名节点加编号，防止 Clash 报错
-        name_counter = 1
-        for future in concurrent.futures.as_completed(future_to_proxy):
-            proxy = future_to_proxy[future]
-            if future.result():
-                # 强制重命名，确保唯一性
-                proxy['name'] = f"NODE-{name_counter:03d}"
-                final_proxies.append(proxy)
-                name_counter += 1
+    good = []
+    with ThreadPoolExecutor(max_workers=20) as ex:
+        results = ex.map(test_delay, names)
 
-    # 3. 写入文件
-    output = {"proxies": final_proxies}
-    with open("all.yaml", "w", encoding="utf-8") as f:
-        # default_flow_style=False 保证生成的是标准的 YAML 列表格式
-        yaml.dump(output, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
-    
-    print(f"处理结束！可用节点: {len(final_proxies)} / {len(all_raw_proxies)}")
+    good_names = set(filter(None, results))
+
+    for p in proxies:
+        if p["name"] in good_names:
+            good.append(p)
+
+    print(f"可用节点: {len(good)}")
+    return good
+
+
+def save_output(proxies):
+    with open("output/proxies.yaml", "w", encoding="utf-8") as f:
+        yaml.dump({"proxies": proxies}, f, allow_unicode=True)
+
+    config = yaml.safe_load(open("clash.yaml", encoding="utf-8"))
+    config["proxies"] = proxies
+    config["proxy-groups"][0]["proxies"] = [p["name"] for p in proxies]
+
+    with open("output/config.yaml", "w", encoding="utf-8") as f:
+        yaml.dump(config, f, allow_unicode=True)
+
 
 if __name__ == "__main__":
-    merge_and_filter()
+    proxies = fetch_proxies()
+
+    save_for_clash(proxies)
+
+    clash = start_clash()
+
+    good = filter_proxies(proxies)
+
+    save_output(good)
+
+    clash.kill()
+
+    print("完成 ✅")
