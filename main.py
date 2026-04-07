@@ -25,10 +25,13 @@ URLS = [
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
-# ================= 核心过滤配置 =================
-# 仅保留地区过滤
-ALLOW_COUNTRIES = {"HK", "JP", "SG", "KR", "TW", "US", "GB", "DE"}
-TEST_URL = "https://www.google.com" # 目标修改为 Google
+# 地区映射表：确保名字包含 ACL4SSR 识别的关键词
+COUNTRY_NAMES = {
+    "HK": "香港", "JP": "日本", "SG": "新加坡", "KR": "韩国", 
+    "TW": "台湾", "US": "美国", "GB": "英国", "DE": "德国"
+}
+ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
+TEST_URL = "https://www.google.com"
 
 ip_cache = {}
 
@@ -42,22 +45,19 @@ def get_country(ip):
     except:
         return None
 
-def make_unique_name(name, used):
-    name = str(name).strip() or "Node"
-    if name not in used:
-        used.add(name)
-        return name
-    i = 1
-    while f"{name}_{i}" in used: i += 1
-    new_name = f"{name}_{i}"
-    used.add(new_name)
+def make_unique_name(country_code, index, used_names):
+    """
+    生成符合 ACL4SSR 正则匹配的名字
+    格式：香港 01, 日本 05 等
+    """
+    base_name = COUNTRY_NAMES.get(country_code, country_code)
+    new_name = f"{base_name} {index:02d}"
     return new_name
 
-# ================= 获取与初步筛选 =================
 def fetch_proxies():
     all_proxies = []
     seen_addr = set()
-    name_used = set()
+    country_counters = {c: 1 for c in ALLOW_COUNTRIES}
 
     for url in URLS:
         print(f"正在获取: {url}")
@@ -74,7 +74,6 @@ def fetch_proxies():
                 addr = f"{server}:{port}"
                 if addr in seen_addr: continue
 
-                # 1. 地区过滤
                 try:
                     ip = socket.gethostbyname(server)
                     country = get_country(ip)
@@ -84,9 +83,9 @@ def fetch_proxies():
                 if country not in ALLOW_COUNTRIES:
                     continue
 
-                # 2. 名字处理 (移除了协议和TCP检测，直接记录)
-                old_name = p.get("name") or f"{server}_{port}"
-                p["name"] = make_unique_name(f"{country}-{old_name}", name_used)
+                # 修改点 1: 重命名为 ACL4SSR 喜欢的格式，不带特殊字符
+                p["name"] = make_unique_name(country, country_counters[country], None)
+                country_counters[country] += 1
 
                 seen_addr.add(addr)
                 all_proxies.append(p)
@@ -94,23 +93,15 @@ def fetch_proxies():
         except Exception as e:
             print(f"获取失败: {url} -> {e}")
 
-    print(f"地区筛选完成，待测试节点数: {len(all_proxies)}")
+    print(f"初步筛选完成，待测试节点数: {len(all_proxies)}")
     return all_proxies
 
-# ================= 连通性测试 (Google) =================
 def test_google_access(name):
-    """
-    通过 Clash 外部控制 API 测试是否能访问 Google
-    """
     safe_name = urllib.parse.quote(name)
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-    
     try:
-        # 使用 Google 作为测试地址，超时设为 8 秒（Google 响应通常比 204 慢）
-        params = {"url": TEST_URL, "timeout": 8000}
-        r = requests.get(url, params=params, timeout=10)
-        
-        # 如果返回了有效 delay，说明 Google 握手成功
+        params = {"url": TEST_URL, "timeout": 5000} # 5秒超时足够了
+        r = requests.get(url, params=params, timeout=7)
         delay = r.json().get("delay", 0)
         if delay > 0:
             return (name, delay)
@@ -118,8 +109,8 @@ def test_google_access(name):
         pass
     return None
 
-# ================= 工具函数 =================
 def save_for_clash(proxies):
+    """供脚本内部测试使用的临时配置"""
     config = {
         "mode": "global",
         "port": 7890,
@@ -132,6 +123,9 @@ def save_for_clash(proxies):
         yaml.dump(config, f, allow_unicode=True)
 
 def start_clash():
+    # 确保 clash 有执行权限
+    if os.name != 'nt':
+        subprocess.run(["chmod", "+x", "./clash"])
     return subprocess.Popen(["./clash", "-f", "run.yaml"],
                             stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL)
@@ -147,7 +141,7 @@ def wait_clash():
 
 def filter_proxies(proxies):
     if not wait_clash():
-        print("错误: Clash 启动失败，请检查 ./clash 路径是否正确")
+        print("错误: Clash 启动失败")
         return []
 
     results = []
@@ -157,38 +151,34 @@ def filter_proxies(proxies):
             if r:
                 results.append(r)
 
-    # 按延迟排序
-    results.sort(key=lambda x: x[1])
-    valid_names = {r[0]: r[1] for r in results}
-
-    out = []
-    for p in proxies:
-        if p["name"] in valid_names:
-            p["name"] += f" | {valid_names[p['name']]}ms"
-            out.append(p)
+    # 仅保留测试通过的名字
+    valid_names = {r[0] for r in results}
+    
+    # 过滤列表，保持原名（不把延迟写进名字里！）
+    out = [p for p in proxies if p["name"] in valid_names]
     return out
 
 if __name__ == "__main__":
-    # 1. 抓取并按地区过滤
     raw = fetch_proxies()
     if not raw:
-        print("未找到符合地区条件的节点")
+        print("未找到符合条件的节点")
         exit()
 
-    # 2. 启动临时 Clash 进行真测
     save_for_clash(raw)
     clash_process = start_clash()
     
     try:
-        # 3. 运行 Google 访问测试
         good_proxies = filter_proxies(raw)
         
-        # 4. 保存结果
+        # 修改点 2: 规范化输出。SubConverter 只需要 proxies 这一层
         os.makedirs("output", exist_ok=True)
-        with open("output/proxies.yaml", "w", encoding="utf-8") as f:
-            yaml.dump({"proxies": good_proxies}, f, allow_unicode=True)
+        # 这种格式最利于订阅转换器解析
+        final_data = {"proxies": good_proxies}
         
-        print(f"测试结束。共 {len(good_proxies)} 个节点可访问 Google。")
-        print("结果已保存至: output/proxies.yaml")
+        with open("output/proxies.yaml", "w", encoding="utf-8") as f:
+            # 使用 sort_keys=False 保持国家顺序，不乱跳
+            yaml.dump(final_data, f, allow_unicode=True, sort_keys=False)
+        
+        print(f"成功筛选出 {len(good_proxies)} 个 Google 节点并保存。")
     finally:
         clash_process.terminate()
