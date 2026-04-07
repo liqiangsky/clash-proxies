@@ -111,9 +111,9 @@ def fetch_proxies():
             resp.encoding = 'utf-8' # 强制 utf-8
             text = resp.text
 
-            if "<html" in text.lower():
-                print(f"跳过（HTML页面）: {url}")
-                continue
+            #if "<html" in text.lower():
+             #   print(f"跳过（HTML页面）: {url}")
+              #  continue
 
             # 尝试标准 YAML 解析
             current_source_proxies = []
