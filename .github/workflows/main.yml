@@ -1,40 +1,36 @@
-name: Update Sub
+name: Build Proxy List
+
 on:
   schedule:
-    - cron: '0 */6 * * *' # 每6小时自动运行一次
-  workflow_dispatch:      # 允许手动触发
-
-# 关键：必须添加以下权限声明，否则 Push 会报 403 错误
-permissions:
-  contents: write
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
         with:
-          persist-credentials: true # 确保使用持久化凭据进行推送
+          python-version: "3.10"
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with: {python-version: '3.10'}
+      - run: pip install -r requirements.txt
 
-      - name: Run Merge
+      - name: 下载 Clash
         run: |
-          pip install requests pyyaml
-          # 确保你的脚本文件名是 update_proxies.py 
-          python update_proxies.py
+          wget https://github.com/Dreamacro/clash/releases/download/v1.18.0/clash-linux-amd64.gz
+          gunzip clash-linux-amd64.gz
+          chmod +x clash-linux-amd64
+          mv clash-linux-amd64 clash
 
-      - name: Push Changes
-        run: |
-          git config --local user.email "bot@github.com"
-          git config --local user.name "Bot"
-          git add all.yaml
-          # 检查是否有文件变动，有才提交，防止空提交报错
-          if git diff --staged --quiet; then
-            echo "没有发现节点变化，跳过推送。"
-          else
-            git commit -m "自动更新节点列表"
-            git push
-          fi
+      - name: 运行脚本
+        run: python update_proxies.py
+
+      - name: 上传结果
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output/
