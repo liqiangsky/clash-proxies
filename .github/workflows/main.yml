@@ -19,13 +19,12 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      # ✅ 修复：保证 clash 存在
-      - name: 下载 Clash
+      - name: 下载 Clash Core（稳定版）
         run: |
-          wget -O clash.gz https://github.com/Dreamacro/clash/releases/download/v1.18.0/clash-linux-amd64.gz
+          wget -O clash.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.19.20/mihomo-linux-amd64-v1-v1.19.20.gz
           gunzip clash.gz
           chmod +x clash
-          ls -l
+          ./clash -v
 
       - name: 运行脚本
         run: python main.py
