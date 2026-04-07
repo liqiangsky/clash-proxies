@@ -14,20 +14,20 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # 订阅地址列表
 URLS = [
-    #"https://165.154.105.225/clash/proxies",
-    #"https://pp.dcd.one/clash/proxies",
-    #"https://vc.majunfei.club:51/clash/proxies",
-    #"http://138.2.112.136:12580/clash/proxies",
-    #"http://tmac.eu.org:12580/clash/proxies",
-    #"http://ql.ethanyang.top:12580/clash/proxies",
-    #"https://open.tidnotes.top:2083/clash/proxies",
-    #"http://xqz0.vip:15580/clash/proxies",
-    #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
-    #"https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
+    "https://165.154.105.225/clash/proxies",
+    "https://pp.dcd.one/clash/proxies",
+    "https://vc.majunfei.club:51/clash/proxies",
+    "http://138.2.112.136:12580/clash/proxies",
+    "http://tmac.eu.org:12580/clash/proxies",
+    "http://ql.ethanyang.top:12580/clash/proxies",
+    "https://open.tidnotes.top:2083/clash/proxies",
+    "http://xqz0.vip:15580/clash/proxies",
+    "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
+    "https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
     "https://vahid.ehsandigik.ir/clash",
     #"https://dy.reiasu.jp",
     #"https://jd.zhujunlong.eu.org",
-    "https://proxy.525168.xyz",
+    #"https://proxy.525168.xyz",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
