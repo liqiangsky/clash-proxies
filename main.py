@@ -48,7 +48,7 @@ COUNTRY_NAMES = {
 }
 
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
-TEST_URL = "https://www.google.com"
+TEST_URL = "http://www.google.com/generate_204"
 MAX_DELAY = 2000  # 最大可接受延迟 (ms)
 
 # 线程池配置（激进提速版）
