@@ -49,7 +49,7 @@ COUNTRY_NAMES = {
 
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 TEST_URL = "https://www.google.com"
-MAX_DELAY = 1500  # 最大可接受延迟 (ms)
+MAX_DELAY = 2000  # 最大可接受延迟 (ms)
 
 # 线程池配置（激进提速版）
 FETCH_WORKERS = 10
