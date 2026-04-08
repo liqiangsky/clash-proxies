@@ -141,6 +141,12 @@ def fetch_proxies():
                     elif not isinstance(val, list):
                         # 如果是其他奇怪类型（如数字、None），直接删除确保不报错
                         p.pop("alpn")
+
+                # --- 删除所有空的配置项 ---
+                keys_to_check = ["http-opts", "h2-opts", "ws-opts", "grpc-opts"]
+                for k in keys_to_check:
+                    if k in p and (not p[k] or p[k] == {}):
+                        p.pop(k)
                 
                 # --- 辅助修复：强制端口为整数 ---
                 if "port" in p:
