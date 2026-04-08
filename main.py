@@ -188,13 +188,36 @@ def save_for_clash(proxies):
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
-def start_clash():
+#def start_clash():
     # 确保 clash 有执行权限
+#    if os.name != 'nt':
+#        subprocess.run(["chmod", "+x", "./clash"])
+#    return subprocess.Popen(["./clash", "-f", "run.yaml"],
+#                            stdout=subprocess.DEVNULL,
+#                            stderr=subprocess.DEVNULL)
+
+def start_clash():
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
-    return subprocess.Popen(["./clash", "-f", "run.yaml"],
-                            stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL)
+    
+    # 修改这里：捕获输出，方便在 Actions 日志里看到具体报错
+    try:
+        process = subprocess.Popen(
+            ["./clash", "-f", "run.yaml"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        # 打印前几行日志看看有没有报错
+        print("--- Clash 启动日志预览 ---")
+        for _ in range(5):
+            line = process.stdout.readline()
+            if line:
+                print(line.strip())
+        return process
+    except Exception as e:
+        print(f"❌ 无法执行 Clash 命令: {e}")
+        return None
 
 def wait_clash():
     for _ in range(30):
