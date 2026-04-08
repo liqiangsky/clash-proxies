@@ -1,36 +1,125 @@
 proxies:
+- name: 美国 01
+  server: 82.198.246.250
+  type: vmess
+  country: 🇬🇧GB
+  port: 180
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  network: tcp
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 美国 02
+  server: 82.198.246.46
+  type: vmess
+  country: 🇬🇧GB
+  port: 180
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  network: tcp
+  h2-opts: {}
+  skip-cert-verify: true
 - name: 日本 01
-  server: 3.112.150.142
-  port: 21413
+  server: 160.16.132.38
   type: trojan
+  country: 🇯🇵JP
+  port: 34818
   password: 187dda4498be9ac4f28db939d5940185
   sni: www.nintendogames.net
-  skip-cert-verify: false
+  skip-cert-verify: true
+  udp: true
+- name: 日本 02
+  server: 3.112.150.142
+  type: trojan
+  country: 🇯🇵JP
+  port: 21413
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
+- name: 日本 03
+  server: 160.16.132.38
+  type: trojan
+  country: 🇯🇵JP
+  port: 4674
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
+- name: 日本 04
+  server: 160.16.85.33
+  type: trojan
+  country: 🇯🇵JP
+  port: 4019
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
 - name: 日本 05
   server: 160.16.132.38
-  port: 34818
   type: trojan
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 日本 07
-  server: 160.16.132.38
-  port: 4674
-  type: trojan
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 日本 08
-  server: 160.16.132.38
+  country: 🇯🇵JP
   port: 29370
-  type: trojan
   password: 187dda4498be9ac4f28db939d5940185
   sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 日本 09
-  server: 160.16.85.33
-  port: 4019
+  skip-cert-verify: true
+  udp: true
+- name: 台湾 01
+  server: twy.cloud-services.top
   type: trojan
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
-  skip-cert-verify: false
+  country: 🇹🇼TW
+  port: 8443
+  password: c964f4a4-9dfa-4be3-a400-5544e8ed396c
+  sni: twy.cloud-services.top
+  skip-cert-verify: true
+  udp: true
+- name: 美国 04
+  server: 209.126.84.189
+  type: vmess
+  country: 🇺🇸US
+  port: 443
+  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: 209.126.84.189
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /vmessws
+    headers:
+      HOST: 209.126.84.189
+- name: 美国 05
+  server: 165.140.216.141
+  type: vmess
+  country: 🏁ZZ
+  port: 443
+  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
+  alterId: 0
+  cipher: auto
+  network: tcp
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 台湾 02
+  server: r3mrcg00129437x.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
+- name: 台湾 04
+  server: r3mrcg007117fb8.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
+- name: 台湾 05
+  server: r3mrcg007134n4g.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
