@@ -40,13 +40,7 @@ jobs:
       
           CUR_DIR=$(pwd)
       
-          cat <<EOF > my_config.ini
-          [General]
-          log_level=info
-          
-          [ManagedConfig]
-          config = target=clash&url=file://$CUR_DIR/output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false
-          EOF
+          printf "[General]\nlog_level=info\n\n[ManagedConfig]\nconfig1=target=clash&url=file://$CUR_DIR/output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false\n" > my_config.ini
       
           cd subconverter
           chmod +x subconverter
