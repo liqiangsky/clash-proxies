@@ -44,17 +44,17 @@ jobs:
           
           # 准备配置文件 (确保 cat 这里的缩进是靠左顶格的，或者使用下面的方式)
           cat <<EOF > subconverter/generate.ini
-[General]
-target=clash
-url=$PROXIES_PATH
-config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini
-emoji=true
-udp=true
-tfo=false
-scv=true
-fdn=false
-sort=false
-EOF
+          [General]
+          target=clash
+          url=$PROXIES_PATH
+          config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini
+          emoji=true
+          udp=true
+          tfo=false
+          scv=true
+          fdn=false
+          sort=false
+          EOF
           
           # 执行转换
           cd subconverter
