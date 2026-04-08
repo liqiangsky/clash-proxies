@@ -14,38 +14,38 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # 订阅地址列表
 URLS = [
-    "https://165.154.105.225/clash/proxies",
-    "https://pp.dcd.one/clash/proxies",
-    "http://138.2.112.136:12580/clash/proxies",
-    "http://tmac.eu.org:12580/clash/proxies",
-    "http://ql.ethanyang.top:12580/clash/proxies",
-    "https://open.tidnotes.top:2083/clash/proxies",
-    "http://xqz0.vip:15580/clash/proxies",
-    "https://vahid.ehsandigik.ir/clash",
+    #"https://165.154.105.225/clash/proxies",
+    #"https://pp.dcd.one/clash/proxies",
+    #"http://138.2.112.136:12580/clash/proxies",
+    #"http://tmac.eu.org:12580/clash/proxies",
+    #"http://ql.ethanyang.top:12580/clash/proxies",
+    #"https://open.tidnotes.top:2083/clash/proxies",
+    #"http://xqz0.vip:15580/clash/proxies",
+    #"https://vahid.ehsandigik.ir/clash",
     "https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
-    #"https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
-    #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
-    #"https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    #"https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
-    #"https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
-    #"https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
-    #"https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
-    #"https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
-    #"https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
-    #"https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
-    #"https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
-    #"https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
+    "https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
+    "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
+    "https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
+    "https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
+    "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
+    "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
+    "https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
+    "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
+    "https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
+    "https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
+    "https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
+    "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
 # 地区映射表
 COUNTRY_NAMES = {
-    "HK": "香港", "JP": "日本", "SG": "新加坡", "KR": "韩国",
-    "TW": "台湾", "US": "美国", "GB": "英国", "DE": "德国",
-    "FR": "法国", "NL": "荷兰", "RU": "俄罗斯", "IT": "意大利",
-    "CA": "加拿大", "AU": "澳大利亚", "TR": "土耳其", "IN": "印度",
-    "TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
+    "HK": "香港", "JP": "日本", "KR": "韩国", "TW": "台湾", "US": "美国", 
+    #"GB": "英国", "DE": "德国", "SG": "新加坡",
+    #"FR": "法国", "NL": "荷兰", "RU": "俄罗斯", "IT": "意大利",
+    #"CA": "加拿大", "AU": "澳大利亚", "TR": "土耳其", "IN": "印度",
+    #"TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
 }
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 TEST_URL = "https://www.google.com"
