@@ -50,14 +50,13 @@ COUNTRY_NAMES = {
 
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 TEST_URL = "https://www.google.com"
-MAX_DELAY = 2000  # 最大可接受延迟 (ms)
-TEST_COUNT = 2    # 连通性测试次数（优化速度：5 次→2 次，提速约 2.5 倍）
+MAX_DELAY = 1500  # 最大可接受延迟 (ms)
 
-# 线程池大小配置（针对 GitHub Action 优化）
-FETCH_WORKERS = 10      # 获取订阅源并发数
-FETCH_TIMEOUT = 8       # 单个订阅源超时（秒）
-IP_WORKERS = 10         # IP 查询并发数（避免触发 ip-api.com 限流 45/min）
-TEST_WORKERS = 50       # 节点测试并发数（充分利用 Action 带宽）
+# 线程池配置（激进提速版）
+FETCH_WORKERS = 10
+FETCH_TIMEOUT = 8
+IP_WORKERS = 15       # 提高并发，接近 ip-api 45/min 限流边缘
+TEST_WORKERS = 80     # 充分利用 GitHub Action 带宽
 
 # 线程安全的 IP 缓存
 import threading
@@ -65,11 +64,9 @@ ip_cache = {}
 ip_cache_lock = threading.Lock()
 
 def get_country(ip):
-    """带线程锁和缓存的 IP 查询"""
     with ip_cache_lock:
         if ip in ip_cache:
             return ip_cache[ip]
-
     try:
         r = requests.get(f"http://ip-api.com/json/{ip}", timeout=3)
         code = r.json().get("countryCode")
@@ -80,12 +77,9 @@ def get_country(ip):
         return None
 
 def get_country_batch(ip_list, max_workers=IP_WORKERS):
-    """批量并发查询 IP 地理位置"""
     results = {}
-
     def query(ip):
         return (ip, get_country(ip))
-
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         for future in as_completed(ex.submit(query, ip) for ip in ip_list):
             try:
@@ -94,19 +88,15 @@ def get_country_batch(ip_list, max_workers=IP_WORKERS):
                     results[ip] = country
             except:
                 pass
-
     return results
 
 def make_unique_name(country_code, index):
-    """生成符合 ACL4SSR 正则匹配的名字"""
     base_name = COUNTRY_NAMES.get(country_code, country_code)
     return f"{base_name} {index:02d}"
 
 def manual_parse_proxies(text):
-    """手动暴力提取节点信息"""
     proxies = []
     pattern = re.compile(r'- name: (.*?)\n\s+server: (.*?)\n\s+port: (\d+)\n\s+type: vmess\n\s+uuid: (.*?)\n', re.S)
-
     matches = pattern.findall(text)
     for m in matches:
         try:
@@ -114,7 +104,6 @@ def manual_parse_proxies(text):
             search_range = text[text.find(name):text.find(name)+500]
             path_match = re.search(r'path: (.*?)\n', search_range)
             host_match = re.search(r'host: (.*?)\n', search_range)
-
             p = {
                 "name": name,
                 "server": m[1].strip(),
@@ -137,41 +126,34 @@ def manual_parse_proxies(text):
     return proxies
 
 def fetch_single_url(url):
-    """获取单个订阅源的节点"""
     print(f"正在获取：{url}")
     try:
         resp = requests.get(url, headers=HEADERS, timeout=FETCH_TIMEOUT, verify=False)
         resp.encoding = 'utf-8'
         text = resp.text
-
         if "<html" in text.lower():
             print(f"跳过（HTML 页面）: {url}")
             return []
-
         current_source_proxies = []
         try:
             data = yaml.safe_load(text)
             if data and "proxies" in data:
                 current_source_proxies = data["proxies"]
         except Exception as e:
-            print(f"⚠️ YAML 标准解析失败，启动暴力提取逻辑：{url}")
+            print(f"⚠️ YAML 解析失败，启动暴力提取：{url}")
             current_source_proxies = manual_parse_proxies(text)
-
         if not current_source_proxies:
             print(f"未能从源提取到任何节点：{url}")
             return []
-
         return current_source_proxies
     except Exception as e:
         print(f"获取失败：{url} -> {e}")
         return []
 
 def fetch_proxies():
-    """优化版：并发获取所有订阅源"""
     all_proxies = []
     seen_addr = set()
 
-    # 并发获取所有订阅源
     with ThreadPoolExecutor(max_workers=FETCH_WORKERS) as ex:
         futures = [ex.submit(fetch_single_url, url) for url in URLS]
         for future in as_completed(futures):
@@ -183,14 +165,13 @@ def fetch_proxies():
 
     print(f"获取完成，原始节点总数：{len(all_proxies)}")
 
-    # 清洗和去重
     cleaned_proxies = []
     country_counters = {c: 1 for c in ALLOW_COUNTRIES}
     server_to_resolve = []
     server_country_map = {}
 
     for p in all_proxies:
-        # 智能修复 ALPN 格式
+        # 清洗 ALPN 格式
         if "alpn" in p:
             val = p["alpn"]
             if isinstance(val, str):
@@ -231,7 +212,6 @@ def fetch_proxies():
 
         seen_addr.add(addr)
 
-        # 收集需要解析的 server
         if server not in server_country_map:
             server_to_resolve.append(server)
 
@@ -240,18 +220,14 @@ def fetch_proxies():
     print(f"清洗去重后：{len(cleaned_proxies)} 个节点")
     print(f"正在查询 {len(server_to_resolve)} 个 IP 的地理位置...")
 
-    # 批量并发查询 IP 地理位置
     server_country_map = get_country_batch(server_to_resolve, max_workers=IP_WORKERS)
 
-    # 根据国家过滤和重命名
     final_proxies = []
     for p in cleaned_proxies:
         server = p.get("server")
         country = server_country_map.get(server)
-
         if not country or country not in ALLOW_COUNTRIES:
             continue
-
         p["name"] = make_unique_name(country, country_counters[country])
         country_counters[country] += 1
         final_proxies.append(p)
@@ -260,29 +236,20 @@ def fetch_proxies():
     return final_proxies
 
 def test_google_access(name):
-    """测试单个节点 - 连续 5 次测试，计算平均延迟"""
+    """单次连通性测试 - 提速核心"""
     safe_name = urllib.parse.quote(name)
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-
-    delays = []
-    for _ in range(TEST_COUNT):
-        try:
-            params = {"url": TEST_URL, "timeout": 5000}
-            r = requests.get(url, params=params, timeout=7)
-            delay = r.json().get("delay", 0)
-            if delay > 0 and delay <= MAX_DELAY:
-                delays.append(delay)
-            else:
-                return None  # 某次失败或超限，直接淘汰
-        except:
-            return None
-
-    # 5 次都通过，返回平均延迟
-    avg_delay = sum(delays) // len(delays)
-    return (name, avg_delay)
+    try:
+        params = {"url": TEST_URL, "timeout": 5000}
+        r = requests.get(url, params=params, timeout=7)
+        delay = r.json().get("delay", 0)
+        if delay > 0 and delay <= MAX_DELAY:
+            return (name, delay)
+    except:
+        pass
+    return None
 
 def save_for_clash(proxies):
-    """供脚本内部测试使用的临时配置"""
     config = {
         "mixed-port": 7890,
         "allow-lan": False,
@@ -302,10 +269,8 @@ def save_for_clash(proxies):
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
 def start_clash():
-    """启动 Clash 内核"""
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
-
     try:
         process = subprocess.Popen(
             ["./clash", "-f", "run.yaml"],
@@ -318,7 +283,6 @@ def start_clash():
         return None
 
 def wait_clash():
-    """等待 Clash 启动"""
     for _ in range(30):
         try:
             socket.create_connection(("127.0.0.1", 9090), timeout=1)
@@ -328,7 +292,6 @@ def wait_clash():
     return False
 
 def filter_proxies(proxies):
-    """优化版：并发测试节点延迟"""
     if not wait_clash():
         print("错误：Clash 启动失败")
         return []
