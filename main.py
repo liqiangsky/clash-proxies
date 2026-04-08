@@ -143,10 +143,19 @@ def fetch_proxies():
                         p.pop("alpn")
 
                 # --- 删除所有空的配置项 ---
-                keys_to_check = ["http-opts", "h2-opts", "ws-opts", "grpc-opts"]
-                for k in keys_to_check:
-                    if k in p and (not p[k] or p[k] == {}):
-                        p.pop(k)
+                # --- 深度清理 ws-opts/grpc-opts ---
+                for opt_key in ["ws-opts", "grpc-opts", "http-opts"]:
+                    if opt_key in p:
+                        # 如果该选项下没有任何实际内容，直接删掉整个大项
+                        if not p[opt_key] or not isinstance(p[opt_key], dict):
+                            p.pop(opt_key)
+                        else:
+                            # 清理选项内部的空 headers
+                            if "headers" in p[opt_key] and not p[opt_key]["headers"]:
+                                p[opt_key].pop("headers")
+                            # 如果清理完 headers 后这个选项变空了，也删掉
+                            if not p[opt_key]:
+                                p.pop(opt_key)
                 
                 # --- 辅助修复：强制端口为整数 ---
                 if "port" in p:
