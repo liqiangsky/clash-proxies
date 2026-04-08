@@ -34,6 +34,9 @@ jobs:
       - name: 生成完整配置
         run: |
           mkdir -p output
+
+          # 去掉 !!int, !!bool 和键值上的引号，使其变成最基础的 YAML
+          sed -i 's/!!int //g; s/!!bool //g; s/"//g' output/proxies.yaml
           
           # 下载并解压 subconverter
           wget -qO subconverter.tar.gz https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
