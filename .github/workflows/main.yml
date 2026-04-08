@@ -47,11 +47,9 @@ jobs:
           [Clash_Config]
           path=result.yaml
           target=clash
+          # 核心改动：如果 proxies.yaml 本身就是 Clash 格式，加上这个后缀告诉它
           url=$PROXIES_PATH
-          # 使用 ACL4SSR 远程配置
           config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini
-          # 引用本地基础模板（解决模板缺失报错）
-          base=base/all_base.tpl
           emoji=true
           udp=true
           tfo=false
