@@ -236,10 +236,6 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
 
 def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
     """第一轮：快速筛选，宽松条件 - 分批测试避免 Clash 过载"""
-    if not wait_clash():
-        print("错误：Clash 启动失败")
-        return []
-
     results = []
     total = len(proxies)
     batches = (total + batch_size - 1) // batch_size
@@ -255,12 +251,9 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
         # 为当前批次生成精简配置
         save_batch_for_clash(all_proxies_dict, batch)
 
-        # 重启 Clash 加载新配置
-        print("重启 Clash 加载配置...")
+        # 启动 Clash 加载新配置
+        print("启动 Clash...")
         global clash_process
-        if clash_process:
-            clash_process.terminate()
-            time.sleep(2)
         clash_process = start_clash()
         if not wait_clash():
             print("Clash 启动失败")
@@ -279,6 +272,11 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
 
         results.extend(batch_results)
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
+
+        # 测试完当前批次后关闭 Clash
+        if clash_process:
+            clash_process.terminate()
+            time.sleep(1)
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -302,12 +300,9 @@ def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
         # 为当前批次生成精简配置
         save_batch_for_clash(all_proxies_dict, batch)
 
-        # 重启 Clash 加载新配置
-        print("重启 Clash 加载配置...")
+        # 启动 Clash 加载新配置
+        print("启动 Clash...")
         global clash_process
-        if clash_process:
-            clash_process.terminate()
-            time.sleep(2)
         clash_process = start_clash()
         if not wait_clash():
             print("Clash 启动失败")
@@ -326,6 +321,11 @@ def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
 
         results.extend(batch_results)
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
+
+        # 测试完当前批次后关闭 Clash
+        if clash_process:
+            clash_process.terminate()
+            time.sleep(1)
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -381,6 +381,10 @@ def save_batch_for_clash(all_proxies_dict, batch):
     batch_proxies = [all_proxies_dict[name] for name in batch_names if name in all_proxies_dict]
     save_for_clash(batch_proxies)
 
+    # 打印配置信息
+    file_size = os.path.getsize("run.yaml") / 1024
+    print(f"已生成 run.yaml，{len(batch_proxies)} 个节点，大小：{file_size:.1f} KB")
+
 def start_clash():
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
@@ -396,12 +400,18 @@ def start_clash():
         return None
 
 def wait_clash():
-    for _ in range(30):
+    """等待 Clash 启动，最多等待 60 秒"""
+    print("等待 Clash 启动...")
+    for i in range(60):
         try:
             socket.create_connection(("127.0.0.1", 9090), timeout=1)
+            print(f"Clash 启动成功，耗时 {i+1} 秒")
             return True
         except:
+            if (i + 1) % 10 == 0:
+                print(f"已等待 {i+1} 秒...")
             time.sleep(1)
+    print("Clash 启动超时")
     return False
 
 if __name__ == "__main__":
