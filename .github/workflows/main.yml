@@ -33,22 +33,23 @@ jobs:
       # --- 新增步骤：将 proxies.yaml 转换为带 ACL4SSR 规则的 config.yaml ---
       - name: 生成完整配置
         run: |
-          # 1. 下载并解压 Subconverter 二进制
+          # 1. 下载并解压
           wget -qO subconverter.tar.gz https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
           tar -xzf subconverter.tar.gz
           
-          # 2. 创建一个本地 generate.ini 告诉 subconverter 如何转换
-          # url 为本地生成的路径，config 为你指定的 ACL4SSR 远程配置
-          cat <<EOF > generate.ini
+          # 2. 创建 generate.ini (注意：这里要顶格写，不要有缩进)
+          cat <<EOF > my_config.ini
           [General]
           [ManagedConfig]
           output/config.yaml = target=clash&url=output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false
           EOF
+
+          # 3. 运行转换，明确指定使用 my_config.ini
+          # 使用 -f 参数指定配置文件路径
+          ./subconverter/subconverter -g -f my_config.ini
           
-          # 3. 运行转换程序 (-g 模式不需要后台启动服务)
-          ./subconverter/subconverter -g
-          
-          # 4. 检查文件是否生成成功（用于日志调试）
+          # 4. 确认结果
+          echo "--- 检查 output 目录内容 ---"
           ls -lh output/
 
       # ✅ 发布到仓库（生成订阅链接）
