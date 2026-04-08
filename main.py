@@ -215,7 +215,7 @@ def save_for_clash(proxies):
         "rules": ["MATCH,test"]
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_style='"')
 
 #def start_clash():
     # 确保 clash 有执行权限
@@ -300,7 +300,7 @@ if __name__ == "__main__":
 
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
             # 使用 sort_keys=False 保持国家顺序，不乱跳
-            yaml.dump(final_data, f, allow_unicode=True, sort_keys=False)
+            yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_style='"')
 
         print(f"成功筛选出 {len(good_proxies)} 个 Google 节点并保存。")
     finally:
