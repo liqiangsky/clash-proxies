@@ -46,16 +46,17 @@ COUNTRY_NAMES = {
     #"TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
 }
 
+
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 TEST_URL = "https://gemini.google.com"
-#TEST_URL = "http://www.google.com/generate_204"
-MAX_DELAY = 2000  # 最大可接受延迟 (ms)
+MAX_DELAY_ROUND1 = 3000  # 第一轮最大延迟 (ms) - 较宽松
+MAX_DELAY_ROUND2 = 2000  # 第二轮最大延迟 (ms) - 更严格
 
-# 线程池配置（激进提速版）
+# 线程池配置
 FETCH_WORKERS = 10
 FETCH_TIMEOUT = 8
-IP_WORKERS = 15       # 提高并发，接近 ip-api 45/min 限流边缘
-TEST_WORKERS = 80     # 充分利用 GitHub Action 带宽
+IP_WORKERS = 15
+TEST_WORKERS = 80
 
 # 线程安全的 IP 缓存
 import threading
@@ -149,7 +150,47 @@ def fetch_single_url(url):
         print(f"获取失败：{url} -> {e}")
         return []
 
+def clean_proxy(p):
+    """清洗单个节点配置"""
+    # 清洗 ALPN 格式
+    if "alpn" in p:
+        val = p["alpn"]
+        if isinstance(val, str):
+            p["alpn"] = [x.strip() for x in val.split(',') if x.strip()]
+        elif not isinstance(val, list):
+            p.pop("alpn")
+
+    # 深度清理空配置项
+    for opt_key in ["ws-opts", "grpc-opts", "http-opts"]:
+        if opt_key in p:
+            if not p[opt_key] or not isinstance(p[opt_key], dict):
+                p.pop(opt_key)
+            else:
+                if "headers" in p[opt_key] and not p[opt_key]["headers"]:
+                    p[opt_key].pop("headers")
+                if not p[opt_key]:
+                    p.pop(opt_key)
+
+    # 强制端口为整数
+    if "port" in p:
+        try:
+            p["port"] = int(p["port"])
+        except:
+            return None
+
+    # 清理无意义字段
+    for useless_key in ["fp", "pbk", "headerType", "sid"]:
+        p.pop(useless_key, None)
+
+    server = p.get("server")
+    port = p.get("port")
+    if not server or not port:
+        return None
+
+    return p
+
 def fetch_proxies():
+    """第一步：获取并清洗节点（不查 IP）"""
     all_proxies = []
     seen_addr = set()
 
@@ -164,65 +205,97 @@ def fetch_proxies():
 
     print(f"获取完成，原始节点总数：{len(all_proxies)}")
 
+    # 清洗 + 去重
     cleaned_proxies = []
-    country_counters = {c: 1 for c in ALLOW_COUNTRIES}
-    server_to_resolve = []
-    server_country_map = {}
-
     for p in all_proxies:
-        # 清洗 ALPN 格式
-        if "alpn" in p:
-            val = p["alpn"]
-            if isinstance(val, str):
-                p["alpn"] = [x.strip() for x in val.split(',') if x.strip()]
-            elif not isinstance(val, list):
-                p.pop("alpn")
-
-        # 深度清理空配置项
-        for opt_key in ["ws-opts", "grpc-opts", "http-opts"]:
-            if opt_key in p:
-                if not p[opt_key] or not isinstance(p[opt_key], dict):
-                    p.pop(opt_key)
-                else:
-                    if "headers" in p[opt_key] and not p[opt_key]["headers"]:
-                        p[opt_key].pop("headers")
-                    if not p[opt_key]:
-                        p.pop(opt_key)
-
-        # 强制端口为整数
-        if "port" in p:
-            try:
-                p["port"] = int(p["port"])
-            except:
-                continue
-
-        # 清理无意义字段
-        for useless_key in ["fp", "pbk", "headerType", "sid"]:
-            p.pop(useless_key, None)
-
-        server = p.get("server")
-        port = p.get("port")
-        if not server or not port:
+        p = clean_proxy(p)
+        if not p:
             continue
-
-        addr = f"{server}:{port}"
+        addr = f"{p['server']}:{p['port']}"
         if addr in seen_addr:
             continue
-
         seen_addr.add(addr)
-
-        if server not in server_country_map:
-            server_to_resolve.append(server)
-
         cleaned_proxies.append(p)
 
-    print(f"清洗去重后：{len(cleaned_proxies)} 个节点")
-    print(f"正在查询 {len(server_to_resolve)} 个 IP 的地理位置...")
+    print(f"清洗去重后：{len(cleaned_proxies)} 个节点（待连通性测试）")
+    return cleaned_proxies
 
+def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
+    """单次连通性测试"""
+    safe_name = urllib.parse.quote(name)
+    url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
+    try:
+        params = {"url": TEST_URL, "timeout": 5000}
+        r = requests.get(url, params=params, timeout=7)
+        delay = r.json().get("delay", 0)
+        if delay > 0 and delay <= max_delay:
+            return (name, delay)
+    except:
+        pass
+    return None
+
+def filter_proxies_round1(proxies):
+    """第一轮：快速筛选，宽松条件"""
+    if not wait_clash():
+        print("错误：Clash 启动失败")
+        return []
+
+    results = []
+    print("第一轮筛选（快速测试）...")
+
+    with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
+        futures = {ex.submit(test_google_access, p["name"]): p["name"] for p in proxies}
+        for i, future in enumerate(as_completed(futures), 1):
+            try:
+                r = future.result()
+                if r:
+                    results.append(r)
+                if i % 50 == 0 or i == len(proxies):
+                    print(f"已测试 {i}/{len(proxies)} 个节点，通过：{len(results)}")
+            except:
+                pass
+
+    valid_names = {r[0] for r in results}
+    out = [p for p in proxies if p["name"] in valid_names]
+
+    print(f"第一轮通过：{len(out)} 个节点")
+    return out
+
+def filter_proxies_round2(proxies):
+    """第二轮：严格筛选，确保质量"""
+    results = []
+    print("第二轮筛选（严格测试）...")
+
+    with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
+        futures = {ex.submit(test_google_access, p["name"], MAX_DELAY_ROUND2): p["name"] for p in proxies}
+        for i, future in enumerate(as_completed(futures), 1):
+            try:
+                r = future.result()
+                if r:
+                    results.append(r)
+                if i % 20 == 0 or i == len(proxies):
+                    print(f"已测试 {i}/{len(proxies)} 个节点，通过：{len(results)}")
+            except:
+                pass
+
+    valid_names = {r[0] for r in results}
+    out = [p for p in proxies if p["name"] in valid_names]
+
+    print(f"第二轮通过：{len(out)} 个节点")
+    return out
+
+def resolve_countries(proxies):
+    """第三步：只查询通过测试的节点 IP"""
+    if not proxies:
+        return []
+
+    server_to_resolve = list(set(p["server"] for p in proxies))
+    print(f"正在查询 {len(server_to_resolve)} 个通过节点的 IP 地理位置...")
     server_country_map = get_country_batch(server_to_resolve, max_workers=IP_WORKERS)
 
+    country_counters = {c: 1 for c in ALLOW_COUNTRIES}
     final_proxies = []
-    for p in cleaned_proxies:
+    for p in proxies:
         server = p.get("server")
         country = server_country_map.get(server)
         if not country or country not in ALLOW_COUNTRIES:
@@ -231,22 +304,8 @@ def fetch_proxies():
         country_counters[country] += 1
         final_proxies.append(p)
 
-    print(f"筛选后剩余：{len(final_proxies)} 个节点（待测试）")
+    print(f"地区筛选后剩余：{len(final_proxies)} 个节点")
     return final_proxies
-
-def test_google_access(name):
-    """单次连通性测试 - 提速核心"""
-    safe_name = urllib.parse.quote(name)
-    url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-    try:
-        params = {"url": TEST_URL, "timeout": 5000}
-        r = requests.get(url, params=params, timeout=7)
-        delay = r.json().get("delay", 0)
-        if delay > 0 and delay <= MAX_DELAY:
-            return (name, delay)
-    except:
-        pass
-    return None
 
 def save_for_clash(proxies):
     config = {
@@ -290,43 +349,37 @@ def wait_clash():
             time.sleep(1)
     return False
 
-def filter_proxies(proxies):
-    if not wait_clash():
-        print("错误：Clash 启动失败")
-        return []
-
-    results = []
-    print("正在进行 Google 连通性测试...")
-
-    with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-        futures = {ex.submit(test_google_access, p["name"]): p["name"] for p in proxies}
-        for i, future in enumerate(as_completed(futures), 1):
-            try:
-                r = future.result()
-                if r:
-                    results.append(r)
-                if i % 50 == 0 or i == len(proxies):
-                    print(f"已测试 {i}/{len(proxies)} 个节点，通过：{len(results)}")
-            except:
-                pass
-
-    valid_names = {r[0] for r in results}
-    out = [p for p in proxies if p["name"] in valid_names]
-
-    print(f"测试完成，通过：{len(out)} 个节点")
-    return out
-
 if __name__ == "__main__":
+    # 第一步：获取并清洗节点
     raw = fetch_proxies()
     if not raw:
         print("未找到符合条件的节点")
         exit()
 
+    # 临时命名用于测试
+    for i, p in enumerate(raw):
+        p["name"] = f"temp_{i}"
+
     save_for_clash(raw)
     clash_process = start_clash()
 
     try:
-        good_proxies = filter_proxies(raw)
+        # 第二步：第一轮快速筛选（宽松条件）
+        passed_round1 = filter_proxies_round1(raw)
+
+        if not passed_round1:
+            print("第一轮筛选无节点通过，退出")
+            exit()
+
+        # 第三步：第二轮严格筛选（更严格条件）
+        passed_round2 = filter_proxies_round2(passed_round1)
+
+        if not passed_round2:
+            print("第二轮筛选无节点通过，退出")
+            exit()
+
+        # 第四步：只查询通过两轮测试的节点 IP
+        good_proxies = resolve_countries(passed_round2)
 
         os.makedirs("output", exist_ok=True)
         final_data = {"proxies": good_proxies}
@@ -334,7 +387,7 @@ if __name__ == "__main__":
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
             yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-        print(f"成功筛选出 {len(good_proxies)} 个 Google 节点并保存。")
+        print(f"成功筛选出 {len(good_proxies)} 个节点并保存。")
     finally:
         if clash_process:
             clash_process.terminate()
