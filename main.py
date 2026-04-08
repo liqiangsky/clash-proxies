@@ -132,13 +132,27 @@ def fetch_proxies():
 
             for p in current_source_proxies:
                 # --- 新增清洗逻辑 ---
+                # --- 智能修复 ALPN 格式 ---
                 if "alpn" in p:
-                    if isinstance(p["alpn"], str):
-                        # 如果是字符串，转成列表
-                        p["alpn"] = [p["alpn"]]
-                    elif not isinstance(p["alpn"], list):
-                        # 如果是其他奇怪格式，直接删除该字段，让 Clash 使用默认值
-                        del p["alpn"]
+                    val = p["alpn"]
+                    if isinstance(val, str):
+                        # 如果是字符串 "h2,http/1.1"，拆分为列表 ["h2", "http/1.1"]
+                        p["alpn"] = [x.strip() for x in val.split(',') if x.strip()]
+                    elif not isinstance(val, list):
+                        # 如果是其他奇怪类型（如数字、None），直接删除确保不报错
+                        p.pop("alpn")
+                
+                # --- 辅助修复：强制端口为整数 ---
+                if "port" in p:
+                    try:
+                        p["port"] = int(p["port"])
+                    except:
+                        continue # 端口非法直接舍弃该节点
+
+                # --- 辅助修复：清理无意义的空字段 ---
+                # 很多乱抓的节点会带这些字段，导致特定版本的 Clash 解析失败
+                for useless_key in ["fp", "pbk", "headerType", "sid"]:
+                    p.pop(useless_key, None)
                 # -------------------
                 server = p.get("server")
                 port = p.get("port")
