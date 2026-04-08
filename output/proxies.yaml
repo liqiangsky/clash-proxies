@@ -1,12 +1,36 @@
 proxies:
-- alterId: 2
-  cipher: auto
-  name: 香港 01
-  port: 30807
-  server: v10.hdacd.com
+- name: 日本 01
+  server: 3.112.150.142
+  port: 21413
+  type: trojan
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
   skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alpn:
-  - h2
+- name: 日本 05
+  server: 160.16.132.38
+  port: 34818
+  type: trojan
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+- name: 日本 07
+  server: 160.16.132.38
+  port: 4674
+  type: trojan
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+- name: 日本 08
+  server: 160.16.132.38
+  port: 29370
+  type: trojan
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+- name: 日本 09
+  server: 160.16.85.33
+  port: 4019
+  type: trojan
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: false
