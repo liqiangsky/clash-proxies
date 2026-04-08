@@ -1,103 +1,104 @@
-"proxies":
-- "client-fingerprint": "qq"
-  "encryption": "none"
-  "flow": "xtls-rprx-vision"
-  "http-opts":
-    "path":
-    - "/"
-  "name": "德国 01"
-  "network": "tcp"
-  "port": !!int "443"
-  "reality-opts":
-    "public-key": "NLARt-womsWqopLrSLNpfp3bHXy3Pg08_LbFUQPhpjU"
-    "short-id": "0f4dacf82203e11f"
-  "server": "de.api-yandex.net"
-  "servername": "de.api-yandex.net"
-  "tls": !!bool "true"
-  "type": "vless"
-  "udp": !!bool "true"
-  "uuid": "8b65efc9-03a3-4758-8a2e-4b66a1e75062"
-  "xudp": !!bool "true"
-- "cipher": "none"
-  "name": "美国 01"
-  "password": "3e96ef7d-8637-42c2-ac73-75182196e755"
-  "plugin": "v2ray-plugin"
-  "plugin-opts":
-    "host": "mfvpn.fuchen.indevs.in"
-    "mode": "websocket"
-    "mux": !!bool "false"
-    "path": "3e96ef7d-8637-42c2-ac73-75182196e755/?ed=2560"
-    "tls": !!bool "true"
-  "port": !!int "443"
-  "server": "199.181.197.38"
-  "type": "ss"
-  "udp": !!bool "true"
-- "alpn":
-  - ""
-  "alterId": "0"
-  "cipher": "auto"
-  "name": "美国 02"
-  "network": "tcp"
-  "port": !!int "180"
-  "server": "82.198.246.250"
-  "skip-cert-verify": !!bool "false"
-  "tls": !!bool "false"
-  "type": "vmess"
-  "udp": !!bool "true"
-  "uuid": "d13fc2f5-3e05-4795-81eb-44143a09e552"
-  "xudp": !!bool "true"
-- "name": "日本 03"
-  "network": "tcp"
-  "password": "187dda4498be9ac4f28db939d5940185"
-  "port": !!int "21413"
-  "server": "3.112.150.142"
-  "skip-cert-verify": !!bool "false"
-  "sni": "www.nintendogames.net"
-  "type": "trojan"
-- "name": "英国 01"
-  "network": "ws"
-  "port": !!int "7443"
-  "server": "222.167.202.36"
-  "servername": "2026.hhhhh.eu.org"
-  "tls": !!bool "true"
-  "type": "vless"
-  "uuid": "06ef598c-1555-4887-b3f9-08214a2f6792"
-  "ws-opts":
-    "headers":
-      "Host": "2026.hhhhh.eu.org"
-    "path": "/222.167.202.36:7443"
-- "cipher": "chacha20-ietf"
-  "name": "新加坡 01"
-  "password": "asd123456"
-  "port": !!int "8388"
-  "server": "103.36.91.32"
-  "type": "ss"
-- "client-fingerprint": "chrome"
-  "encryption": "none"
-  "flow": "xtls-rprx-vision"
-  "http-opts":
-    "path":
-    - "/"
-  "name": "德国 03"
-  "network": "tcp"
-  "port": !!int "8443"
-  "reality-opts":
-    "public-key": "FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc"
-    "short-id": "cafe01234567"
-  "server": "81.19.141.96"
-  "servername": "www.apple.com"
-  "tls": !!bool "true"
-  "type": "vless"
-  "udp": !!bool "true"
-  "uuid": "ca05976a-2dea-11f1-9ec5-baabcd4be2cd"
-  "xudp": !!bool "true"
-- "name": "美国 05"
-  "obfs": "salamander"
-  "obfs-password": "OrT7yQQIMqcvKdet"
-  "password": "48b36b6a-eaa6-4843-9231-0bb8b38b5da5"
-  "port": !!int "443"
-  "server": "usa-hy2.onetaplink.app"
-  "skip-cert-verify": !!bool "false"
-  "sni": "hy2-usa.onetaplink.app"
-  "tfo": !!bool "false"
-  "type": "hysteria2"
+proxies:
+- client-fingerprint: qq
+  encryption: none
+  flow: xtls-rprx-vision
+  http-opts:
+    path:
+    - /
+  name: 德国 01
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: NLARt-womsWqopLrSLNpfp3bHXy3Pg08_LbFUQPhpjU
+    short-id: 0f4dacf82203e11f
+  server: de.api-yandex.net
+  servername: de.api-yandex.net
+  tls: true
+  type: vless
+  udp: true
+  uuid: 8b65efc9-03a3-4758-8a2e-4b66a1e75062
+  xudp: true
+- cipher: none
+  name: 美国 01
+  password: 3e96ef7d-8637-42c2-ac73-75182196e755
+  plugin: v2ray-plugin
+  plugin-opts:
+    host: mfvpn.fuchen.indevs.in
+    mode: websocket
+    mux: false
+    path: 3e96ef7d-8637-42c2-ac73-75182196e755/?ed=2560
+    tls: true
+  port: 443
+  server: 199.181.197.38
+  type: ss
+  udp: true
+- name: 日本 03
+  network: tcp
+  password: 187dda4498be9ac4f28db939d5940185
+  port: 21413
+  server: 3.112.150.142
+  skip-cert-verify: false
+  sni: www.nintendogames.net
+  type: trojan
+- name: 英国 01
+  network: ws
+  port: 7443
+  server: 222.167.202.36
+  servername: 2026.hhhhh.eu.org
+  tls: true
+  type: vless
+  uuid: 06ef598c-1555-4887-b3f9-08214a2f6792
+  ws-opts:
+    headers:
+      Host: 2026.hhhhh.eu.org
+    path: /222.167.202.36:7443
+- cipher: chacha20-ietf
+  name: 新加坡 01
+  password: asd123456
+  port: 8388
+  server: 103.36.91.32
+  type: ss
+- client-fingerprint: chrome
+  encryption: none
+  flow: xtls-rprx-vision
+  http-opts:
+    path:
+    - /
+  name: 德国 03
+  network: tcp
+  port: 8443
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: cafe01234567
+  server: 81.19.141.96
+  servername: www.apple.com
+  tls: true
+  type: vless
+  udp: true
+  uuid: ca05976a-2dea-11f1-9ec5-baabcd4be2cd
+  xudp: true
+- name: 美国 05
+  obfs: salamander
+  obfs-password: OrT7yQQIMqcvKdet
+  password: 48b36b6a-eaa6-4843-9231-0bb8b38b5da5
+  port: 443
+  server: usa-hy2.onetaplink.app
+  skip-cert-verify: false
+  sni: hy2-usa.onetaplink.app
+  tfo: false
+  type: hysteria2
+- client-fingerprint: chrome
+  encryption: none
+  flow: xtls-rprx-vision
+  name: 美国 06
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: gwuAehnMX6e-n1fxIenfjx43j3qXXi7Cb4wfnW5VyBQ
+    short-id: f04729f65b9ea261
+  server: us1.samovargate.com
+  servername: www.microsoft.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: 82b5b465-3307-4a25-acef-abd1649bbedf
