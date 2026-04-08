@@ -23,7 +23,7 @@ URLS = [
     "https://open.tidnotes.top:2083/clash/proxies",
     "http://xqz0.vip:15580/clash/proxies",
     "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
-    "https://ghfast.top/https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
+    "https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
     "https://vahid.ehsandigik.ir/clash",
     #"https://dy.reiasu.jp",
     #"https://jd.zhujunlong.eu.org",
@@ -254,6 +254,11 @@ if __name__ == "__main__":
         exit()
 
     save_for_clash(raw)
+    # 增加这一行，调试完可以删掉
+    with open("run.yaml", "r", encoding="utf-8") as f:
+        print("--- 生成的 run.yaml 内容 ---")
+        print(f.read())
+        print("--- 结束 ---")
     clash_process = start_clash()
 
     try:
