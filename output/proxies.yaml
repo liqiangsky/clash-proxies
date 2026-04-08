@@ -1,5 +1,69 @@
 proxies:
-- name: 日本 01
+- name: 香港 02
+  server: v12.hdacd.com
+  port: 30812
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  udp: true
+- name: 香港 03
+  server: 54.46.72.234
+  port: 8025
+  type: trojan
+  password: trojan
+  sni: jflsjlaf.pages.dev
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jflsjlaf.pages.dev
+  udp: true
+- name: 美国 06
+  server: 64.23.143.23
+  port: 34045
+  type: vless
+  uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
+  tls: true
+  skip-cert-verify: false
+  client-fingerprint: chrome
+  servername: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
+  reality-opts:
+    public-key: cDaDzPr3PlS3NM8lreHZbdo-Mhqz8vMBzMSkHXhGIUA
+    short-id: e8ab71d0
+  udp: true
+- name: 美国 07
+  server: 199.181.197.38
+  port: 443
+  type: ss
+  cipher: none
+  password: 3e96ef7d-8637-42c2-ac73-75182196e755
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: mfvpn.fuchen.indevs.in
+    path: 3e96ef7d-8637-42c2-ac73-75182196e755/?ed=2560
+    tls: true
+    mux: false
+  udp: true
+- alpn:
+  - ''
+  alterId: '0'
+  cipher: auto
+  name: 美国 08
+  network: tcp
+  port: 180
+  server: 82.198.246.250
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  udp: true
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  xudp: true
+- name: 日本 03
   network: tcp
   password: 187dda4498be9ac4f28db939d5940185
   port: 21413
@@ -7,7 +71,17 @@ proxies:
   skip-cert-verify: false
   sni: www.nintendogames.net
   type: trojan
-- name: 日本 05
+- name: 美国 11
+  obfs: salamander
+  obfs-password: OrT7yQQIMqcvKdet
+  password: 48b36b6a-eaa6-4843-9231-0bb8b38b5da5
+  port: 443
+  server: usa-hy2.onetaplink.app
+  skip-cert-verify: false
+  sni: hy2-usa.onetaplink.app
+  tfo: false
+  type: hysteria2
+- name: 日本 04
   network: tcp
   password: 187dda4498be9ac4f28db939d5940185
   port: 34818
@@ -15,7 +89,7 @@ proxies:
   skip-cert-verify: false
   sni: www.nintendogames.net
   type: trojan
-- name: 日本 07
+- name: 日本 06
   network: tcp
   password: 187dda4498be9ac4f28db939d5940185
   port: 4674
@@ -23,7 +97,7 @@ proxies:
   skip-cert-verify: false
   sni: www.nintendogames.net
   type: trojan
-- name: 日本 08
+- name: 日本 07
   network: tcp
   password: 187dda4498be9ac4f28db939d5940185
   port: 29370
@@ -31,2139 +105,413 @@ proxies:
   skip-cert-verify: false
   sni: www.nintendogames.net
   type: trojan
-- name: 日本 09
-  network: tcp
-  password: 187dda4498be9ac4f28db939d5940185
-  port: 4019
-  server: 160.16.85.33
+- type: vless
+  name: 美国 14
+  server: 43.130.105.166
+  port: 65002
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
   skip-cert-verify: false
-  sni: www.nintendogames.net
-  type: trojan
-- name: 香港 04
   network: ws
-  password: trojan
-  port: 8025
-  server: 54.46.72.234
-  skip-cert-verify: true
-  sni: jflsjlaf.pages.dev
-  type: trojan
-  udp: true
   ws-opts:
     headers:
-      Host: jflsjlaf.pages.dev
+      Host: sni.111000.indevs.in
     path: /
-- name: 美国 01
-  server: 82.198.246.250
-  type: vmess
-  country: 🇬🇧GB
-  port: 180
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 02
-  server: 82.198.246.46
-  type: vmess
-  country: 🇬🇧GB
-  port: 180
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 台湾 01
-  server: fbxt0765gh0pielsss.ftisthebest.com
-  type: trojan
-  country: 🇭🇰HK
-  port: 56251
-  password: e4895ea3-7b4a-3f46-ba5a-44ac4a691635
-  sni: fbxt0765gh0pielsss.ftisthebest.com
-  skip-cert-verify: true
-  udp: true
-- name: 香港 05
-  server: v12.hdacd.com
-  type: vmess
-  country: 🇮🇷IR
-  port: 30812
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 0
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 05
-  server: 209.126.84.189
-  type: vmess
-  country: 🇺🇸US
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 94.72.127.55
+  port: 80
+  cipher: aes-256-gcm
+  password: wlJSF0fC8uqB5Gm5
+  name: 美国 15
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 66.94.125.178
   port: 443
-  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: 209.126.84.189
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /vmessws
-    headers:
-      HOST: 209.126.84.189
-- name: 美国 06
-  server: 165.140.216.141
-  type: vmess
-  country: 🏁ZZ
-  port: 443
-  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
-  alterId: 0
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 英国 01
-  server: 141.98.101.182
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 荷兰 02
-  server: 82.38.31.184
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 03
-  server: 82.38.31.99
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 04
-  server: 82.38.31.189
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 05
-  server: 82.38.31.62
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 06
-  server: 82.38.31.101
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 07
-  server: 82.38.31.194
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 08
-  server: 82.38.31.82
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 09
-  server: 82.38.31.199
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 10
-  server: 82.38.31.35
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 11
-  server: 82.38.31.208
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 12
-  server: 82.38.31.191
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 13
-  server: nl-4.tr202507.com
-  type: trojan
-  country: 🇳🇱NL
-  port: 443
-  password: uThbm8eGmXZ7GKqnWy
-  sni: nl-4.tr202507.com
-  skip-cert-verify: true
-  udp: true
-- name: 荷兰 14
-  server: nl-4.tr202512.com
-  type: trojan
-  country: 🇳🇱NL
-  port: 443
-  password: M08tvzYWtUEJNtbpHp
-  skip-cert-verify: true
-  udp: true
-- name: 台湾 03
-  server: r3mrcg007134n4g.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 台湾 04
-  server: r3mrcg007117fb8.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 德国 02
-  server: 38.60.250.107
-  type: ss
-  country: 🇺🇸US
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 美国 07
-  server: tinkered-pennies-puppies.freesocks.work
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: hbGrpfvNrJsUmKmPbR3iY2
-  cipher: chacha20-ietf-poly1305
-- name: 美国 08
-  server: 64.94.95.118
-  type: trojan
-  country: 🇺🇸US
-  port: 57142
-  password: kkzh2prsyr2ik47as615
-  skip-cert-verify: true
-  udp: true
-- name: 德国 03
-  server: 57.129.95.198
-  type: ss
-  country: 🇫🇷FR
-  port: 11201
-  password: d6b0973401858b29
-  cipher: chacha20-ietf-poly1305
-- name: 德国 04
-  server: 141.95.106.127
-  type: ss
-  country: 🇫🇷FR
-  port: 11201
-  password: 94aae0510188e8c5
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 15
-  server: 82.38.31.176
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 16
-  server: 82.38.31.210
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 17
-  server: 82.38.31.122
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 英国 02
-  server: 51.75.168.50
-  type: ss
-  country: 🇬🇧GB
-  port: 13030
-  password: 6c815bb84c781da5
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 18
-  server: 82.38.31.89
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 19
-  server: 82.38.31.61
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 20
-  server: 193.29.139.141
-  type: ss
-  country: 🇳🇱NL
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 加拿大 01
-  server: 188.114.98.0
-  type: trojan
-  country: 🇳🇱NL
-  port: 443
-  udp: true
-  password: humanity
-  sni: www.creationlong.org
-  ws-opts:
-    path: /assignment
-    headers:
-      Host: www.creationlong.org
-  network: ws
-- name: 美国 09
+  cipher: aes-256-gcm
+  password: 14CLBaFBqwqxBJy6
+  name: 美国 16
+- type: ss
+  skip-cert-verify: false
+  udp: false
   server: 94.72.127.58
-  type: ss
-  country: 🇺🇸US
-  port: 443
+  port: 80
+  cipher: aes-256-gcm
   password: jJHq807bQ7TM0yOh
-  cipher: aes-256-gcm
-- name: 美国 10
-  server: 154.38.176.7
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: nKeE2ZFWVaE4DyjR
-  cipher: aes-256-gcm
-- name: 美国 11
-  server: 94.72.127.55
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: wlJSF0fC8uqB5Gm5
-  cipher: aes-256-gcm
-- name: 美国 12
-  server: 94.72.127.55
-  type: ss
-  country: 🇺🇸US
+  name: 美国 17
+- type: vless
+  name: 美国 18
+  server: 8.35.211.62
+  port: 2083
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  servername: xqkxw.ccwu.cc
+- name: 美国 19
+  type: vless
+  server: 135.84.67.74
   port: 443
-  password: wlJSF0fC8uqB5Gm5
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 20
+  server: 152.53.80.40
+  port: 443
+  uuid: e6567a1e-260f-4b0e-8de3-e2e12f90e854
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: W-zf_ncm9sYALF5EqvUsxqTkYGdAw-tQczT2SqwVMGE
+    short-id: ff776ff77be48b88
+  network: tcp
+  encryption: none
+  servername: sha.helper-internet.com
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 66.94.125.178
+  port: 80
   cipher: aes-256-gcm
-- name: 美国 13
+  password: 14CLBaFBqwqxBJy6
+  name: 美国 21
+- type: vless
+  name: 美国 23
+  server: 45.40.152.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  servername: sni.jpmj.dev
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 94.72.127.55
+  port: 443
+  cipher: aes-256-gcm
+  password: wlJSF0fC8uqB5Gm5
+  name: 美国 24
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 108.181.0.177
+  port: 8388
+  cipher: chacha20-ietf-poly1305
+  password: G5p6ww4o67HB
+  name: 美国 25
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 94.72.127.58
+  port: 443
+  cipher: aes-256-gcm
+  password: jJHq807bQ7TM0yOh
+  name: 美国 26
+- type: vless
+  name: 美国 27
+  server: 8.35.211.210
+  port: 443
+  uuid: 51a0af77-a60c-4d9b-81a4-f50e1b38d90b
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: javad.fighterjavad8-faa.workers.dev
+    path: /
+  encryption: none
+  servername: javad.fighterjavad8-faa.workers.dev
+- type: vless
+  name: 美国 28
+  server: 104.167.199.138
+  port: 443
+  uuid: 6d0e9ded-d23d-4ffb-b165-7bc757be84d3
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: iJQK0wDw5QuWz00zl6H1j_10x7Y2RVcBntvF7KL3l1g
+    short-id: 6308ee39a9dd2b3b
+  network: tcp
+  servername: google.com
+- name: 美国 29
+  type: vless
+  server: 205.233.181.138
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- client-fingerprint: chrome
+  encryption: none
+  name: 美国 30
+  network: ws
+  port: 2096
+  server: 141.193.213.238
+  tls: true
+  type: vless
+  udp: true
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+      User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/64.0.3282.186 Safari/537.36
+    path: /
+  xudp: true
+  servername: sni.jpmj.dev
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 154.53.63.42
+  port: 443
+  cipher: aes-256-gcm
+  password: SM7WYtAwvBORXKjI
+  name: 美国 31
+- type: ss
+  skip-cert-verify: false
+  udp: false
   server: 154.53.63.32
-  type: ss
-  country: 🇺🇸US
   port: 443
+  cipher: aes-256-gcm
   password: k6ruJuwgAUxIrkHb
-  cipher: aes-256-gcm
-- name: 美国 14
-  server: 154.53.57.143
-  type: ss
-  country: 🇺🇸US
+  name: 美国 32
+- name: 美国 33
+  type: vless
+  server: 160.153.1.113
   port: 443
-  password: uwmRUOVM5ljNAtPj
-  cipher: aes-256-gcm
-- name: 美国 15
-  server: 154.53.57.143
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: uwmRUOVM5ljNAtPj
-  cipher: aes-256-gcm
-- name: 英国 03
-  server: chatgpt.com
-  type: trojan
-  country: 🇺🇸US
-  port: 443
-  udp: true
-  password: humanity
-  sni: www.gossipglove.com
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
   ws-opts:
-    path: /assignment
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
     headers:
-      Host: www.gossipglove.com
-  network: ws
-- name: 加拿大 02
-  server: 172.64.152.23
-  type: trojan
-  country: 🇺🇸US
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 34
+  server: 135.84.67.38
   port: 443
-  udp: true
-  password: humanity
-  sni: www.creationlong.org
-  ws-opts:
-    path: /assignment
-    headers:
-      Host: www.creationlong.org
-  network: ws
-- name: 加拿大 03
-  server: 104.21.40.34
-  type: trojan
-  country: 🏁ZZ
-  port: 443
-  udp: true
-  password: humanity
-  sni: www.gossipglove.com
-  ws-opts:
-    path: /assignment
-    headers:
-      Host: www.gossipglove.com
-  network: ws
-- cipher: aes-256-cfb
-  name: 越南 01
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.30
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 02
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.37
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 03
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.32
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 04
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.118
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 05
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.223
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 06
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.30
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 07
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.195
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 08
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.2
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 09
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.20
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 10
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.79
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 11
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.104
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 12
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.164
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 13
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.207
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 14
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.64
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 15
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.111
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 16
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.57
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 17
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.222
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 18
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.59
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 19
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.235
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 20
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.150
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 21
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.228
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 22
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.124
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 23
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.253
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 24
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.121
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 25
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.56
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 26
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.154.185
-  type: ss
-  udp: false
-- cipher: aes-256-cfb
-  name: 越南 27
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  plugin: ''
-  plugin-opts: {}
-  port: 38388
-  server: 103.186.155.78
-  type: ss
-  udp: false
-- name: 荷兰 23
-  server: 109.201.152.181
-  type: ss
-  port: 443
-  udp: true
-  password: shadowsocks
-  cipher: aes-128-cfb
-- name: 新加坡 01
-  server: 38.89.142.56
-  type: ss
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 加拿大 04
-  server: 45.154.204.7
-  type: ss
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 美国 16
-  server: 37.19.198.236
-  type: ss
-  port: 443
-  udp: true
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 加拿大 05
-  server: 79.127.200.169
-  type: ss
-  country: 🇨🇿CZ
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 加拿大 06
-  server: 79.127.233.170
-  type: ss
-  country: 🇨🇿CZ
-  port: 989
-  password: f8f7aCzcPKbsF8p3
-  cipher: aes-256-cfb
-- name: 英国 04
-  server: 141.98.101.178
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 荷兰 24
-  server: 82.38.31.217
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 日本 11
-  server: 149.22.87.204
-  type: ss
-  country: 🇬🇧GB
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 荷兰 25
-  server: 82.38.31.218
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 26
-  server: 82.38.31.179
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 27
-  server: 82.38.31.187
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 28
-  server: 82.38.31.202
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 29
-  server: 82.38.31.205
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 30
-  server: 82.38.31.214
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  cipher: chacha20-ietf-poly1305
-- name: 英国 05
-  server: 146.70.61.37
-  type: ss
-  country: 🇬🇧GB
-  port: 8080
-  password: 14fFPrbezE3HDZzsMOr6
-  cipher: rc4-md5
-- name: 香港 26
-  server: v8.hdacd.com
-  type: vmess
-  country: 🇭🇰HK
-  port: 30808
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 2
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 台湾 05
-  server: 165.154.195.38
-  type: vmess
-  country: 🇭🇰HK
-  port: 35034
-  uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
-  alterId: 0
-  cipher: auto
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 香港 51
-  server: v4.hdacd.com
-  type: vmess
-  country: 🇭🇰HK
-  port: 30804
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 2
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 韩国 02
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 7001
-  password: RexnBgU7EV5ADxG
-  cipher: aes-256-gcm
-- name: 韩国 03
-  server: 140.238.2.250
-  type: vmess
-  country: 🇰🇷KR
-  port: 443
-  uuid: 41a7089a-040b-4538-8b8d-010902405bde
-  alterId: 0
-  cipher: auto
-  network: none
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 荷兰 31
-  server: 193.29.139.179
-  type: ss
-  country: 🇳🇱 NL
-  port: 8080
-  password: cvII85TrW6n0OGyfpHVS1u
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 32
-  server: 193.29.139.217
-  type: ss
-  country: 🇳🇱NL
-  port: 8080
-  password: QCXDxuDlTTMD7jtgHUjIoj
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 33
-  server: 193.29.139.202
-  type: ss
-  country: 🇳🇱NL
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 德国 05
-  server: mn.qwer-cn.org
-  type: ss
-  country: 🇸🇮SI
-  port: 10935
-  password: c1e93142-d092-4bc6-8723-0352ae6b1d74
-  cipher: aes-128-gcm
-- name: 香港 73
-  server: tj.oopscat.com
-  type: trojan
-  country: 🇭🇰HK
-  port: 7443
-  password: '88888888'
-  sni: tj.oopscat.com
-  skip-cert-verify: true
-  udp: true
-- name: 香港 74
-  server: 151.242.180.91
-  type: vmess
-  country: 🇮🇷IR
-  port: 30812
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 0
-  cipher: auto
-  network: tcp
-  servername: 2001:bc8:32d7:302::10
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 韩国 04
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 6679
-  password: TEzjfAYq2IjtuoS
-  cipher: aes-256-gcm
-- name: 韩国 05
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 6697
-  password: TEzjfAYq2IjtuoS
-  cipher: aes-256-gcm
-- name: 韩国 06
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 5498
-  password: lGqs95QkFHo2NV
-  cipher: aes-256-gcm
-- name: 韩国 07
-  server: chuncheon03.zgjok.com
-  type: vmess
-  country: 🇰🇷KR
-  port: 443
-  uuid: 81d5cac4-d039-4874-9a20-c391f580012d
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: chuncheon03.zgjok.com
-  h2-opts: {}
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
   tls: true
   skip-cert-verify: true
+  network: ws
   ws-opts:
-    path: /
     headers:
-      HOST: chuncheon03.zgjok.com
-- name: 荷兰 34
-  server: 193.29.139.204
-  type: ss
-  country: 🇳🇱NL
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 35
-  server: 185.117.91.27
-  type: ss
-  country: 🇳🇱NL
-  port: 21836
-  password: PDNcrHbGmb5u76Og8NatjZ
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 36
-  server: 193.29.139.152
-  type: ss
-  country: 🇳🇱NL
-  port: 8080
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 37
-  server: 193.29.139.164
-  type: ss
-  country: 🇳🇱NL
-  port: 8080
-  password: cvII85TrW6n0OGyfpHVS1u
-  cipher: chacha20-ietf-poly1305
-- name: 澳大利亚 01
-  server: 103.75.119.38
-  type: ss
-  country: 🇳🇿NZ
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 美国 17
-  server: 94.72.127.58
-  type: ss
-  country: 🇵🇱PL
-  port: 80
-  password: jJHq807bQ7TM0yOh
-  cipher: aes-256-gcm
-- name: 香港 75
-  server: 185.244.208.150
-  type: ss
-  country: 🇷🇴RO
-  port: 11201
-  password: 41d6655d3625fd14
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 38
-  server: 185.250.45.163
-  type: ss
-  country: 🇷🇺RU
-  port: 4129
-  password: rZ36yc34dVHB0pl1wg21Ps
-  cipher: chacha20-ietf-poly1305
-- name: 俄罗斯 02
-  server: 213.183.54.243
-  type: vmess
-  country: 🇷🇺RU
-  port: 443
-  uuid: d7f56688-56a0-448c-bc04-fd83c6ac17d0
-  alterId: 0
-  cipher: auto
-  network: ws
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN---#TELEGRAM-PULAVPN
-- name: 土耳其 01
-  server: 45.89.52.207
-  type: vmess
-  country: 🇷🇺RU
-  port: 39651
-  uuid: ac4c12c5-45f2-4398-a718-9983941ede2b
-  alterId: 0
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 新加坡 03
-  server: 194.233.75.190
-  type: ss
-  country: 🇸🇬SG
-  port: 80
-  password: qKvfX7yQnT99OMu3
-  cipher: aes-256-gcm
-- name: 新加坡 04
-  server: 194.233.94.119
-  type: ss
-  country: 🇸🇬SG
-  port: 80
-  password: 8t2xeemUtyui4zAv
-  cipher: aes-256-gcm
-- name: 新加坡 05
-  server: 194.233.73.51
-  type: ss
-  country: 🇸🇬SG
-  port: 48801
-  password: 7afa39016d5a409c
-  cipher: chacha20-ietf-poly1305
-- name: 新加坡 06
-  server: 194.233.94.119
-  type: ss
-  country: 🇸🇬SG
-  port: 443
-  password: 8t2xeemUtyui4zAv
-  cipher: aes-256-gcm
-- name: 新加坡 07
-  server: 194.233.73.51
-  type: ss
-  country: 🇸🇬SG
-  port: 48803
-  password: 7afa39016d5a409c
-  cipher: chacha20-ietf-poly1305
-- name: 新加坡 08
-  server: 103.47.225.69
-  type: ss
-  country: 🇸🇬SG
-  port: 443
-  password: 899c7e30-50c7-4b63-a0a0-f26ac572d4f9
-  cipher: aes-256-gcm
-- name: 德国 06
-  server: mn.qwer-cn.org
-  type: ss
-  country: 🇸🇮SI
-  port: 10913
-  password: c1e93142-d092-4bc6-8723-0352ae6b1d74
-  cipher: aes-128-gcm
-- name: 德国 07
-  server: mn.qwer-cn.org
-  type: ss
-  country: 🇸🇮SI
-  port: 10933
-  password: c1e93142-d092-4bc6-8723-0352ae6b1d74
-  cipher: aes-128-gcm
-- name: 德国 08
-  server: mn.qwer-cn.org
-  type: ss
-  country: 🇸🇮SI
-  port: 10937
-  password: c1e93142-d092-4bc6-8723-0352ae6b1d74
-  cipher: aes-128-gcm
-- name: 台湾 06
-  server: r3mrcg001286ek2.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 台湾 07
-  server: 185.189.160.105
-  type: ss
-  country: 🇹🇼TW
-  port: 41632
-  password: qwerREWQ@@
-  cipher: aes-256-cfb
-- name: 台湾 08
-  server: nbmrcg0034686rw.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 荷兰 39
-  server: 92.112.126.90
-  type: ss
-  country: 🇺🇦UA
-  port: 443
-  password: 9tqhMdIrTkgQ46PvhyAtMH
-  cipher: chacha20-ietf-poly1305
-- name: 美国 18
-  server: 154.12.242.150
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: 7vZO55fXgXAJXa2F
-  cipher: aes-256-gcm
-- name: 德国 09
-  server: 2.58.81.221
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: 9dQS3geeylyrRth9
-  cipher: aes-256-gcm
-- name: 法国 02
-  server: 38.242.222.183
-  type: ss
-  country: 🇺🇸US
-  port: 11201
-  password: 52671647af0cffa0
-  cipher: chacha20-ietf-poly1305
-- name: 香港 76
-  server: 45.82.252.109
-  type: ss
-  country: 🇺🇸US
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 意大利 02
-  server: promo19v.bystrivpn.ru
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: SwTShXYSQd404FISs8NFeJ
-  cipher: chacha20-ietf-poly1305
-- name: 美国 19
-  server: 50.19.33.104
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: amazonskr05
-  cipher: aes-256-cfb
-- name: 日本 12
-  server: 154.205.139.9
-  type: ss
-  country: 🇺🇸US
-  port: 11201
-  password: 303ac65e30f28b0b
-  cipher: chacha20-ietf-poly1305
-- name: 日本 13
-  server: 154.205.139.9
-  type: ss
-  country: 🇺🇸US
-  port: 11202
-  password: 303ac65e30f28b0b
-  cipher: chacha20-ietf-poly1305
-- name: 印度 01
-  server: 163.171.206.24
-  type: ss
-  country: 🇺🇸US
-  port: 44235
-  password: 9d97433688e7efd5
-  cipher: chacha20-ietf-poly1305
-- name: 日本 14
-  server: 154.205.139.9
-  type: ss
-  country: 🇺🇸US
-  port: 11203
-  password: 303ac65e30f28b0b
-  cipher: chacha20-ietf-poly1305
-- name: 美国 20
-  server: 154.53.60.212
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: ZfbPFDdeBj0B1Txs
-  cipher: aes-256-gcm
-- name: 美国 21
-  server: 144.126.145.77
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: QzM0NfuMNngbVnZK
-  cipher: aes-256-gcm
-- name: 美国 22
-  server: 37.19.198.244
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: shadowsocks
-  cipher: aes-128-gcm
-- name: 韩国 08
-  server: 154.90.62.145
-  type: ss
-  country: 🇺🇸US
-  port: 46578
-  password: 907e91edf84826c3
-  cipher: chacha20-ietf-poly1305
-- name: 美国 23
-  server: 154.12.242.150
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: 7vZO55fXgXAJXa2F
-  cipher: aes-256-gcm
-- name: 美国 24
-  server: 66.94.125.178
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: 14CLBaFBqwqxBJy6
-  cipher: aes-256-gcm
-- name: 英国 06
-  server: 149.102.149.207
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: umWwoQJEJGf74SLe
-  cipher: aes-256-gcm
-- name: 澳大利亚 02
-  server: 154.26.155.172
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: SL4vzcvhBHhTWivD
-  cipher: aes-256-gcm
-- name: 英国 07
-  server: 149.102.132.186
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: YhzqOeJsfuZ9rkkc
-  cipher: aes-256-gcm
-- name: 美国 25
-  server: 154.12.240.141
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: mK7eN3z276Tr0vVA
-  cipher: aes-256-gcm
-- name: 新加坡 09
-  server: 154.26.132.38
-  type: ss
-  country: 🇺🇸US
-  port: 27884
-  password: ded718fcb2bb17b7
-  cipher: chacha20-ietf-poly1305
-- name: 美国 26
-  server: 154.53.63.42
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: SM7WYtAwvBORXKjI
-  cipher: aes-256-gcm
-- name: 印度 02
-  server: 163.171.206.24
-  type: ss
-  country: 🇺🇸US
-  port: 44233
-  password: 9d97433688e7efd5
-  cipher: chacha20-ietf-poly1305
-- name: 新加坡 10
-  server: 154.26.132.38
-  type: ss
-  country: 🇺🇸US
-  port: 16922
-  password: 42d2b47181a32de7
-  cipher: chacha20-ietf-poly1305
-- name: 德国 10
-  server: 209.46.102.22
-  type: ss
-  country: 🇺🇸US
-  port: 8388
-  password: 1hhrqrokj3ag
-  cipher: chacha20-ietf-poly1305
-- name: 澳大利亚 03
-  server: 45.15.185.70
-  type: ss
-  country: 🇺🇸US
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 土耳其 03
-  server: 38.180.113.194
-  type: ss
-  country: 🇺🇸US
-  port: 8119
-  password: cdBIDV42DCwnfIN
-  cipher: aes-256-gcm
-- name: 泰国 02
-  server: 163.171.148.71
-  type: ss
-  country: 🇺🇸US
-  port: 11201
-  password: 312ee9bcc9570095
-  cipher: chacha20-ietf-poly1305
-- name: 英国 08
-  server: 149.102.132.180
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: ZTiO11KwZG3S7aET
-  cipher: aes-256-gcm
-- name: 澳大利亚 04
-  server: 154.26.156.99
-  type: ss
-  country: 🇺🇸US
-  port: 47386
-  password: 78322e4b934870b6
-  cipher: chacha20-ietf-poly1305
-- name: 美国 27
-  server: 38.135.24.131
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: hbGrpfvNrJsUmKmPbR3iY2
-  cipher: chacha20-ietf-poly1305
-- name: 美国 28
-  server: 154.53.60.197
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: 8rb580EBG4l7tO8K
-  cipher: aes-256-gcm
-- name: 日本 15
-  server: 154.205.139.9
-  type: ss
-  country: 🇺🇸US
-  port: 11204
-  password: 303ac65e30f28b0b
-  cipher: chacha20-ietf-poly1305
-- name: 美国 29
-  server: 154.53.63.32
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: k6ruJuwgAUxIrkHb
-  cipher: aes-256-gcm
-- name: 英国 09
-  server: 149.102.132.184
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: ldjmwoNqgQqqc43j
-  cipher: aes-256-gcm
-- name: 澳大利亚 05
-  server: 154.26.155.172
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: SL4vzcvhBHhTWivD
-  cipher: aes-256-gcm
-- name: 英国 10
-  server: series-a2.samanehha.co
-  type: ss
-  country: 🇺🇸US
-  port: 443
-  password: W74XFALLLuw6m5IA
-  cipher: chacha20-ietf-poly1305
-- name: 英国 11
-  server: 149.102.132.180
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: ZTiO11KwZG3S7aET
-  cipher: aes-256-gcm
-- name: 英国 12
-  server: 149.102.149.207
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: umWwoQJEJGf74SLe
-  cipher: aes-256-gcm
-- name: 美国 30
-  server: 154.12.240.141
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: mK7eN3z276Tr0vVA
-  cipher: aes-256-gcm
-- name: 土耳其 04
-  server: 154.205.148.202
-  type: ss
-  country: 🇺🇸US
-  port: 11201
-  password: 71807718f593d3e6
-  cipher: chacha20-ietf-poly1305
-- name: 英国 13
-  server: 149.102.132.184
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: ldjmwoNqgQqqc43j
-  cipher: aes-256-gcm
-- name: 日本 16
-  server: 154.205.139.9
-  type: ss
-  country: 🇺🇸US
-  port: 11205
-  password: 303ac65e30f28b0b
-  cipher: chacha20-ietf-poly1305
-- name: 美国 33
-  server: 216.106.185.141
-  type: vmess
-  country: 🇺🇸US
-  port: 22324
-  uuid: 04621bae-ab36-11ec-b909-0242ac120002
-  alterId: 0
-  cipher: auto
-  network: tcp
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 34
-  server: 173.249.209.146
-  type: vmess
-  country: 🇺🇸US
-  port: 20086
-  uuid: 3935c2dc-dbb0-43f7-b367-fe89abe87fdf
-  alterId: 0
-  cipher: auto
-  network: ws
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
+      Host: sni.111000.dynv6.net
+    path: /?Telegram%F0%9F%87%A8%F0%9F%87%B3+%40WangCai2=
+  encryption: none
+  servername: sni.111000.dynv6.net
 - name: 美国 35
-  server: 104.168.94.41
-  type: vmess
-  country: 🇺🇸US
-  port: 32301
-  uuid: a2235b72-fd9c-404f-be5a-53b2de0cb798
-  alterId: 0
-  cipher: auto
-  network: http
+  type: vless
+  server: 135.84.74.212
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- name: 美国 36
+  type: vless
+  server: 45.40.150.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.jpmj.dev
+  client-fingerprint: chrome
+  servername: sni.jpmj.dev
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 154.53.63.42
+  port: 80
+  cipher: aes-256-gcm
+  password: SM7WYtAwvBORXKjI
+  name: 美国 37
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 154.53.63.32
+  port: 80
+  cipher: aes-256-gcm
+  password: k6ruJuwgAUxIrkHb
+  name: 美国 38
+- type: vless
+  name: 美国 39
+  server: 192.193.104.25
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- cipher: chacha20-ietf-poly1305
+  name: 日本 08
+  password: b421832d-9964-4519-b4b3-e52a7be8b31b
+  port: 35601
+  server: gw.lydwan.com
+  type: ss
+  udp: true
+- cipher: chacha20-ietf-poly1305
+  name: 日本 09
+  password: b421832d-9964-4519-b4b3-e52a7be8b31b
+  port: 35604
+  server: gw.lydwan.com
+  type: ss
+  udp: true
+- client-fingerprint: chrome
+  encryption: none
+  flow: xtls-rprx-vision
   http-opts:
-    method: GET
     path:
     - /
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 美国 36
-  server: 141.193.213.62
-  type: vmess
-  country: 🇺🇸US
-  port: 2086
-  uuid: 2c366360-0333-4738-9423-6d5b378e3594
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: er250901.bptimecsgo.xyz
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /4397hy/843uhbp
-    headers:
-      HOST: er250901.bptimecsgo.xyz
-- name: 加拿大 07
-  server: freeyx.cloudflare88.eu.org
-  type: vmess
-  country: 🇺🇸US
-  port: 80
-  uuid: 8e34e170-13ae-4892-9d20-05962acc9f84
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: fr.eva.hidns.co
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: fr.eva.hidns.co
-- name: 加拿大 08
-  server: ct.090227.xyz
-  type: vmess
-  country: 🇺🇸US
-  port: 80
-  uuid: 8e34e170-13ae-4892-9d20-05962acc9f84
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: fr.eva.hidns.co
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: fr.eva.hidns.co
-- name: 美国 37
-  server: 141.193.213.173
-  type: vmess
-  country: 🇺🇸US
-  port: 2086
-  uuid: 2c366360-0333-4738-9423-6d5b378e3594
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: er250901.bptimecsgo.xyz
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /4397hy/843uhbp
-    headers:
-      HOST: er250901.bptimecsgo.xyz
-- name: 加拿大 09
-  server: ct.877774.xyz
-  type: vmess
-  country: 🇺🇸US
-  port: 80
-  uuid: 8e34e170-13ae-4892-9d20-05962acc9f84
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: fr.eva.hidns.co
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: fr.eva.hidns.co
-- name: 加拿大 10
-  server: yg6.ygkkk.dpdns.org
-  type: vmess
-  country: 🇺🇸US
-  port: 80
-  uuid: 8e34e170-13ae-4892-9d20-05962acc9f84
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: fr.eva.hidns.co
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: fr.eva.hidns.co
-- name: 美国 39
-  server: 64.94.95.115
-  type: trojan
-  country: 🇺🇸US
-  port: 57142
-  password: kkzh2prsyr2ik47as615
-  sni: static.rutube.ru
-  skip-cert-verify: true
+  name: 日本 10
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: wLkaWLYNGirBj1ggKZsnmlZiWnwZd99cIShBHVm7BQo
+    short-id: c906f73d3ba8211f
+  server: 64.176.57.250
+  tls: true
+  type: vless
   udp: true
-- name: 美国 40
-  server: 64.94.95.114
+  uuid: 43488128-319e-f480-64ea-0acdc712e2a8
+  xudp: true
+  servername: www.muji.com
+- skip-cert-verify: true
+  sni: tj.oopscat.com
   type: trojan
-  country: 🇺🇸US
-  port: 57142
-  password: kkzh2prsyr2ik47as615
-  sni: static.rutube.ru
-  skip-cert-verify: true
+  password: '88888888'
+  server: tj.oopscat.com
+  port: 7443
+  name: 香港 12
+  network: tcp
+- type: vless
+  name: 日本 11
+  server: 140.238.37.103
+  port: 14782
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- cipher: chacha20-ietf-poly1305
+  name: 日本 12
+  password: b421832d-9964-4519-b4b3-e52a7be8b31b
+  port: 35608
+  server: gw.lydwan.com
+  type: ss
   udp: true
-- name: 越南 28
-  server: 112.197.26.106
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 140.238.51.35
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: 14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 日本 13
+- name: 美国 52
+  server: starlink-us1.mfa.cat
+  port: 443
+  udp: true
+  type: hysteria2
+  password: 34RhFnnyTjFVqyC-CMuslgzB
+  sni: www.cloudflare.com
+  skip-cert-verify: true
+- name: 美国 53
+  server: starlink-us5.mfa.cat
+  port: 443
+  udp: true
+  type: hysteria2
+  password: 34RhFnnyTjFVqyC-CMuslgzB
+  sni: www.cloudflare.com
+  skip-cert-verify: true
+- name: 日本 15
+  server: starlink-jp4.mfa.cat
+  port: 20443
+  udp: true
+  type: hysteria2
+  password: 34RhFnnyTjFVqyC-CMuslgzB
+  sni: www.cloudflare.com
+  skip-cert-verify: true
+- name: 日本 17
+  server: gw.lydwan.com
+  port: 35603
+  udp: true
   type: ss
-  country: 🇻🇳VN
-  port: 45310
-  password: ca5a5efae00a832b
   cipher: chacha20-ietf-poly1305
-- name: 越南 29
-  server: 112.197.26.106
+  password: b421832d-9964-4519-b4b3-e52a7be8b31b
+- name: 日本 18
+  server: gw.lydwan.com
+  port: 35607
+  udp: true
   type: ss
-  country: 🇻🇳VN
-  port: 26417
-  password: fd7b0d14b590bceb
   cipher: chacha20-ietf-poly1305
-- name: 越南 30
-  server: 112.197.26.106
-  type: ss
-  country: 🇻🇳VN
-  port: 45311
-  password: ca5a5efae00a832b
-  cipher: chacha20-ietf-poly1305
-- name: 越南 31
-  server: 103.186.154.141
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 32
-  server: 103.186.155.57
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 33
-  server: 103.186.155.61
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 34
-  server: 103.186.154.48
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 35
-  server: 103.186.155.230
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 36
-  server: 103.186.154.226
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 37
-  server: 103.186.155.231
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 38
-  server: 103.186.155.9
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 39
-  server: 103.186.155.4
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 40
-  server: 103.186.155.150
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 41
-  server: 103.186.155.138
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 42
-  server: 103.186.155.232
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 43
-  server: 103.186.154.197
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 44
-  server: 103.186.154.201
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 45
-  server: 103.186.155.225
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 46
-  server: 103.186.155.205
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 47
-  server: 103.186.155.141
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 48
-  server: 103.186.154.204
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 49
-  server: 103.186.155.183
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 50
-  server: 103.186.154.232
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 51
-  server: 103.186.155.145
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 52
-  server: 103.186.155.45
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 53
-  server: 103.186.155.84
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 54
-  server: 103.186.154.173
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 56
-  server: 103.186.155.35
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 57
-  server: 103.186.154.192
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 58
-  server: 103.186.154.179
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 59
-  server: 103.186.154.198
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 60
-  server: 103.186.154.200
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 61
-  server: 103.186.154.214
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 62
-  server: 103.186.155.144
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 63
-  server: 103.186.154.180
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 64
-  server: 103.186.155.33
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 65
-  server: 103.186.154.238
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 66
-  server: 103.186.154.254
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 67
-  server: 103.186.154.47
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 68
-  server: 103.186.154.227
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 69
-  server: 103.186.155.211
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 70
-  server: 103.186.154.215
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 71
-  server: 103.186.154.59
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 72
-  server: 103.186.155.52
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 73
-  server: 103.186.154.181
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 74
-  server: 103.186.154.241
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 75
-  server: 103.186.154.234
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 76
-  server: 103.186.155.147
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 77
-  server: 103.186.154.235
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 78
-  server: 103.186.155.29
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 79
-  server: 103.186.155.153
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 80
-  server: 103.186.154.208
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 81
-  server: 103.186.155.226
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 82
-  server: 103.186.154.233
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 83
-  server: 103.186.154.13
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 84
-  server: 103.186.154.242
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 85
-  server: 103.186.154.191
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 86
-  server: 103.186.155.222
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 87
-  server: 103.186.154.16
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 88
-  server: 103.186.155.76
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 89
-  server: 103.186.154.231
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 90
-  server: 103.186.154.158
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 91
-  server: 103.186.154.157
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 92
-  server: 103.186.154.153
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 93
-  server: 103.186.155.105
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 94
-  server: 103.186.154.243
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 95
-  server: 103.186.154.46
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 96
-  server: 103.186.154.54
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 97
-  server: 103.186.155.41
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 98
-  server: 103.186.154.220
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 99
-  server: 103.186.155.38
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 100
-  server: 103.186.154.221
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 101
-  server: 103.186.155.37
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 102
-  server: 103.186.154.219
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 103
-  server: 103.186.154.239
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 104
-  server: 103.186.154.51
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 105
-  server: 103.186.155.13
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 106
-  server: 103.186.154.213
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 107
-  server: 103.186.154.15
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 108
-  server: 103.186.154.240
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 109
-  server: 103.186.154.194
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 110
-  server: 103.186.154.58
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 111
-  server: 103.186.154.155
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 112
-  server: 103.186.155.12
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 113
-  server: 103.186.155.134
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 114
-  server: 103.186.154.142
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 115
-  server: 103.186.154.41
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 116
-  server: 103.186.154.60
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 117
-  server: 103.186.155.129
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 越南 118
-  server: 103.186.155.116
-  type: ss
-  country: 🏁ZZ
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
+  password: b421832d-9964-4519-b4b3-e52a7be8b31b
