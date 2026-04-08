@@ -33,24 +33,32 @@ jobs:
       # --- 新增步骤：将 proxies.yaml 转换为带 ACL4SSR 规则的 config.yaml ---
       - name: 生成完整配置
         run: |
-          # 1. 下载并解压
+          # 1. 确保 output 存在
+          mkdir -p output
+      
+          # 2. 下载 subconverter
           wget -qO subconverter.tar.gz https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
           tar -xzf subconverter.tar.gz
-          
-          # 2. 创建 generate.ini (注意：这里要顶格写，不要有缩进)
+      
+          # 3. 当前路径
+          CUR_DIR=$(pwd)
+      
+          # 4. 写配置（关键：file://）
           cat <<EOF > my_config.ini
           [General]
           [ManagedConfig]
-          output/config.yaml = target=clash&url=output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false
+          $CUR_DIR/output/config.yaml = target=clash&url=file://$CUR_DIR/output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false
           EOF
-
-          # 3. 运行转换，明确指定使用 my_config.ini
-          # 使用 -f 参数指定配置文件路径
+      
+          # 5. 执行转换
           ./subconverter/subconverter -g -f my_config.ini
-          
-          # 4. 确认结果
-          echo "--- 检查 output 目录内容 ---"
+      
+          # 6. 调试
+          echo "--- 检查 output ---"
           ls -lh output/
+      
+          echo "--- 检查 subconverter 输出 ---"
+          ls -lh subconverter/output/
 
       # ✅ 发布到仓库（生成订阅链接）
       - name: 提交结果
