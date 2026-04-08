@@ -131,6 +131,15 @@ def fetch_proxies():
                 continue
 
             for p in current_source_proxies:
+                # --- 新增清洗逻辑 ---
+                if "alpn" in p:
+                    if isinstance(p["alpn"], str):
+                        # 如果是字符串，转成列表
+                        p["alpn"] = [p["alpn"]]
+                    elif not isinstance(p["alpn"], list):
+                        # 如果是其他奇怪格式，直接删除该字段，让 Clash 使用默认值
+                        del p["alpn"]
+                # -------------------
                 server = p.get("server")
                 port = p.get("port")
                 if not server or not port:
