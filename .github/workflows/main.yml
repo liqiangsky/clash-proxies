@@ -42,23 +42,23 @@ jobs:
       
           cat <<EOF > my_config.ini
           [General]
+          log_level=info
+          
           [ManagedConfig]
-          $CUR_DIR/output/config.yaml = target=clash&url=file://$CUR_DIR/output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false
+          config = target=clash&url=file://$CUR_DIR/output/proxies.yaml&config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&emoji=true&udp=true&tfo=false&scv=true&fdn=false&sort=false
           EOF
       
-          # ✅ 关键：进入目录执行
           cd subconverter
           chmod +x subconverter
           ./subconverter -g -f ../my_config.ini
       
-          # 回到根目录
           cd ..
       
-          echo "--- 检查 output ---"
-          ls -lh output/
+          echo "--- subconverter 输出 ---"
+          ls -lh subconverter/output/
       
-          echo "--- 检查 subconverter 输出 ---"
-          ls -lh subconverter/output/ || echo "subconverter 没生成输出"
+          # ✅ 拷贝为你想要的文件名
+          cp subconverter/output/config.yaml output/config.yaml || echo "生成失败"
 
       # ✅ 发布到仓库（生成订阅链接）
       - name: 提交结果
