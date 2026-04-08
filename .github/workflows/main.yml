@@ -34,25 +34,42 @@ jobs:
       - name: 生成完整配置
         run: |
           mkdir -p output
-      
+          
+          # 下载并解压 subconverter
           wget -qO subconverter.tar.gz https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
           tar -xzf subconverter.tar.gz
-      
-          CUR_DIR=$(pwd)
-      
-          printf "[ManagedConfig]\nconfig=target=clash\nurl1=file://$CUR_DIR/output/proxies.yaml\nconfig1=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini\nemoji1=true\nudp1=true\ntfo1=false\nscv1=true\nfdn1=false\nsort1=false\n" > my_config.ini
-      
+          
+          # 获取绝对路径
+          PROXIES_PATH="$(pwd)/output/proxies.yaml"
+          
+          # 准备配置文件 (确保 cat 这里的缩进是靠左顶格的，或者使用下面的方式)
+          cat <<EOF > subconverter/generate.ini
+[General]
+target=clash
+url=$PROXIES_PATH
+config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini
+emoji=true
+udp=true
+tfo=false
+scv=true
+fdn=false
+sort=false
+EOF
+          
+          # 执行转换
           cd subconverter
           chmod +x subconverter
-          ./subconverter -g -f ../my_config.ini
-      
+          ./subconverter -g -f generate.ini
           cd ..
-      
-          echo "--- subconverter 输出 ---"
-          ls -lh subconverter/output/
-      
-          # ✅ 拷贝为你想要的文件名
-          cp subconverter/output/config.yaml output/config.yaml || echo "生成失败"
+          
+          # 结果拷贝逻辑
+          if [ -f "subconverter/result.yaml" ]; then
+            cp subconverter/result.yaml output/config.yaml
+          elif [ -f "subconverter/output.yaml" ]; then
+            cp subconverter/output.yaml output/config.yaml
+          else
+            cp subconverter/*.yaml output/config.yaml || echo "Warning: No output file found"
+          fi
 
       # ✅ 发布到仓库（生成订阅链接）
       - name: 提交结果
