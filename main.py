@@ -234,7 +234,7 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
         pass
     return None
 
-def filter_proxies_round1(proxies, batch_size=500):
+def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
     """第一轮：快速筛选，宽松条件 - 分批测试避免 Clash 过载"""
     if not wait_clash():
         print("错误：Clash 启动失败")
@@ -252,6 +252,20 @@ def filter_proxies_round1(proxies, batch_size=500):
         batch = proxies[start:end]
         print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
+        # 为当前批次生成精简配置
+        save_batch_for_clash(all_proxies_dict, batch)
+
+        # 重启 Clash 加载新配置
+        print("重启 Clash 加载配置...")
+        global clash_process
+        if clash_process:
+            clash_process.terminate()
+            time.sleep(2)
+        clash_process = start_clash()
+        if not wait_clash():
+            print("Clash 启动失败")
+            return []
+
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
             futures = {ex.submit(test_google_access, p["name"]): p["name"] for p in batch}
@@ -266,24 +280,12 @@ def filter_proxies_round1(proxies, batch_size=500):
         results.extend(batch_results)
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
 
-        # 每批次后重启 Clash 释放内存
-        print("重启 Clash...")
-        global clash_process
-        if clash_process:
-            clash_process.terminate()
-            time.sleep(2)
-        if batch_idx < batches - 1:
-            clash_process = start_clash()
-            if not wait_clash():
-                print("Clash 重启失败")
-                return []
-
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
     print(f"\n第一轮总计通过：{len(out)}/{total} 个节点")
     return out
 
-def filter_proxies_round2(proxies, batch_size=500):
+def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
     """第二轮：严格筛选，确保质量 - 分批测试"""
     results = []
     total = len(proxies)
@@ -296,6 +298,20 @@ def filter_proxies_round2(proxies, batch_size=500):
         end = min(start + batch_size, total)
         batch = proxies[start:end]
         print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
+
+        # 为当前批次生成精简配置
+        save_batch_for_clash(all_proxies_dict, batch)
+
+        # 重启 Clash 加载新配置
+        print("重启 Clash 加载配置...")
+        global clash_process
+        if clash_process:
+            clash_process.terminate()
+            time.sleep(2)
+        clash_process = start_clash()
+        if not wait_clash():
+            print("Clash 启动失败")
+            return []
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
@@ -310,18 +326,6 @@ def filter_proxies_round2(proxies, batch_size=500):
 
         results.extend(batch_results)
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
-
-        # 每批次后重启 Clash 释放内存
-        print("重启 Clash...")
-        global clash_process
-        if clash_process:
-            clash_process.terminate()
-            time.sleep(2)
-        if batch_idx < batches - 1:
-            clash_process = start_clash()
-            if not wait_clash():
-                print("Clash 重启失败")
-                return []
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -352,6 +356,7 @@ def resolve_countries(proxies):
     return final_proxies
 
 def save_for_clash(proxies):
+    """生成 Clash 配置 - 只包含当前批次需要的节点"""
     config = {
         "mixed-port": 7890,
         "allow-lan": False,
@@ -369,6 +374,12 @@ def save_for_clash(proxies):
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+
+def save_batch_for_clash(all_proxies_dict, batch):
+    """为当前批次生成精简的 Clash 配置"""
+    batch_names = {p["name"] for p in batch}
+    batch_proxies = [all_proxies_dict[name] for name in batch_names if name in all_proxies_dict]
+    save_for_clash(batch_proxies)
 
 def start_clash():
     if os.name != 'nt':
@@ -404,20 +415,22 @@ if __name__ == "__main__":
     for i, p in enumerate(raw):
         p["name"] = f"temp_{i}"
 
-    save_for_clash(raw)
     global clash_process
-    clash_process = start_clash()
+    clash_process = None
 
     try:
-        # 第二步：第一轮快速筛选（宽松条件）
-        passed_round1 = filter_proxies_round1(raw)
+        # 保存全部节点用于后续 IP 查询
+        all_proxies_dict = {p["name"]: p for p in raw}
+
+        # 第二步：第一轮快速筛选（宽松条件）- 每批 500 个
+        passed_round1 = filter_proxies_round1(raw, batch_size=500, all_proxies_dict=all_proxies_dict)
 
         if not passed_round1:
             print("第一轮筛选无节点通过，退出")
             exit()
 
-        # 第三步：第二轮严格筛选（更严格条件）
-        passed_round2 = filter_proxies_round2(passed_round1)
+        # 第三步：第二轮严格筛选（更严格条件）- 每批 500 个
+        passed_round2 = filter_proxies_round2(passed_round1, batch_size=500, all_proxies_dict=all_proxies_dict)
 
         if not passed_round2:
             print("第二轮筛选无节点通过，退出")
