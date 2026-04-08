@@ -42,9 +42,13 @@ jobs:
           # 获取绝对路径
           PROXIES_PATH="$(pwd)/output/proxies.yaml"
           
-          # 准备配置文件 (确保 cat 这里的缩进是靠左顶格的，或者使用下面的方式)
+          # 创建 generate.ini
+          # 关键点：增加了 path 项，并确保格式符合 subconverter 的 artifact 定义
           cat <<EOF > subconverter/generate.ini
           [General]
+          
+          [Clash]
+          path=result.yaml
           target=clash
           url=$PROXIES_PATH
           config=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini
@@ -59,16 +63,18 @@ jobs:
           # 执行转换
           cd subconverter
           chmod +x subconverter
+          # 使用 -g 模式执行
           ./subconverter -g -f generate.ini
           cd ..
           
-          # 结果拷贝逻辑
+          # 拷贝结果
           if [ -f "subconverter/result.yaml" ]; then
             cp subconverter/result.yaml output/config.yaml
-          elif [ -f "subconverter/output.yaml" ]; then
-            cp subconverter/output.yaml output/config.yaml
+            echo "✅ 成功生成 config.yaml"
           else
-            cp subconverter/*.yaml output/config.yaml || echo "Warning: No output file found"
+            echo "❌ 转换失败，未找到结果文件"
+            ls -R subconverter/
+            exit 1
           fi
 
       # ✅ 发布到仓库（生成订阅链接）
