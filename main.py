@@ -23,31 +23,34 @@ URLS = [
     "http://xqz0.vip:15580/clash/proxies",
     "https://vahid.ehsandigik.ir/clash",
     "https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
-    "https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
-    "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
-    "https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    "https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
-    "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
-    "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
-    "https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
-    "https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
-    "https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
-    "https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
-    "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
+    #"https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
+    #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
+    #"https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
+    #"https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
+    #"https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
+    #"https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
+    #"https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
+    #"https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
+    #"https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
+    #"https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
+    #"https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
+    #"https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
 # 地区映射表
 COUNTRY_NAMES = {
-    "HK": "香港", "JP": "日本", "SG": "新加坡", "KR": "韩国", "TW": "台湾", "US": "美国", 
-    #"GB": "英国", "DE": "德国",
-    #"FR": "法国", "NL": "荷兰", "RU": "俄罗斯", "IT": "意大利",
-    #"CA": "加拿大", "AU": "澳大利亚", "TR": "土耳其", "IN": "印度",
-    #"TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
+    "HK": "香港", "JP": "日本", "SG": "新加坡", "KR": "韩国",
+    "TW": "台湾", "US": "美国", "GB": "英国", "DE": "德国",
+    "FR": "法国", "NL": "荷兰", "RU": "俄罗斯", "IT": "意大利",
+    "CA": "加拿大", "AU": "澳大利亚", "TR": "土耳其", "IN": "印度",
+    "TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
 }
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 TEST_URL = "https://www.google.com"
+TEST_URL_BACKUP = "http://www.gstatic.com/generate_204"  # 备用测试地址
+MAX_DELAY = 3000  # 最大可接受延迟 (ms)
 
 # 线程池大小配置（针对 GitHub Action 优化）
 FETCH_WORKERS = 10      # 获取订阅源并发数
@@ -256,31 +259,46 @@ def fetch_proxies():
     return final_proxies
 
 def test_google_access(name):
-    """测试单个节点的 Google 连通性"""
+    """测试单个节点的 Google 连通性 - 两次测试都通过才算有效"""
     safe_name = urllib.parse.quote(name)
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-    try:
-        params = {"url": TEST_URL, "timeout": 5000}
-        r = requests.get(url, params=params, timeout=7)
-        delay = r.json().get("delay", 0)
-        if delay > 0:
-            return (name, delay)
-    except:
-        pass
-    return None
+
+    delays = []
+    for test_url in [TEST_URL, TEST_URL_BACKUP]:
+        try:
+            params = {"url": test_url, "timeout": 5000}
+            r = requests.get(url, params=params, timeout=7)
+            delay = r.json().get("delay", 0)
+            if delay > 0 and delay <= MAX_DELAY:
+                delays.append(delay)
+            else:
+                return None  # 延迟超限或失败
+        except:
+            return None
+
+    # 两次测试都通过，返回平均延迟
+    avg_delay = sum(delays) // len(delays)
+    return (name, avg_delay)
 
 def save_for_clash(proxies):
     """供脚本内部测试使用的临时配置"""
     config = {
-        "mode": "global",
-        "port": 7890,
+        "mixed-port": 7890,
+        "allow-lan": False,
+        "mode": "rule",
         "external-controller": "127.0.0.1:9090",
         "proxies": proxies,
-        "proxy-groups": [{"name": "test", "type": "select", "proxies": [p["name"] for p in proxies]}],
+        "proxy-groups": [
+            {
+                "name": "test",
+                "type": "select",
+                "proxies": [p["name"] for p in proxies]
+            }
+        ],
         "rules": ["MATCH,test"]
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_style='"')
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
 def start_clash():
     """启动 Clash 内核"""
@@ -324,8 +342,8 @@ def filter_proxies(proxies):
                 r = future.result()
                 if r:
                     results.append(r)
-                if i % 50 == 0:
-                    print(f"已测试 {i}/{len(proxies)} 个节点")
+                if i % 50 == 0 or i == len(proxies):
+                    print(f"已测试 {i}/{len(proxies)} 个节点，通过：{len(results)}")
             except:
                 pass
 
@@ -351,7 +369,7 @@ if __name__ == "__main__":
         final_data = {"proxies": good_proxies}
 
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
-            yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_style='"')
+            yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
         print(f"成功筛选出 {len(good_proxies)} 个 Google 节点并保存。")
     finally:
