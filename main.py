@@ -16,18 +16,25 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 URLS = [
     "https://165.154.105.225/clash/proxies",
     "https://pp.dcd.one/clash/proxies",
-    "https://vc.majunfei.club:51/clash/proxies",
     "http://138.2.112.136:12580/clash/proxies",
     "http://tmac.eu.org:12580/clash/proxies",
     "http://ql.ethanyang.top:12580/clash/proxies",
     "https://open.tidnotes.top:2083/clash/proxies",
     "http://xqz0.vip:15580/clash/proxies",
+    "https://vahid.ehsandigik.ir/clash",
+    "https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
+    "https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
     "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
     "https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    "https://vahid.ehsandigik.ir/clash",
-    #"https://dy.reiasu.jp",
-    #"https://jd.zhujunlong.eu.org",
-    #"https://proxy.525168.xyz",
+    "https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
+    "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml"
+    "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
+    "https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
+    "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
+    "https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
+    "https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
+    "https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml"
+    "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
