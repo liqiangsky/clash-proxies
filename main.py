@@ -23,12 +23,14 @@ URLS = [
     "http://xqz0.vip:15580/clash/proxies",
     "https://vahid.ehsandigik.ir/clash",
     "https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
+    "https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash",
     "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
     "https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
     "https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
     "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
     "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
     "https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
+    "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
     "https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
     "https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
     "https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
@@ -37,15 +39,14 @@ URLS = [
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
-# 地区映射表
+# 地区映射表 - 只保留需要的地区
 COUNTRY_NAMES = {
-    "HK": "香港", "JP": "日本", "KR": "韩国", "TW": "台湾", "US": "美国", 
+    "HK": "香港", "JP": "日本", "KR": "韩国", "TW": "台湾", "US": "美国",
     "GB": "英国", "DE": "德国", "SG": "新加坡",
     "FR": "法国", "NL": "荷兰", "RU": "俄罗斯", "IT": "意大利",
     "CA": "加拿大", "AU": "澳大利亚", "TR": "土耳其", "IN": "印度",
     "TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
 }
-
 
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 # 使用国内可访问的测试目标，更贴近实际使用场景
@@ -235,54 +236,98 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
         pass
     return None
 
-def filter_proxies_round1(proxies):
-    """第一轮：快速筛选，宽松条件"""
+def filter_proxies_round1(proxies, batch_size=500):
+    """第一轮：快速筛选，宽松条件 - 分批测试避免 Clash 过载"""
     if not wait_clash():
         print("错误：Clash 启动失败")
         return []
 
     results = []
-    print("第一轮筛选（快速测试）...")
+    total = len(proxies)
+    batches = (total + batch_size - 1) // batch_size
 
-    with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-        futures = {ex.submit(test_google_access, p["name"]): p["name"] for p in proxies}
-        for i, future in enumerate(as_completed(futures), 1):
-            try:
-                r = future.result()
-                if r:
-                    results.append(r)
-                if i % 50 == 0 or i == len(proxies):
-                    print(f"已测试 {i}/{len(proxies)} 个节点，通过：{len(results)}")
-            except:
-                pass
+    print(f"第一轮筛选（快速测试），共 {batches} 批次...")
+
+    for batch_idx in range(batches):
+        start = batch_idx * batch_size
+        end = min(start + batch_size, total)
+        batch = proxies[start:end]
+        print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
+
+        batch_results = []
+        with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
+            futures = {ex.submit(test_google_access, p["name"]): p["name"] for p in batch}
+            for i, future in enumerate(as_completed(futures), 1):
+                try:
+                    r = future.result()
+                    if r:
+                        batch_results.append(r)
+                except:
+                    pass
+
+        results.extend(batch_results)
+        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
+
+        # 每批次后重启 Clash 释放内存
+        print("重启 Clash...")
+        global clash_process
+        if clash_process:
+            clash_process.terminate()
+            time.sleep(2)
+        if batch_idx < batches - 1:
+            clash_process = start_clash()
+            if not wait_clash():
+                print("Clash 重启失败")
+                return []
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
-
-    print(f"第一轮通过：{len(out)} 个节点")
+    print(f"\n第一轮总计通过：{len(out)}/{total} 个节点")
     return out
 
-def filter_proxies_round2(proxies):
-    """第二轮：严格筛选，确保质量"""
+def filter_proxies_round2(proxies, batch_size=500):
+    """第二轮：严格筛选，确保质量 - 分批测试"""
     results = []
-    print("第二轮筛选（严格测试）...")
+    total = len(proxies)
+    batches = (total + batch_size - 1) // batch_size
 
-    with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-        futures = {ex.submit(test_google_access, p["name"], MAX_DELAY_ROUND2): p["name"] for p in proxies}
-        for i, future in enumerate(as_completed(futures), 1):
-            try:
-                r = future.result()
-                if r:
-                    results.append(r)
-                if i % 20 == 0 or i == len(proxies):
-                    print(f"已测试 {i}/{len(proxies)} 个节点，通过：{len(results)}")
-            except:
-                pass
+    print(f"\n第二轮筛选（严格测试），共 {batches} 批次...")
+
+    for batch_idx in range(batches):
+        start = batch_idx * batch_size
+        end = min(start + batch_size, total)
+        batch = proxies[start:end]
+        print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
+
+        batch_results = []
+        with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
+            futures = {ex.submit(test_google_access, p["name"], MAX_DELAY_ROUND2): p["name"] for p in batch}
+            for i, future in enumerate(as_completed(futures), 1):
+                try:
+                    r = future.result()
+                    if r:
+                        batch_results.append(r)
+                except:
+                    pass
+
+        results.extend(batch_results)
+        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
+
+        # 每批次后重启 Clash 释放内存
+        print("重启 Clash...")
+        global clash_process
+        if clash_process:
+            clash_process.terminate()
+            time.sleep(2)
+        if batch_idx < batches - 1:
+            clash_process = start_clash()
+            if not wait_clash():
+                print("Clash 重启失败")
+                return []
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
-
-    print(f"第二轮通过：{len(out)} 个节点")
+    print(f"\n第二轮总计通过：{len(out)}/{total} 个节点")
     return out
 
 def resolve_countries(proxies):
@@ -362,6 +407,7 @@ if __name__ == "__main__":
         p["name"] = f"temp_{i}"
 
     save_for_clash(raw)
+    global clash_process
     clash_process = start_clash()
 
     try:
