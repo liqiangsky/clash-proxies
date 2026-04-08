@@ -30,7 +30,6 @@ URLS = [
     "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
     "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
     "https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
-    "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
     "https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
     "https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
     "https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
