@@ -38,7 +38,8 @@ COUNTRY_NAMES = {
     "TW": "台湾", "US": "美国", "GB": "英国", "DE": "德国"
 }
 ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
-TEST_URL = "https://www.google.com"
+# TEST_URL = "https://www.google.com"
+TEST_URL = "https://gemini.google.com"
 
 ip_cache = {}
 
