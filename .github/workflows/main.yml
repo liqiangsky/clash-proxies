@@ -19,9 +19,8 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: 运行脚本
+      - name: 下载 Clash 内核
         run: |
-          # 下载 Clash 内核
           wget -q -O clash.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.gz
           gunzip -f clash.gz
           chmod +x clash
