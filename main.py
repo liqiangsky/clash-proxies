@@ -137,10 +137,12 @@ def clean_proxy(p):
                 if not p[opt_key]:
                     p.pop(opt_key)
 
-    # 清理 reality-opts 中可能的无效配置
-    if "reality-opts" in p and p["reality-opts"]:
-        if not isinstance(p["reality-opts"], dict):
-            p.pop("reality-opts")
+    # 移除所有 reality 相关配置（格式要求严格，容易出错）
+    p.pop("reality-opts", None)
+
+    # 清理 reality 相关字段
+    for reality_key in ["sid", "fp", "pbk", "sni", "serverName"]:
+        p.pop(reality_key, None)
 
     # 强制端口为整数
     if "port" in p:
@@ -298,6 +300,9 @@ def save_batch_for_clash(batch):
     for p in batch:
         # 跳过 reality 类型（sid 格式问题多）
         if p.get("type") == "reality":
+            continue
+        # 跳过带有 reality-opts 的节点（格式要求严格）
+        if p.get("reality-opts"):
             continue
         # 跳过没有必要字段的节点
         if not p.get("server") or not p.get("port"):
