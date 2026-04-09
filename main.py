@@ -309,9 +309,8 @@ def filter_proxies_batch(proxies, batch_size=None, max_delay=MAX_DELAY_ROUND1, r
 
         # 启动 Clash 加载新配置
         print("启动 Clash...")
-        global clash_process
-        clash_process = start_clash()
-        if not wait_clash():
+        clash_proc = start_clash()
+        if not wait_clash(clash_proc):
             print("Clash 启动失败")
             return []
 
@@ -330,8 +329,8 @@ def filter_proxies_batch(proxies, batch_size=None, max_delay=MAX_DELAY_ROUND1, r
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
 
         # 测试完当前批次后关闭 Clash - 使用强力清理
-        if clash_process:
-            clash_process.terminate()
+        if clash_proc:
+            clash_proc.terminate()
         kill_clash()
 
     valid_names = {r[0] for r in results}
@@ -366,25 +365,23 @@ def resolve_countries(proxies):
 
     # 2. 启动 Clash，通过代理获取出口位置
     print("启动 Clash 以获取节点真实出口位置...")
-    global clash_process
     save_for_clash(proxies)  # 使用全部通过测试的节点生成配置
-    clash_process = start_clash()
-    if not wait_clash():
+    clash_proc = start_clash()
+    if not wait_clash(clash_proc):
         print("Clash 启动失败，使用 Server 位置命名")
-        clash_process = None
+        clash_proc = None
 
     # 3. 获取出口位置
     exit_country_map = {}
-    if clash_process:
+    if clash_proc:
         print(f"正在获取 {len(proxies)} 个节点的真实出口位置...")
         time.sleep(2)  # 等待 Clash 完全就绪
         exit_country_map = get_exit_country_batch(proxies, max_workers=EXIT_IP_WORKERS)
         print(f"获取到 {len(exit_country_map)} 个节点的出口位置")
 
         # 关闭 Clash
-        clash_process.terminate()
+        clash_proc.terminate()
         kill_clash()
-        clash_process = None
 
     # 4. 生成最终命名
     country_counters = {c: 1 for c in ALLOW_COUNTRIES}
@@ -437,13 +434,18 @@ def kill_clash():
             time.sleep(0.5)
             subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
+            # Linux 环境下更彻底的清理
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(0.5)
-            subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(1)
+            subprocess.run(["pkill", "-9", "mihomo"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(1)
+            # 额外确认：使用 fuser 释放端口
+            subprocess.run(["fuser", "-k", "9090/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(["fuser", "-k", "7890/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except:
         pass
-    # 等待端口释放 - 增加等待时间确保端口完全释放
-    time.sleep(3)
+    # 等待端口释放
+    time.sleep(2)
 
     # 确认端口已释放
     for port in [9090, 7890]:
@@ -486,7 +488,7 @@ def start_clash():
         print(f"❌ 无法执行 Clash 命令：{e}")
         return None
 
-def wait_clash():
+def wait_clash(process):
     """等待 Clash 启动，最多等待 30 秒"""
     print("等待 Clash 启动...")
     for i in range(30):
@@ -498,8 +500,8 @@ def wait_clash():
             if (i + 1) % 5 == 0:
                 print(f"已等待 {i+1} 秒...")
                 # 检查 Clash 进程是否还在运行
-                if clash_process and clash_process.poll() is not None:
-                    stdout, stderr = clash_process.communicate()
+                if process and process.poll() is not None:
+                    stdout, stderr = process.communicate()
                     if stderr:
                         print(f"Clash 进程已退出，错误输出：{stderr[:500]}")
                     return False
@@ -517,9 +519,6 @@ if __name__ == "__main__":
     # 临时命名用于测试
     for i, p in enumerate(raw):
         p["name"] = f"temp_{i}"
-
-    global clash_process
-    clash_process = None
 
     try:
         # 第二步：第一轮快速筛选（宽松条件）
@@ -546,6 +545,6 @@ if __name__ == "__main__":
             yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
         print(f"成功筛选出 {len(good_proxies)} 个节点并保存。")
-    finally:
-        if clash_process:
-            clash_process.terminate()
+    except Exception as e:
+        print(f"运行出错：{e}")
+        kill_clash()
