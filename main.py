@@ -434,14 +434,16 @@ def kill_clash():
     try:
         if os.name == 'nt':
             subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(0.5)
             subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(0.5)
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except:
         pass
-    # 等待端口释放
-    time.sleep(2)
+    # 等待端口释放 - 增加等待时间确保端口完全释放
+    time.sleep(3)
 
 def is_port_in_use(port):
     """检查端口是否被占用"""
@@ -459,7 +461,9 @@ def start_clash():
         if is_port_in_use(port):
             print(f"{port} 端口被占用，清理旧 Clash 进程...")
             kill_clash()
-            time.sleep(1)
+
+    # 强制等待确保端口完全释放
+    time.sleep(1)
 
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
