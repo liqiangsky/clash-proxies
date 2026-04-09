@@ -61,6 +61,9 @@ FETCH_TIMEOUT = 8
 IP_WORKERS = 15
 TEST_WORKERS = 80
 
+# 批次大小配置
+BATCH_SIZE = 300  # 每批次节点数，避免配置文件过大导致 Clash 启动超时
+
 # 线程安全的 IP 缓存
 import threading
 ip_cache = {}
@@ -285,8 +288,10 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
         pass
     return None
 
-def filter_proxies_batch(proxies, batch_size=500, max_delay=MAX_DELAY_ROUND1, round_name="筛选轮"):
+def filter_proxies_batch(proxies, batch_size=None, max_delay=MAX_DELAY_ROUND1, round_name="筛选轮"):
     """通用分批测试函数 - 支持多轮筛选"""
+    if batch_size is None:
+        batch_size = BATCH_SIZE
     results = []
     total = len(proxies)
     batches = (total + batch_size - 1) // batch_size
@@ -335,13 +340,17 @@ def filter_proxies_batch(proxies, batch_size=500, max_delay=MAX_DELAY_ROUND1, ro
     return out
 
 
-def filter_proxies_round1(proxies, batch_size=500):
+def filter_proxies_round1(proxies, batch_size=None):
     """第一轮：快速筛选，宽松条件"""
+    if batch_size is None:
+        batch_size = BATCH_SIZE
     return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND1, round_name="第一轮")
 
 
-def filter_proxies_round2(proxies, batch_size=500):
+def filter_proxies_round2(proxies, batch_size=None):
     """第二轮：严格筛选，确保质量"""
+    if batch_size is None:
+        batch_size = BATCH_SIZE
     return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND2, round_name="第二轮")
 
 
@@ -492,15 +501,15 @@ if __name__ == "__main__":
     clash_process = None
 
     try:
-        # 第二步：第一轮快速筛选（宽松条件）- 每批 500 个
-        passed_round1 = filter_proxies_round1(raw, batch_size=500)
+        # 第二步：第一轮快速筛选（宽松条件）
+        passed_round1 = filter_proxies_round1(raw)
 
         if not passed_round1:
             print("第一轮筛选无节点通过，退出")
             exit()
 
-        # 第三步：第二轮严格筛选（更严格条件）- 每批 500 个
-        passed_round2 = filter_proxies_round2(passed_round1, batch_size=500)
+        # 第三步：第二轮严格筛选（更严格条件）
+        passed_round2 = filter_proxies_round2(passed_round1)
 
         if not passed_round2:
             print("第二轮筛选无节点通过，退出")
