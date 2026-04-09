@@ -39,8 +39,9 @@ HEADERS = {"User-Agent": "Clash/1.0.0"}
 
 # 使用国内可访问的测试目标，更贴近实际使用场景
 TEST_URL = "https://www.google.com/generate_204"  # Google 204 测试，更轻量
-MAX_DELAY_ROUND1 = 5000  # 第一轮最大延迟 (ms) - 较宽松
-MAX_DELAY_ROUND2 = 3000  # 第二轮最大延迟 (ms) - 更严格
+
+# 5 轮过滤延迟阈值 (ms) - 逐步收紧
+MAX_DELAY_ROUNDS = [5000, 3000, 2000, 1000, 500]  # 从宽松到严格
 
 # 线程池配置
 FETCH_WORKERS = 10
@@ -243,7 +244,7 @@ def fetch_proxies():
     print(f"清洗去重后：{len(cleaned_proxies)} 个节点（待连通性测试）")
     return cleaned_proxies
 
-def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
+def test_google_access(name, max_delay=MAX_DELAY_ROUNDS[0]):
     """单次连通性测试"""
     safe_name = urllib.parse.quote(name)
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
@@ -257,15 +258,16 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
         pass
     return None
 
-def filter_proxies_batch(proxies, batch_size=None, max_delay=MAX_DELAY_ROUND1, round_name="筛选轮"):
-    """通用分批测试函数 - 支持多轮筛选"""
+
+def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0], round_num=1):
+    """通用单轮筛选函数"""
     if batch_size is None:
         batch_size = BATCH_SIZE
     results = []
     total = len(proxies)
     batches = (total + batch_size - 1) // batch_size
 
-    print(f"\n{round_name}筛选（延迟 ≤ {max_delay}ms），共 {batches} 批次...")
+    print(f"\n第{round_num}轮筛选（延迟 ≤ {max_delay}ms），共 {batches} 批次...")
 
     for batch_idx in range(batches):
         start = batch_idx * batch_size
@@ -304,22 +306,8 @@ def filter_proxies_batch(proxies, batch_size=None, max_delay=MAX_DELAY_ROUND1, r
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
-    print(f"\n{round_name}总计通过：{len(out)}/{total} 个节点")
+    print(f"\n第{round_num}轮总计通过：{len(out)}/{total} 个节点")
     return out
-
-
-def filter_proxies_round1(proxies, batch_size=None):
-    """第一轮：快速筛选，宽松条件"""
-    if batch_size is None:
-        batch_size = BATCH_SIZE
-    return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND1, round_name="第一轮")
-
-
-def filter_proxies_round2(proxies, batch_size=None):
-    """第二轮：严格筛选，确保质量"""
-    if batch_size is None:
-        batch_size = BATCH_SIZE
-    return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND2, round_name="第二轮")
 
 
 def save_for_clash(proxies):
@@ -463,28 +451,23 @@ if __name__ == "__main__":
         exit()
 
     try:
-        # 第二步：第一轮快速筛选（宽松条件）
-        passed_round1 = filter_proxies_round1(raw)
+        # 第二步：5 轮递进筛选（延迟要求逐步收紧）
+        current_proxies = raw
+        for round_idx, max_delay in enumerate(MAX_DELAY_ROUNDS, 1):
+            passed = filter_proxies_round(current_proxies, max_delay=max_delay, round_num=round_idx)
+            if not passed:
+                print(f"第{round_idx}轮筛选无节点通过，退出")
+                exit()
+            current_proxies = passed
 
-        if not passed_round1:
-            print("第一轮筛选无节点通过，退出")
-            exit()
-
-        # 第三步：第二轮严格筛选（更严格条件）
-        passed_round2 = filter_proxies_round2(passed_round1)
-
-        if not passed_round2:
-            print("第二轮筛选无节点通过，退出")
-            exit()
-
-        # 第四步：保存结果
+        # 第三步：保存结果
         os.makedirs("output", exist_ok=True)
-        final_data = {"proxies": passed_round2}
+        final_data = {"proxies": current_proxies}
 
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
             yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-        print(f"成功筛选出 {len(passed_round2)} 个节点并保存。")
+        print(f"\n成功筛选出 {len(current_proxies)} 个节点并保存。")
     except Exception as e:
         print(f"运行出错：{e}")
         kill_clash()
