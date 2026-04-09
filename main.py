@@ -214,35 +214,31 @@ def clean_proxy(p):
         elif not isinstance(val, list):
             p.pop("alpn")
 
-    # 深度清理 ws-opts/grpc-opts/http-opts
+    # 深度清理空配置项
     for opt_key in ["ws-opts", "grpc-opts", "http-opts"]:
         if opt_key in p:
             if not p[opt_key] or not isinstance(p[opt_key], dict):
                 p.pop(opt_key)
-                continue
-
-            # 清理 headers 中的无效 Host 字段
-            if "headers" in p[opt_key]:
-                headers = p[opt_key]["headers"]
-                if headers and isinstance(headers, dict):
-                    # 清理 Host 字段 - 必须是有效字符串
-                    if "Host" in headers:
-                        host_val = headers["Host"]
-                        if not host_val or not isinstance(host_val, str):
-                            headers.pop("Host")
-                        else:
-                            # 去除空格和不可见字符
-                            headers["Host"] = host_val.strip()
-                            # 验证 Host 格式（不能包含空格或特殊字符）
-                            if " " in headers["Host"] or headers["Host"] == "":
-                                headers.pop("Host")
-                    # 如果 headers 为空或只有空值，删除整个 headers
-                    headers = {k: v for k, v in headers.items() if v and isinstance(v, str)}
-                    if not headers:
+            else:
+                if "headers" in p[opt_key]:
+                    headers = p[opt_key]["headers"]
+                    if not headers or not isinstance(headers, dict):
                         p[opt_key].pop("headers")
+                    else:
+                        # 清理 headers 中非字符串的值
+                        for k in list(headers.keys()):
+                            v = headers[k]
+                            if not v or not isinstance(v, str):
+                                headers.pop(k)
+                        if not headers:
+                            p[opt_key].pop("headers")
+                if not p[opt_key]:
+                    p.pop(opt_key)
 
-            if not p[opt_key]:
-                p.pop(opt_key)
+    # 清理 reality-opts 中可能的无效配置
+    if "reality-opts" in p and p["reality-opts"]:
+        if not isinstance(p["reality-opts"], dict):
+            p.pop("reality-opts")
 
     # 强制端口为整数
     if "port" in p:
@@ -441,9 +437,21 @@ def save_for_clash(proxies):
 
 def save_batch_for_clash(batch):
     """为当前批次生成精简的 Clash 配置"""
-    save_for_clash(batch)
+    # 过滤掉可能导致 Clash 解析失败的节点
+    valid_batch = []
+    for p in batch:
+        # 跳过 reality 类型（sid 格式问题多）
+        if p.get("type") == "reality":
+            continue
+        # 跳过没有必要字段的节点
+        if not p.get("server") or not p.get("port"):
+            continue
+        valid_batch.append(p)
+
+    save_for_clash(valid_batch)
     file_size = os.path.getsize("run.yaml") / 1024
-    print(f"已生成 run.yaml，{len(batch)} 个节点，大小：{file_size:.1f} KB")
+    skipped = len(batch) - len(valid_batch)
+    print(f"已生成 run.yaml，{len(valid_batch)} 个节点{' (跳过 ' + str(skipped) + ' 个无效节点)' if skipped else ''}，大小：{file_size:.1f} KB")
 
 def kill_clash():
     """强力清理 Clash 进程"""
