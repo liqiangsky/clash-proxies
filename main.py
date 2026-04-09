@@ -104,7 +104,7 @@ def start_clash():
             "type": "ss",
             "server": "1.1.1.1",
             "port": 443,
-            "cipher": "aead-aes-128-gcm",
+            "cipher": "aes-128-gcm",
             "password": "test"
         }],
         "rules": ["MATCH,DIRECT"]
