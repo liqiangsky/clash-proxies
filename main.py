@@ -73,16 +73,21 @@ def kill_clash():
 def wait_clash():
     """检测 API 端口是否就绪"""
     print("等待 Clash 启动...")
-    for i in range(30):
+    for i in range(60):  # 增加到 60 秒
         try:
             with socket.create_connection(("127.0.0.1", 9090), timeout=1):
                 print(f"Clash 启动成功，耗时 {i+1} 秒")
                 return True
-        except:
-            if (i + 1) % 5 == 0:
-                print(f"已等待 {i+1} 秒...")
+        except Exception as e:
+            if (i + 1) % 10 == 0:
+                print(f"已等待 {i+1} 秒... (端口未就绪)")
             time.sleep(1)
-    print("Clash 启动超时")
+    print("Clash 启动超时 (60 秒)")
+    # 输出日志便于调试
+    if os.path.exists("clash.log"):
+        with open("clash.log", "r") as f:
+            print("=== Clash 启动日志 ===")
+            print(f.read()[:2000])  # 只输出前 2000 字符
     return False
 
 def start_clash():
@@ -93,6 +98,7 @@ def start_clash():
     init_config = {
         "mixed-port": 7890,
         "external-controller": "127.0.0.1:9090",
+        "log-level": "info",
         "proxies": [{
             "name": "init",
             "type": "ss",
@@ -110,11 +116,23 @@ def start_clash():
         subprocess.run(["chmod", "+x", "./clash"], check=False)
 
     try:
-        process = subprocess.Popen(
-            ["./clash", "-f", "run.yaml"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
+        # 在 Linux 下使用 nohup 确保进程独立运行
+        if os.name == 'nt':
+            process = subprocess.Popen(
+                ["./clash", "-f", "run.yaml"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+        else:
+            # Linux 下将输出写入文件便于调试
+            with open("clash.log", "w") as f:
+                process = subprocess.Popen(
+                    ["./clash", "-f", "run.yaml"],
+                    stdout=f,
+                    stderr=subprocess.STDOUT,
+                    preexec_fn=os.setsid  # 创建新进程组
+                )
+            print("Clash 已启动，日志输出到 clash.log")
         return process
     except Exception as e:
         print(f"❌ 无法执行 Clash 命令：{e}")
