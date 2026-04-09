@@ -273,10 +273,10 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
         results.extend(batch_results)
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
 
-        # 测试完当前批次后关闭 Clash
+        # 测试完当前批次后关闭 Clash - 使用强力清理
         if clash_process:
             clash_process.terminate()
-            time.sleep(1)
+        kill_clash()
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -322,10 +322,10 @@ def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
         results.extend(batch_results)
         print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
 
-        # 测试完当前批次后关闭 Clash
+        # 测试完当前批次后关闭 Clash - 使用强力清理
         if clash_process:
             clash_process.terminate()
-            time.sleep(1)
+        kill_clash()
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -385,7 +385,35 @@ def save_batch_for_clash(all_proxies_dict, batch):
     file_size = os.path.getsize("run.yaml") / 1024
     print(f"已生成 run.yaml，{len(batch_proxies)} 个节点，大小：{file_size:.1f} KB")
 
+def kill_clash():
+    """强力清理 Clash 进程"""
+    try:
+        if os.name == 'nt':
+            subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except:
+        pass
+    time.sleep(1)
+
+def is_port_in_use(port):
+    """检查端口是否被占用"""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        try:
+            s.settimeout(1)
+            result = s.connect_ex(('127.0.0.1', port))
+            return result == 0
+        except:
+            return False
+
 def start_clash():
+    # 启动前先确保 9090 端口可用
+    if is_port_in_use(9090):
+        print("9090 端口被占用，清理旧 Clash 进程...")
+        kill_clash()
+
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
     try:
@@ -400,15 +428,15 @@ def start_clash():
         return None
 
 def wait_clash():
-    """等待 Clash 启动，最多等待 60 秒"""
+    """等待 Clash 启动，最多等待 30 秒"""
     print("等待 Clash 启动...")
-    for i in range(60):
+    for i in range(30):
         try:
             socket.create_connection(("127.0.0.1", 9090), timeout=1)
             print(f"Clash 启动成功，耗时 {i+1} 秒")
             return True
         except:
-            if (i + 1) % 10 == 0:
+            if (i + 1) % 5 == 0:
                 print(f"已等待 {i+1} 秒...")
             time.sleep(1)
     print("Clash 启动超时")
