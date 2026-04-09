@@ -292,8 +292,9 @@ def save_for_clash(proxies):
 
 def save_batch_for_clash(batch):
     """为当前批次生成精简的 Clash 配置"""
-    # 过滤掉可能导致 Clash 解析失败的节点
+    # 过滤掉可能导致 Clash 解析失败的节点，并确保名称唯一
     valid_batch = []
+    seen_names = {}  # name -> count
     for p in batch:
         # 跳过 reality 类型（sid 格式问题多）
         if p.get("type") == "reality":
@@ -301,7 +302,16 @@ def save_batch_for_clash(batch):
         # 跳过没有必要字段的节点
         if not p.get("server") or not p.get("port"):
             continue
-        valid_batch.append(p)
+
+        # 确保名称唯一，重复则添加后缀
+        name = p.get("name")
+        if name:
+            if name in seen_names:
+                seen_names[name] += 1
+                p["name"] = f"{name}_{seen_names[name]}"
+            else:
+                seen_names[name] = 0
+            valid_batch.append(p)
 
     save_for_clash(valid_batch)
     file_size = os.path.getsize("run.yaml") / 1024
