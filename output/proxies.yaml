@@ -1,32 +1,788 @@
 proxies:
-- name: 日本 01
-  server: 160.16.85.33
+- alterId: '0'
+  cipher: auto
+  name: 美国 01
+  network: tcp
+  port: 180
+  server: 82.198.246.250
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  udp: true
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  xudp: true
+- cipher: none
+  name: 韩国 01
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    host: ylnhh.us.ci
+    mode: websocket
+    mux: false
+    path: 14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+  port: 19655
+  server: 211.48.77.114
+  type: ss
+  udp: true
+- client-fingerprint: chrome
+  encryption: none
+  flow: xtls-rprx-vision
+  http-opts:
+    path:
+    - /
+  name: 荷兰 01
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: pbO31C8T53OfUhnw152DBaQ0qRPPcStHth61s5OYdV4
+    short-id: aabbccdd
+  server: 194.147.221.6
+  servername: www.microsoft.com
+  tls: true
+  type: vless
+  udp: true
+  uuid: 1a76bf9d-e3f8-49ca-a0ca-d7388ecf452f
+  xudp: true
+- cipher: none
+  name: 美国 02
+  password: 3e96ef7d-8637-42c2-ac73-75182196e755
+  plugin: v2ray-plugin
+  plugin-opts:
+    host: mfvpn.fuchen.indevs.in
+    mode: websocket
+    mux: false
+    path: 3e96ef7d-8637-42c2-ac73-75182196e755/?ed=2560
+    tls: true
+  port: 443
+  server: 199.181.197.38
+  type: ss
+  udp: true
+- name: 香港 01
+  network: tcp
+  password: BxceQaOe
+  port: 22045
+  server: 54.46.47.243
+  skip-cert-verify: true
+  sni: t.me%252Fripaojiedian
   type: trojan
-  country: 🇯🇵JP
-  port: 4019
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
+- name: 越南 01
+  server: 103.186.154.163
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  delay: 1834
+- name: 越南 02
+  server: 103.186.154.252
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  delay: 449
+- name: 德国 01
+  server: 57.129.95.198
+  type: ss
+  country: 🇫🇷FR
+  port: 11201
+  password: d6b0973401858b29
+  cipher: chacha20-ietf-poly1305
+- name: 荷兰 02
+  server: 82.38.31.210
+  type: ss
+  country: 🇬🇧GB
+  port: 8080
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  cipher: chacha20-ietf-poly1305
+- name: 美国 03
+  server: 94.72.127.58
+  type: ss
+  country: 🇺🇸US
+  port: 443
+  password: jJHq807bQ7TM0yOh
+  cipher: aes-256-gcm
+- name: 荷兰 03
+  server: 82.38.31.199
+  type: ss
+  country: 🇬🇧GB
+  port: 8080
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  cipher: chacha20-ietf-poly1305
+- name: 荷兰 04
+  server: nl-4.tr202512.com
+  type: trojan
+  country: 🇳🇱NL
+  port: 443
+  password: M08tvzYWtUEJNtbpHp
   skip-cert-verify: true
   udp: true
-- name: 美国 01
-  server: 98.159.108.13
+- name: 香港 02
+  server: v30.hdacd.com
+  type: vmess
+  country: 🇮🇷IR
+  port: 30830
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  network: tcp
+  servername: cdnfire.xiaomispeed.com
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 美国 04
+  server: 209.126.84.189
   type: vmess
   country: 🇺🇸US
-  port: 22379
-  uuid: 0f15e38d-3bdf-4dc0-aeb4-01085838d7b3
+  port: 443
+  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: 209.126.84.189
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /vmessws
+    headers:
+      HOST: 209.126.84.189
+- name: 德国 02
+  server: 185.94.29.156
+  port: 4001
+  type: vless
+  uuid: 00000000-0000-4000-8000-000000000000
+  tls: true
+  skip-cert-verify: true
+  servername: sub.mot.ip-ddns.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: sub.mot.ip-ddns.com
+  udp: true
+- name: 法国 01
+  server: 51.210.151.165
+  port: 8443
+  type: vless
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  servername: sni.111000.v6.navy
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: sni.111000.v6.navy
+  udp: true
+- name: 香港 03
+  server: 1389306e-t9w4g0-tcr22d-1rsuw.hkt.gotochinatown.net
+  port: 80
+  type: vmess
+  uuid: 0de37cdc-abff-11ef-b7c6-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+  udp: true
+- cipher: aes-256-cfb
+  name: 越南 03
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  plugin: ''
+  plugin-opts: {}
+  port: 38388
+  server: 103.186.155.30
+  type: ss
+  udp: false
+- cipher: aes-256-cfb
+  name: 越南 04
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  plugin: ''
+  plugin-opts: {}
+  port: 38388
+  server: 103.186.155.124
+  type: ss
+  udp: false
+- name: 荷兰 05
+  type: vless
+  server: 150.251.145.242
+  port: 8443
+  uuid: 4b056394-2f40-11f1-bffe-46c4782ac1a7
+  servername: www.apple.com
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: deadbeef42
+- name: 加拿大 01
+  type: vless
+  server: jp.111000.cc.cd
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  network: ws
+  servername: sni.111000.dynv6.net
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /?ed=2560&proxyip=ip.111000.de5.net:443
+    headers:
+      Host: sni.111000.dynv6.net
+- name: 日本 01
+  type: vless
+  server: dongjing1.zqjsqapi.com
+  port: 443
+  uuid: 8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19
+  network: ws
+  servername: dongjing1.zqjsqapi.com
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /proxy
+    headers:
+      Host: dongjing1.zqjsqapi.com
+- name: 韩国 02
+  type: vless
+  server: 130.162.131.60
+  port: 9
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  servername: gavorbhj.chinam.indevs.in
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /danfeng?ed=2560
+    headers:
+      Host: gavorbhj.chinam.indevs.in
+- name: 荷兰 06
+  type: vless
+  server: 198.199.126.228
+  port: 2053
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  servername: gavorbhj.chinam.indevs.in
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /danfeng?ed=2560
+    headers:
+      Host: gavorbhj.chinam.indevs.in
+- name: 美国 05
+  type: vless
+  server: 38.22.237.79
+  port: 39738
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  servername: gavorbhj.chinam.indevs.in
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /danfeng?ed=2560
+    headers:
+      Host: gavorbhj.chinam.indevs.in
+- name: 加拿大 02
+  type: vless
+  server: cf8.danfeng.eu.org
+  port: 2096
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  servername: gavorbhj.chinam.indevs.in
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /danfeng?ed=2560
+    headers:
+      Host: gavorbhj.chinam.indevs.in
+- name: 美国 06
+  type: vless
+  server: 135.84.74.43
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  network: ws
+  servername: sni.111000.v6.navy
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /
+    headers:
+      Host: sni.111000.v6.navy
+- name: 韩国 03
+  type: vless
+  server: 138.2.117.41
+  port: 587
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  servername: gavorbhj.chinam.indevs.in
+  tls: true
+  client-fingerprint: chrome
+  ws-opts:
+    path: /danfeng?ed=2560
+    headers:
+      Host: gavorbhj.chinam.indevs.in
+- name: 加拿大 03
+  network: ws
+  port: 443
+  server: betty.ns.cloudflare.com
+  servername: octopusss4.com
+  tls: true
+  type: vless
+  uuid: fc965ad9-bdd7-4815-ad71-b39ec5972dc1
+  ws-opts:
+    headers:
+      Host: octopusss4.com
+    path: /tsghdws
+- name: 美国 07
+  server: 23.177.40.226
+  type: ss
+  port: 30011
+  password: somebody
+  cipher: chacha20-ietf-poly1305
+  plugin: obfs
+  plugin-opts:
+    host: 20xteamxa9-usc1-a7xr.update.microsoft.com
+    mode: http
+- name: 香港 04
+  server: 1fd3ae26-t8nog0-tpftcp-13x18.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  uuid: e4499a62-0cfe-11eb-ad8c-f23c9164ca5d
+  alterId: 2
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+- name: 香港 05
+  server: 4b5ef466-t8pj40-tbicd9-1go3q.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  uuid: 19dd9c70-e4a5-11ed-8347-f23c9164ca5d
+  alterId: 2
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+- name: 香港 06
+  server: 6f65c092-t8wxs0-tighxj-12hj8.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  udp: true
+  uuid: 5acc7a7c-d7ea-11eb-8673-f23c9164ca5d
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      Host: 6f65c092-t8wxs0-tighxj-12hj8.hkt.gotochinatown.net
+- name: 香港 07
+  server: ea9bd486-t9mv40-ta00rd-1o8ak.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  udp: true
+  uuid: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  alterId: 2
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+- name: 香港 08
+  server: 1dacb9ee-t8nog0-tpw4i4-1pckg.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  udp: true
+  uuid: 526a1128-7487-11ee-9bca-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      Host: 1dacb9ee-t8nog0-tpw4i4-1pckg.hkt.gotochinatown.net
+- name: 香港 09
+  server: fd5a0a4d-t8wxs0-te0v28-1mh67.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  udp: true
+  uuid: e1c7fbbc-96b6-11ef-8563-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+- name: 香港 10
+  server: 513b6626-t9w4g0-tcinla-hrtf.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  udp: true
+  uuid: 0da8651e-e1f6-11ec-bd7c-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+- name: 香港 11
+  server: e6cb2dd4-t8wxs0-tphxte-1h5u7.hkt.gotochinatown.net
+  type: vmess
+  port: 80
+  uuid: e3fdbd22-8c17-11ee-ace4-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+- name: 香港 12
+  server: f307cee0-t70f40-tpftcp-13x18.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: e4499a62-0cfe-11eb-ad8c-f23c9164ca5d
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 13
+  server: 29f495e4-t94cg0-tairte-1m0fq.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: a698c4a6-c3c9-11ee-9693-f23c91cfbbc9
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 14
+  server: 7cce4d1a-t6r5s0-tjsm26-6gn6.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: c12f73f6-e8c7-11ed-9246-f23c9164ca5d
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 15
+  server: ebc00a3a-t6r5s0-tn57fp-5ifr.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: ecfab6c8-df5b-11ed-98a7-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 16
+  server: 3c10fcdf-t6r5s0-tdcdb7-1k27l.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: ba4b1f2e-c985-11ed-9c0c-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 17
+  server: 6fdda999-t70f40-tlm64c-xm0q.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: 3437f34e-1b77-11eb-8684-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: 6fdda999-t70f40-tlm64c-xm0q.hkt.gotochinatown.net
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: 6fdda999-t70f40-tlm64c-xm0q.hkt.gotochinatown.net
+- name: 香港 18
+  server: 0ca4305f-t6r5s0-thv9l4-1jbj0.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: b2c6384c-f63d-11ec-b1b3-f23c91cfbbc9
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: 0ca4305f-t6r5s0-thv9l4-1jbj0.hkt.gotochinatown.net
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: 0ca4305f-t6r5s0-thv9l4-1jbj0.hkt.gotochinatown.net
+- name: 香港 19
+  server: 7d833b55-t8pj40-thd0h1-1rz5s.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: 40e084d6-0316-11f0-90e2-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 20
+  server: f723b78e-t6r5s0-tgl02u-1jr1u.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: 2c01eae6-0b6a-11ee-a058-f23c91369f2d
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 21
+  server: f7512c32-tbl8g0-tnfe2z-1s4hc.hkt.gotochinatown.net
+  type: vmess
+  country: 🇭🇰HK
+  port: 80
+  uuid: aafedc64-9c23-11ef-a79f-f23c91cfbbc9
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: broadcastlv.chat.bilibili.com
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+- name: 香港 22
+  server: 151.242.180.91
+  type: vmess
+  country: 🇮🇷IR
+  port: 30812
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
   alterId: 0
   cipher: auto
   network: tcp
   h2-opts: {}
   skip-cert-verify: true
-- name: 台湾 01
-  server: r3mrcg007134n4g.cybervena.com
+- name: 香港 23
+  server: c4ced910-t70f40-tdahby-1tnab.hkt.gotochinatown.net
+  type: vmess
+  country: 🏁 ZZ
+  port: 80
+  uuid: ca9c0c54-1513-11f0-8a7b-f23c913c8d2b
+  alterId: 2
+  cipher: auto
+  network: ws
+  servername: c4ced910-t70f40-tdahby-1tnab.hkt.gotochinatown.net
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: c4ced910-t70f40-tdahby-1tnab.hkt.gotochinatown.net
+- name: 荷兰 07
+  server: 213.109.147.242
   type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  port: 62685
+  password: VpKABcOpNNA0l5G2AVOmw8
   cipher: chacha20-ietf-poly1305
-- name: 韩国 01
+- name: 韩国 04
+  server: 221.139.79.57
+  type: ss
+  port: 13979
+  udp: true
+  password: qwerREWQ@@
+  cipher: aes-256-cfb
+- name: 荷兰 08
+  server: 193.29.139.199
+  type: ss
+  port: 8080
+  password: QCXDxuDlTTMD7jtgHUjIoj
+  cipher: chacha20-ietf-poly1305
+- name: 美国 08
+  server: 37.19.198.243
+  type: ss
+  port: 443
+  password: shadowsocks
+  cipher: aes-128-gcm
+- name: 越南 05
+  server: 103.186.155.20
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 06
+  server: 103.186.154.230
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 07
+  server: 103.186.155.21
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 08
+  server: 103.186.155.24
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 09
+  server: 103.186.154.190
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 10
+  server: 103.186.154.24
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 11
+  server: 103.186.155.109
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 12
+  server: 103.186.154.33
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 13
+  server: 103.186.154.225
+  type: ss
+  country: 🇨🇳 CN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 俄罗斯 01
+  server: 212.192.14.226
+  type: ss
+  country: 🇪🇸ES
+  port: 41968
+  password: gC7aQv9DsENaVfKzTPDKYV
+  cipher: chacha20-ietf-poly1305
+- name: 法国 02
+  server: 51.178.114.83
+  type: ss
+  country: 🇫🇷FR
+  port: 11202
+  password: d5b878cbb46f3e33
+  cipher: chacha20-ietf-poly1305
+- name: 日本 02
+  server: 149.22.87.240
+  type: ss
+  country: 🇬🇧GB
+  port: 443
+  password: shadowsocks
+  cipher: aes-128-gcm
+- name: 荷兰 09
+  server: 82.38.31.124
+  type: ss
+  country: 🇬🇧GB
+  port: 8080
+  password: oZIoA69Q8yhcQV8ka3Pa3A
+  cipher: chacha20-ietf-poly1305
+- name: 英国 01
+  server: 46.250.254.174
+  type: ss
+  country: 🇬🇧GB
+  port: 80
+  password: Tqd9GppXpXB8rpc8
+  cipher: aes-256-gcm
+- name: 英国 02
+  server: 46.250.254.174
+  type: ss
+  country: 🇬🇧GB
+  port: 443
+  password: Tqd9GppXpXB8rpc8
+  cipher: aes-256-gcm
+- name: 日本 03
+  server: 149.22.87.204
+  type: ss
+  country: 🇬🇧GB
+  port: 443
+  password: shadowsocks
+  cipher: aes-128-gcm
+- name: 韩国 05
   server: cc0707a.iamnew2020.top
   type: trojan
   country: 🇬🇧GB
@@ -34,30 +790,3408 @@ proxies:
   password: 6d661a77e6534a8e
   skip-cert-verify: true
   udp: true
-- name: 美国 02
-  server: 154.53.60.212
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: ZfbPFDdeBj0B1Txs
-  cipher: aes-256-gcm
-- name: 美国 03
-  server: 66.94.125.178
-  type: ss
-  country: 🇺🇸US
-  port: 80
-  password: 14CLBaFBqwqxBJy6
-  cipher: aes-256-gcm
-- name: 美国 04
-  server: 173.249.209.146
+- name: 香港 24
+  server: 47.243.135.74
   type: vmess
-  country: 🇺🇸US
-  port: 20086
-  uuid: 3935c2dc-dbb0-43f7-b367-fe89abe87fdf
+  country: 🇭🇰HK
+  port: 55185
+  uuid: 1375985e-334a-4c25-8f64-52a182bc8037
   alterId: 0
   cipher: auto
   network: ws
   h2-opts: {}
   skip-cert-verify: true
   ws-opts:
+    path: /Notif_Chat
+- name: 日本 04
+  server: 103.106.228.175
+  type: ss
+  country: 🇮🇳IN
+  port: 8009
+  password: XKFKl2rULjIp74
+  cipher: aes-256-gcm
+- name: 日本 05
+  server: 172.111.146.64
+  type: vmess
+  country: 🇯🇵JP
+  port: 80
+  uuid: 05b8c783-7f59-47f9-9923-06a465679f6a
+  alterId: 0
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /vmess/
+- name: 荷兰 10
+  server: 193.29.139.179
+  type: ss
+  country: 🇳🇱 NL
+  port: 8080
+  password: cvII85TrW6n0OGyfpHVS1u
+  cipher: chacha20-ietf-poly1305
+- name: 荷兰 11
+  server: 109.201.152.181
+  type: ss
+  country: 🇳🇱 NL
+  port: 443
+  udp: true
+  password: shadowsocks
+  cipher: aes-128-cfb
+- name: 荷兰 12
+  server: 193.29.139.251
+  type: ss
+  country: 🇳🇱 NL
+  port: 8080
+  password: oZIoA69Q8yhcQV8ka3Pa3A
+  cipher: chacha20-ietf-poly1305
+- name: 美国 09
+  server: 94.72.127.58
+  type: ss
+  country: 🇵🇱PL
+  port: 80
+  password: jJHq807bQ7TM0yOh
+  cipher: aes-256-gcm
+- name: 新加坡 01
+  server: 194.233.94.119
+  type: ss
+  country: 🇸🇬SG
+  port: 443
+  password: 8t2xeemUtyui4zAv
+  cipher: aes-256-gcm
+- name: 新加坡 02
+  server: 194.233.94.119
+  type: ss
+  country: 🇸🇬SG
+  port: 80
+  password: 8t2xeemUtyui4zAv
+  cipher: aes-256-gcm
+- name: 新加坡 03
+  server: 194.233.75.190
+  type: ss
+  country: 🇸🇬SG
+  port: 80
+  password: qKvfX7yQnT99OMu3
+  cipher: aes-256-gcm
+- name: 土耳其 01
+  server: 185.123.101.64
+  type: ss
+  country: 🇹🇷TR
+  port: 2376
+  password: faBAoD54k87UJG7
+  cipher: aes-256-gcm
+- name: 台湾 01
+  server: 185.189.160.105
+  type: ss
+  country: 🇹🇼TW
+  port: 41632
+  password: qwerREWQ@@
+  cipher: aes-256-cfb
+- name: 台湾 02
+  server: n8mrcg005964vnc.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
+- name: 美国 10
+  server: 173.244.56.6
+  type: ss
+  country: 🇺🇸US
+  port: 443
+  password: shadowsocks
+  cipher: aes-128-gcm
+- name: 德国 03
+  server: 2.58.81.221
+  type: ss
+  country: 🇺🇸US
+  port: 80
+  password: 9dQS3geeylyrRth9
+  cipher: aes-256-gcm
+- name: 美国 11
+  server: 154.53.63.42
+  type: ss
+  country: 🇺🇸US
+  port: 80
+  password: SM7WYtAwvBORXKjI
+  cipher: aes-256-gcm
+- name: 澳大利亚 01
+  server: 154.26.156.99
+  type: ss
+  country: 🇺🇸US
+  port: 47386
+  password: 78322e4b934870b6
+  cipher: chacha20-ietf-poly1305
+- name: 意大利 01
+  server: 38.180.195.193
+  type: ss
+  country: 🇺🇸US
+  port: 443
+  password: SwTShXYSQd404FISs8NFeJ
+  cipher: chacha20-ietf-poly1305
+- name: 美国 12
+  server: 98.94.81.104
+  type: ss
+  country: 🇺🇸US
+  port: 443
+  password: amazonskr05
+  cipher: aes-256-cfb
+- name: 香港 25
+  server: n1753101277.4u9ma.icu
+  type: vmess
+  country: 🇺🇸US
+  port: 443
+  uuid: 6ea48dfe-7de2-45dc-9267-d4d9effad9fc
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: n1753101277.4u9ma.icu
+  h2-opts: {}
+  tls: true
+  skip-cert-verify: true
+  ws-opts:
     path: /
+    headers:
+      HOST: n1753101277.4u9ma.icu
+- name: 越南 14
+  server: 103.186.154.40
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 15
+  server: 103.186.155.63
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 16
+  server: 103.186.155.147
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 17
+  server: 103.186.155.139
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 18
+  server: 103.186.155.81
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 19
+  server: 103.186.154.60
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 20
+  server: 103.186.154.62
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 21
+  server: 103.186.155.240
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 22
+  server: 103.186.154.198
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 23
+  server: 103.186.155.69
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 24
+  server: 103.186.155.26
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 25
+  server: 103.186.154.219
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 26
+  server: 103.186.155.36
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 27
+  server: 103.186.155.224
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 28
+  server: 103.186.155.134
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 29
+  server: 103.186.155.236
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 30
+  server: 103.186.155.234
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 31
+  server: 103.186.154.204
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 32
+  server: 103.186.155.28
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 33
+  server: 103.186.155.46
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 34
+  server: 103.186.155.231
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 35
+  server: 103.186.155.183
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 36
+  server: 103.186.155.232
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 37
+  server: 103.186.154.173
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 38
+  server: 103.186.155.206
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 39
+  server: 103.186.154.192
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 40
+  server: 103.186.155.223
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 41
+  server: 103.186.155.37
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 42
+  server: 103.186.155.52
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 43
+  server: 103.186.155.3
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 44
+  server: 103.186.154.228
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 45
+  server: 103.186.155.128
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 越南 46
+  server: 103.186.154.15
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 加拿大 04
+  server: digitalocean.com
+  type: vmess
+  country: 🏁ZZ
+  port: 2086
+  uuid: 2c366360-0333-4738-9423-6d5b378e3594
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: er250901.bptimecsgo.xyz
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /4397hy/843uhbp
+    headers:
+      HOST: er250901.bptimecsgo.xyz
+- name: 加拿大 05
+  server: static.cloudflareinsights.com
+  type: vmess
+  country: 🏁ZZ
+  port: 80
+  uuid: 8e34e170-13ae-4892-9d20-05962acc9f84
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: fr.eva.hidns.co
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: fr.eva.hidns.co
+- name: 加拿大 06
+  server: yidong.19931101.xyz
+  type: vmess
+  country: 🏁ZZ
+  port: 80
+  uuid: 8e34e170-13ae-4892-9d20-05962acc9f84
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: fr.eva.hidns.co
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /
+    headers:
+      HOST: fr.eva.hidns.co
+- alterId: '2'
+  cipher: auto
+  name: 香港 26
+  network: ws
+  port: 80
+  server: 94c07bd9-t8rds0-tgzvop-hns7.hkt.gotochinatown.net
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 6857f1bc-f27b-11ea-87ad-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: 94c07bd9-t8rds0-tgzvop-hns7.hkt.gotochinatown.net
+    path: /
+  xudp: true
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 27
+  network: ws
+  port: 80
+  server: 223f4e42-t8wxs0-tbnk1n-ueq.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 91df5a86-fcdd-11ef-94aa-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- down: ''
+  fingerprint: ''
+  name: 日本 06
+  obfs: ''
+  obfs-password: ''
+  password: 9d9519a0-7df0-42a4-a765-29512ab65f5c
+  port: 55000
+  server: 151.241.130.90
+  skip-cert-verify: true
+  sni: www.bing.com
+  type: hysteria2
+  up: ''
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 28
+  network: ws
+  port: 80
+  server: f73eab3b-t9w4g0-ta6lxc-jjv2.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 31676725-b0fd-fed2-c857-2da8ce5a6e4f
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 29
+  network: ws
+  port: 80
+  server: a7ecc74f-t9zts0-tbnk1n-ueq.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 91df5a86-fcdd-11ef-94aa-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 30
+  network: ws
+  port: 80
+  server: 5b7dee02-t8ysg0-thiwul-1gcq2.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 759bf004-6137-11ec-bd7c-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- name: 加拿大 07
+  network: ws
+  port: 2095
+  server: 198.41.208.22
+  type: vless
+  udp: true
+  uuid: ef23616d-8a9d-4b22-b2f5-9bda864de179
+  ws-opts:
+    early-data-header-name: Sec-WebSocket-Protocol
+    headers:
+      Host: index.arcane509.workers.dev
+      User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko)
+        Chrome/41.0.2272.104 Safari/537.36
+    max-early-data: 2560
+    path: /ripbdigi5hdb
+  xudp: true
+- alterId: '2'
+  cipher: auto
+  name: 香港 31
+  network: ws
+  port: 80
+  server: 7c31dbe6-t9mv40-tipjoa-1slop.hkt.gotochinatown.net
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 520b9126-9870-11ef-81b0-f23c9164ca5d
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+  xudp: true
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 32
+  network: ws
+  port: 80
+  server: 2abcdbc9-t9zts0-tarubk-1qkeg.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: a305ac08-d136-11ee-b6db-f23c91cfbbc9
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- name: 加拿大 08
+  network: ws
+  port: 2052
+  server: www.visa.com.sg
+  tls: false
+  type: vless
+  udp: true
+  uuid: 25efc727-e853-49ba-9609-3c20009d0e7a
+  ws-opts:
+    headers:
+      Host: winbiss-0tpka6-v1.winbiss.workers.dev
+    path: /?ed=2560
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 33
+  network: ws
+  port: 80
+  server: 46876f2c-t9qkg0-t9x9zr-1lkt0.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: cd1b0ae0-4010-11ee-953a-f23c9164ca5d
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 34
+  network: ws
+  port: 80
+  server: 130b8ee3-t9zts0-tb5nzx-1mqag.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: b585dac6-dc69-11ef-9f1c-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 35
+  network: ws
+  port: 80
+  server: 73a9ba41-t9w4g0-tvb36r-1qwom.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 8d0ec7cc-eefa-11ee-9b59-f23c91cfbbc9
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 36
+  network: ws
+  port: 80
+  server: 4e9115d3-t9zts0-tnsc3a-1f0gu.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 3085fcf8-a69c-11ec-bd7c-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 37
+  network: ws
+  port: 80
+  server: 59310654-t8v340-tdadcv-1hd7v.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: f73c64bc-9e8c-11ec-bd7c-f23c913c8d2b
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- alterId: 2
+  cipher: auto
+  client-fingerprint: chrome
+  name: 香港 38
+  network: ws
+  port: 80
+  server: add774be-t9w4g0-th9kx9-1os43.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  udp: true
+  uuid: 96c798f6-4645-11ee-b8a1-f23c9164ca5d
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- name: 美国 13
+  server: 159.246.55.238
+  port: 2096
+  type: vless
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  alterId: 0
+  cipher: auto
+  security: tls
+  tls: true
+  skip-cert-verify: true
+  servername: sni.jpmj.dev
+  network: ws
+  path: /?ed
+  host: sni.jpmj.dev
+  alpn:
+  - http/1.1
+  ws-opts:
+    path: /?ed
+    headers:
+      Host: sni.jpmj.dev
+  udp: true
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 154.53.63.42
+  port: 443
+  cipher: aes-256-gcm
+  password: SM7WYtAwvBORXKjI
+  name: 美国 14
+- type: vless
+  name: 美国 15
+  server: 15.204.97.206
+  port: 23576
+  uuid: 48ff2b70-e180-582f-8866-d9a2edeed5f5
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: 1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s
+    short-id: '01'
+  network: tcp
+  encryption: none
+  servername: fuck.rkn
+- type: vless
+  name: 美国 16
+  server: 15.204.91.171
+  port: 443
+  uuid: 2e1add4a64494887bd4b2a3a211e58e6
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: QbZBeFzqbP3XfrldMaIkdu-tr91zqBUIQ-WIkXM2p14
+    short-id: 96e03e0f184639ef
+  network: tcp
+  servername: www.asus.com
+- auth: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  name: 美国 17
+  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  port: 443
+  server: vpn-us-023.fastervpn.world
+  skip-cert-verify: true
+  sni: vpn-us-023.fastervpn.world
+  type: hysteria2
+- type: vless
+  name: 加拿大 09
+  server: www.digitalocean.com
+  port: 2053
+  uuid: d37a75db-76b6-4db8-b213-0d5b044d138d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: hio-awx.pages.dev
+    path: /fast
+  encryption: none
+  servername: hio-awx.pages.dev
+- name: 加拿大 10
+  network: ws
+  port: 2087
+  server: 172.64.144.202
+  tls: true
+  type: vless
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  servername: xqkxw.ccwu.cc
+- type: vless
+  name: 加拿大 11
+  server: 172.64.145.249
+  port: 2083
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  encryption: none
+  servername: xqkxw.ccwu.cc
+- name: 加拿大 12
+  network: ws
+  port: 2087
+  server: 104.19.62.178
+  tls: true
+  type: vless
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  servername: xqkxw.ccwu.cc
+- name: 德国 04
+  type: vless
+  server: 185.135.9.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.jpmj.dev
+  client-fingerprint: chrome
+  servername: sni.jpmj.dev
+- name: 加拿大 13
+  network: ws
+  port: 2096
+  server: 104.26.0.196
+  tls: true
+  type: vless
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  servername: xqkxw.ccwu.cc
+- type: vless
+  name: 加拿大 14
+  server: 173.245.59.174
+  port: 2053
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  encryption: none
+  servername: xqkxw.ccwu.cc
+- name: 加拿大 15
+  network: ws
+  port: 2087
+  server: 172.64.147.159
+  tls: true
+  type: vless
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  servername: xqkxw.ccwu.cc
+- type: vless
+  name: 加拿大 16
+  server: 104.19.49.113
+  port: 2083
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /
+  servername: xqkxw.ccwu.cc
+- type: vless
+  name: 加拿大 17
+  server: 104.20.24.24
+  port: 443
+  uuid: 6fb65356-788e-4118-8280-148ec6eca18a
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: xn--cz8h.pages.dev
+    path: /pyip
+  encryption: none
+  servername: xn--cz8h.pages.dev
+- alpn:
+  - h2
+  client-fingerprint: randomized
+  name: 加拿大 18
+  network: ws
+  port: 443
+  server: worker-5n2.pages.dev
+  tls: true
+  type: vless
+  uuid: 89b3cbba-e6ac-485a-9481-976a0415eab9
+  ws-opts:
+    headers:
+      Host: wOrker-5N2.pAgeS.DEv
+    path: /%2F
+  servername: WoRKer-5n2.pAGEs.DEv
+- name: 加拿大 19
+  network: ws
+  port: 443
+  server: 172.64.145.250
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: 8a30cf48-9fa2-46c5-8815-2822b12852e0
+  ws-opts:
+    headers:
+      Host: xqkxw.ccwu.cc
+    path: /%2F
+  servername: xqkxw.ccwu.cc
+- type: vless
+  name: 加拿大 20
+  server: 172.64.146.163
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?Telegram%F0%9F%87%A8%F0%9F%87%B3%40WangCai2=
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 美国 18
+  type: vmess
+  server: 47.90.244.153
+  port: 8443
+  cipher: auto
+  uuid: 65e2a985-ad20-4486-a7ec-b67b20ee56af
+  alterId: 0
+  tls: false
+  network: ws
+  ws-opts:
+    path: /ws
+- client-fingerprint: chrome
+  encryption: none
+  name: 加拿大 21
+  network: ws
+  port: 443
+  server: 104.17.106.12
+  tls: true
+  type: vless
+  udp: true
+  uuid: 6fb65356-788e-4118-8280-148ec6eca18a
+  ws-opts:
+    headers:
+      Host: xn--cz8h.pages.dev
+      User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like
+        Gecko) Chrome/41.0.2272.76 Safari/537.36
+    path: /pyip=proxyip.cmliussss.net
+  xudp: true
+  servername: xn--cz8h.pages.dev
+- name: 美国 19
+  type: vless
+  server: 45.40.145.224
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 加拿大 22
+  server: 104.18.95.98
+  port: 443
+  uuid: 6fb65356-788e-4118-8280-148ec6eca18a
+  tls: true
+  client-fingerprint: random
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: xn--cz8h.pages.dev
+    path: /pyip=proxyip.cmliussss.net
+  servername: xn--cz8h.pages.dev
+- alpn:
+  - h2
+  client-fingerprint: randomized
+  name: 加拿大 23
+  network: ws
+  port: 443
+  server: gxb.pages.dev
+  tls: true
+  type: vless
+  uuid: 89b3cbba-e6ac-485a-9481-976a0415eab9
+  ws-opts:
+    headers:
+      Host: GxB.PAgES.DEv
+    path: /%2F
+  servername: GXB.paGeS.DEV
+- type: vless
+  name: 加拿大 24
+  server: myanmar.visa.com
+  port: 8443
+  uuid: fc625795-792d-4d9d-9d38-bffe59467d2d
+  tls: true
+  client-fingerprint: randomized
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: daluan.eu.org
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: daluan.eu.org
+- name: 美国 20
+  type: vless
+  server: 135.84.75.250
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 21
+  server: 172.86.127.99
+  port: 8443
+  uuid: ca05976a-2dea-11f1-9ec5-baabcd4be2cd
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: cafe01234567
+  network: tcp
+  servername: www.apple.com
+- client-fingerprint: chrome
+  name: 加拿大 25
+  network: ws
+  port: 443
+  server: 104.18.230.62
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: 6fb65356-788e-4118-8280-148ec6eca18a
+  ws-opts:
+    headers:
+      Host: xn--cz8h.pages.dev
+    path: /pyip=proxyip.cmliussss.net
+  servername: xn--cz8h.pages.dev
+- type: vless
+  name: 英国 03
+  server: 194.36.55.138
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 加拿大 26
+  server: www.visaeurope.ch
+  port: 2083
+  uuid: fc625795-792d-4d9d-9d38-bffe59467d2d
+  tls: true
+  client-fingerprint: randomized
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: daluan.eu.org
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: daluan.eu.org
+- type: vless
+  name: 美国 22
+  server: 45.90.12.239
+  port: 443
+  uuid: 360045e9-30d9-4f13-b9d6-9c57f6baab1d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: fviTlCtkzpbYhTpHObiVtlgCaAT8LytP9eWUoa6Jfy4
+    short-id: 66f80bb224a5065a
+  network: grpc
+  grpc-opts:
+    grpc-service-name: xyz
+  encryption: none
+  servername: apple.com
+- type: vless
+  name: 英国 04
+  server: 185.156.19.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /
+  encryption: none
+  servername: sni.jpmj.dev
+- type: vless
+  name: 美国 23
+  server: 135.84.73.239
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 美国 24
+  server: 141.193.213.10
+  port: 2053
+  uuid: 8c4604ef-749c-4b56-adf1-7da405002a21
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: qyi.fqjd663.ggff.net
+    path: /
+  encryption: none
+  servername: qyi.fqjd663.ggff.net
+- type: vless
+  name: 美国 25
+  server: 160.153.1.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  servername: sni.jpmj.dev
+- name: 美国 26
+  type: vless
+  server: 192.0.63.138
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 加拿大 27
+  server: 172.64.146.198
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 27
+  server: 192.9.157.150
+  port: 57783
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 美国 28
+  type: vless
+  server: 135.84.75.16
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 英国 05
+  server: 45.85.119.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.jpmj.dev
+- name: 美国 29
+  type: vless
+  server: 209.46.30.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.jpmj.dev
+  client-fingerprint: chrome
+  servername: sni.jpmj.dev
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 50.62.90.16
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: /14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 美国 30
+- name: 加拿大 28
+  type: vless
+  server: 92.53.190.138
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 31.58.50.110
+  port: 2053
+  cipher: none
+  password: 3e96ef7d-8637-42c2-ac73-75182196e755
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: mfvpn.fuchen.indevs.in
+    path: 3e96ef7d-8637-42c2-ac73-75182196e755/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 美国 31
+- name: 香港 39
+  type: vless
+  server: 104.129.167.138
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 13
+  server: 188.42.88.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.jpmj.dev
+- type: vless
+  name: 美国 32
+  server: 50.62.88.71
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 加拿大 29
+  server: time.is
+  port: 443
+  uuid: 70035da7-d67f-4b7b-8108-fdcf1ed70b9f
+  tls: true
+  client-fingerprint: chrome
+  alpn:
+  - http/1.1
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: mkws4ri8y912gft3c2clmyf9xxbsidhjbx39wlwslnjr6plby52vtp2gik.hdbyuilfocra2cn52esg.workers.dev
+    path: /eyJqdW5rIjoiYWxDYkRwUnIiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: Mkws4ri8Y912Gft3c2cLMyf9XxBsIdHjbx39wLWslnjr6PLBY52vTP2gIk.HdbyuilFOCRa2CN52EsG.WOrkErs.DEv
+- name: 荷兰 14
+  type: vless
+  server: 45.149.12.138
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 160.153.137.16
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: /14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 美国 33
+- type: vless
+  name: 美国 34
+  server: 184.174.80.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.jpmj.dev
+- type: vless
+  name: 美国 35
+  server: 45.40.144.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  alpn:
+  - h2
+  - http/1.1
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /?ed=2560&telegram🇨🇳+@wangcai2
+  encryption: none
+  servername: sni.jpmj.dev
+- name: 英国 06
+  type: vless
+  server: 185.193.31.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.jpmj.dev
+  client-fingerprint: chrome
+  servername: sni.jpmj.dev
+- type: vless
+  name: 美国 36
+  server: 104.254.140.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.jpmj.dev
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 2.58.81.221
+  port: 443
+  cipher: aes-256-gcm
+  password: 9dQS3geeylyrRth9
+  name: 德国 05
+- name: 英国 07
+  server: admin.c1.havij.co
+  port: 443
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: 1kVr0KATIJI7mwOF
+- name: 香港 40
+  server: 95.40.66.13
+  port: 663
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: daeeed82-f7df-439b-9caf-d77b4bf0b7ce
+  udp: true
+- name: 意大利 02
+  server: 45.92.70.236
+  type: vmess
+  country: 🇷🇺RU
+  port: 22324
+  uuid: 04621bae-ab36-11ec-b909-0242ac120002
+  alterId: 0
+  cipher: auto
+  network: tcp
+  h2-opts: {}
+  skip-cert-verify: true
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 82.38.31.146
+  port: 8080
+  cipher: chacha20-ietf-poly1305
+  password: oZIoA69Q8yhcQV8ka3Pa3A
+  name: 荷兰 15
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 198.71.188.16
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: /14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 美国 37
+- type: ss
+  server: 193.29.139.164
+  port: 8080
+  cipher: chacha20-ietf-poly1305
+  password: 4a2rfixophdjffa8KVA4Aa
+  name: 荷兰 16
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 193.29.139.143
+  port: 8080
+  cipher: chacha20-ietf-poly1305
+  password: 1RWwXhwfAB5gAEozU4G2Pg
+  name: 荷兰 17
+- type: vless
+  name: 加拿大 30
+  server: 92.53.191.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.jpmj.dev
+- type: ss
+  server: 193.29.139.233
+  port: 8080
+  cipher: chacha20-ietf-poly1305
+  password: QCXDxuDlTTMD7jtgHUjIoj
+  name: 荷兰 18
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 194.233.75.190
+  port: 443
+  cipher: aes-256-gcm
+  password: qKvfX7yQnT99OMu3
+  name: 新加坡 04
+- type: vless
+  name: 美国 38
+  server: mouse5.1lil1.de
+  port: 443
+  uuid: 191ee2c8-e3e3-09a1-a4a5-c9e8323c6f3d
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: firefox
+  skip-cert-verify: false
+  reality-opts:
+    public-key: LaGTRJ1CJnnYV7FnyqQnU28I0xFTPFKI8xmUFwig5ic
+    short-id: c410508e9721512b
+  network: tcp
+  encryption: none
+  servername: stackoverflow.com
+- auth: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  name: 日本 07
+  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
+  port: 443
+  server: vpn-jp-016.fastervpn.world
+  skip-cert-verify: true
+  sni: vpn-jp-016.fastervpn.world
+  type: hysteria2
+- type: vless
+  name: 加拿大 31
+  server: s4-f45.pages.dev
+  port: 443
+  uuid: b60e5c32-3d4e-425c-a785-a36cd0621a72
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: S4-f45.pAGeS.DeV
+    path: /
+  servername: S4-f45.pAGeS.DeV
+- type: vless
+  name: 英国 08
+  server: 78.141.199.54
+  port: 443
+  uuid: 43488128-319e-f480-64ea-0acdc712e2a8
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: ZpkoOvcRglQoTWJ3B7hiJlmMYTtIu41hJ51FMMdSTDE
+    short-id: 41427aa565e28984
+  network: tcp
+  encryption: none
+  servername: www.vodafone.co.uk
+- type: vless
+  name: 英国 09
+  server: 95.179.236.230
+  port: 443
+  uuid: 43488128-319e-f480-64ea-0acdc712e2a8
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: ZpkoOvcRglQoTWJ3B7hiJlmMYTtIu41hJ51FMMdSTDE
+    short-id: 98c3d62ba1c26863
+  network: tcp
+  encryption: none
+  servername: www.argos.co.uk
+- type: vless
+  name: 荷兰 19
+  server: 165.232.86.81
+  port: 443
+  uuid: 43488128-319e-f480-64ea-0acdc712e2a8
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: K1p8iHF_pzt-Y07A-xqyEMvgFPdhWgJ0k6mLmRv42yg
+    short-id: 9876543210abcdef
+  network: tcp
+  encryption: none
+  servername: www.aliexpress.com
+- type: vless
+  name: 法国 03
+  server: fr.denditop.site
+  port: 443
+  uuid: 256c5f48-4908-4255-83d1-c86cb58f22b4
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: wgoLhL4pRP0y6fu6He4qW_ElohCM_ANWJF3HEoUhNz4
+    short-id: 9c2378562188c3cb
+    _spider-x: /
+  network: tcp
+  encryption: none
+  servername: fr.denditop.site
+- type: vless
+  name: 美国 39
+  server: 141.148.93.235
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 20
+  server: 144.31.233.146
+  port: 43361
+  uuid: bf432795-1383-46e5-8823-d638b956cabe
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: OVkz4f4FnObOQT4vz8SqpiuzFDmTjYH4OZk2wIbjgCk
+    short-id: 55ba93eb8c
+  network: tcp
+  encryption: none
+  servername: www.nvidia.com
+- skip-cert-verify: true
+  sni: www.gossipglove.com
+  network: ws
+  ws-opts:
+    path: /assignment
+    headers:
+      Host: www.gossipglove.com
+  type: trojan
+  password: humanity
+  server: 172.64.146.43
+  port: 443
+  name: 加拿大 32
+- type: vless
+  name: 英国 10
+  server: uk1.fromblancwithlove.com
+  port: 8443
+  uuid: 394f6981-a782-4779-9a85-e6cf22935d93
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  encryption: none
+  servername: uk1.fromblancwithlove.com
+- name: 英国 11
+  type: vmess
+  server: 51.195.235.71
+  port: 2053
+  cipher: auto
+  uuid: c4ea2391-095d-407a-9dab-85fc7104b681
+  alterId: 0
+  tls: true
+  skip-cert-verify: true
+  client-fingerprint: chrome
+  alpn:
+  - h2
+  - http/1.1
+  network: tcp
+  servername: node-uk.connectsuite.org
+- type: vless
+  name: 荷兰 21
+  server: 51.158.206.96
+  port: 23576
+  uuid: 48ff2b70-e180-582f-8866-d9a2edeed5f5
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: 1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s
+    short-id: '01'
+  network: tcp
+  encryption: none
+  servername: fuck.rkn
+- type: hysteria2
+  name: 法国 04
+  server: 62.210.30.179
+  port: 40022
+  ports: 41000-42000
+  password: dongtaiwang.com
+  sni: www.microsoft.com
+  skip-cert-verify: true
+  tfo: false
+- type: vless
+  name: 德国 06
+  server: 104.238.167.226
+  port: 443
+  uuid: 43488128-319e-f480-64ea-0acdc712e2a8
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: Ic2uiGhkBgJUsY0CZUBqa1y22V_BO7F4S93Zgk_ir2c
+    short-id: 889dad4baac2436f
+  network: tcp
+  encryption: none
+  servername: www.zalando.de
+- type: vless
+  name: 荷兰 22
+  server: 51.158.206.12
+  port: 23576
+  uuid: 48ff2b70-e180-582f-8866-d9a2edeed5f5
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: 1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s
+    short-id: '01'
+  network: tcp
+  encryption: none
+  servername: fuck.rkn
+- type: vless
+  name: 德国 07
+  server: 104.194.158.80
+  port: 8443
+  uuid: 4b056394-2f40-11f1-bffe-46c4782ac1a7
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: a1b2c3d4e5f6
+  network: tcp
+  servername: www.apple.com
+- type: vless
+  name: 美国 40
+  server: 38.244.204.106
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 荷兰 23
+  server: 5.180.52.53
+  port: 443
+  uuid: 90c9c25c-df6c-4438-83d3-ef97166a9184
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: A3PWLCRX9oeSyPvrmrwj2jUXcLo2uCwAISRBHtNE1Xw
+  network: tcp
+  encryption: none
+  servername: 5post-gate.x5.ru
+- type: vless
+  name: 荷兰 24
+  server: 46.30.46.161
+  port: 443
+  uuid: 0bbe589a-620e-47b9-a615-60bda9903f31
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: 45Hmp5iW7pQJTt_0BDLBemuZDy4r8_txF2DshyqUE2Y
+  network: tcp
+  encryption: none
+  servername: nlx1.braidpro.online
+- sni: www.gossipglove.com
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /assignment
+  type: trojan
+  password: humanity
+  server: 104.18.1.55
+  port: 443
+  name: 加拿大 33
+- type: vless
+  name: 美国 41
+  server: 72.18.132.149
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 42
+  server: 85.209.159.22
+  port: 443
+  uuid: 90c9c25c-df6c-4438-83d3-ef97166a9184
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: A3PWLCRX9oeSyPvrmrwj2jUXcLo2uCwAISRBHtNE1Xw
+    _spider-x: /
+  network: tcp
+  servername: 5post-gate.x5.ru
+- name: 新加坡 05
+  network: tcp
+  port: 443
+  server: 37.sahanwickramasinghevip.shop
+  tls: true
+  type: vless
+  uuid: c4108e57-c74e-4480-b4e2-db56a517877b
+  servername: 37.sahanwickramasinghevip.shop
+- type: vless
+  name: 荷兰 25
+  server: 103.137.250.250
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 荷兰 26
+  type: vless
+  server: 195.133.59.26
+  port: 50007
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 43
+  server: 159.203.144.233
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 27
+  server: 195.133.59.26
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- skip-cert-verify: true
+  sni: www.gossipglove.com
+  network: ws
+  ws-opts:
+    path: /assignment
+    headers:
+      Host: www.gossipglove.com
+  type: trojan
+  password: humanity
+  server: 172.64.147.79
+  port: 443
+  name: 加拿大 34
+- type: vless
+  name: 德国 08
+  server: 2.27.43.20
+  port: 443
+  uuid: 1bc8a2e7-4c5d-4376-a24b-b877997fd997
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: AQhB5LgVFJq87Kbavc9qYWwqYYnGx0Bj0ci4TXcboDw
+    short-id: a1b2c3d4
+  network: tcp
+  servername: www.google.com
+- type: vless
+  name: 英国 12
+  server: 57.128.183.79
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 44
+  server: 95.164.85.109
+  port: 59374
+  uuid: bfc78cd8-5951-4803-8d6c-4cedef8cd420
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: ZsswZuBV8bEGQWFrpShCilSytnDUj0kwHFhTSLXzOwc
+    short-id: d21e7c
+  network: tcp
+  encryption: none
+  servername: yahoo.com
+- type: vless
+  name: 加拿大 35
+  server: www.base64encode.org
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sany.tara132.workers.dev
+    path: /sni.111000.dynv6.net/?ed
+  encryption: none
+  servername: sany.tara132.workers.dev
+- type: vless
+  name: 英国 13
+  server: 57.128.176.37
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 荷兰 28
+  server: av.nexconnx.com
+  port: 8080
+  uuid: 19a1e5b1-6289-4fe6-9aad-be285510942d
+  skip-cert-verify: false
+  network: http
+  http-opts:
+    headers:
+      Host:
+      - check-host.net
+    path:
+    - /
+  encryption: none
+- name: 德国 09
+  type: vless
+  server: 94.159.97.108
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 法国 05
+  server: 51.210.151.165
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  servername: sni.111000.indevs.in
+- name: 英国 14
+  type: vless
+  server: 57.129.137.219
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 10
+  server: 57.129.47.67
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 29
+  server: nnt.stardevs.top
+  port: 443
+  uuid: f00984ef-f57e-41db-9182-b25f7bc3a1e2
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: QsdftfvfD6Owl-SutPVzJTijXYmQO7LD_YR9mq1vqnI
+    short-id: b03a4d1767157467
+  network: tcp
+  servername: nnt.stardevs.top
+- name: 德国 11
+  type: vless
+  server: 3.79.219.135
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 12
+  server: 45.14.247.67
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 德国 13
+  server: de1.samovargate.com
+  port: 443
+  uuid: 82b5b465-3307-4a25-acef-abd1649bbedf
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: gwuAehnMX6e-n1fxIenfjx43j3qXXi7Cb4wfnW5VyBQ
+    short-id: f04729f65b9ea261
+  network: tcp
+  encryption: none
+  servername: www.github.com
+- type: vless
+  name: 德国 14
+  server: 193.37.70.3
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 15
+  server: 91.107.147.191
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 日本 08
+  server: 45.77.25.6
+  port: 27854
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 日本 09
+  network: ws
+  port: 2053
+  server: 103.106.228.126
+  tls: true
+  type: vless
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  ws-opts:
+    headers:
+      Host: snippet.danfeng.com.cfd
+    path: /danfeng
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.danfeng.com.cfd
+- type: vless
+  name: 日本 10
+  server: 54.95.94.250
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 新加坡 06
+  network: ws
+  port: 443
+  server: 54.151.227.203
+  tls: true
+  type: vless
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  ws-opts:
+    headers:
+      Host: snippet.fgfw.loc.cc
+    path: /danfeng
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.fgfw.loc.cc
+- name: 新加坡 07
+  type: vless
+  server: 213.35.127.9
+  port: 17534
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  tls: true
+  client-fingerprint: random
+  ws-opts:
+    path: /danfeng
+    headers:
+      Host: snippet.danfeng.com.cfd
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.danfeng.com.cfd
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 154.3.33.43
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: 14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 香港 41
+- type: vless
+  name: 日本 11
+  server: 45.76.198.248
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 德国 16
+  server: 134.209.246.179
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&telegram🇨🇳+@wangcai2
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 香港 42
+  server: 8.210.35.208
+  port: 443
+  uuid: 8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: xianggang2.zqjsqapi.com
+    path: /proxy
+  servername: xianggang2.zqjsqapi.com
+- type: vless
+  name: 德国 17
+  server: 91.107.139.23
+  port: 7002
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 新加坡 08
+  type: vless
+  server: 178.128.86.3
+  port: 443
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  tls: true
+  client-fingerprint: random
+  ws-opts:
+    path: /danfeng
+    headers:
+      Host: snippet.danfeng.com.cfd
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.danfeng.com.cfd
+- type: vless
+  name: 荷兰 30
+  server: 185.193.158.54
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 日本 12
+  server: 168.138.46.67
+  port: 443
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: snippet.danfeng.com.cfd
+    path: /danfeng
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.danfeng.com.cfd
+- type: vless
+  name: 荷兰 31
+  server: 167.99.36.26
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram@AliXTso
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 32
+  server: 212.34.134.20
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 美国 45
+  server: 82.38.63.246
+  port: 8443
+  uuid: ca05976a-2dea-11f1-9ec5-baabcd4be2cd
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: FVL0r87K3-vUP2KXQX1juLMFEHJtvxwKM-nm6_PYllc
+    short-id: cafe01234567
+  network: tcp
+  encryption: none
+  servername: www.apple.com
+- type: vless
+  name: 英国 15
+  server: 57.128.183.59
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 英国 16
+  server: 57.128.177.185
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 法国 06
+  server: 152.228.135.204
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 日本 13
+  server: 139.162.102.152
+  port: 7002
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 荷兰 33
+  server: 89.110.110.167
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 德国 18
+  server: 5.61.47.9
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 19
+  server: 162.19.243.173
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 荷兰 34
+  type: vless
+  server: 195.133.94.188
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 法国 07
+  server: 54.36.98.158
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 德国 20
+  server: 164.92.178.103
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 德国 21
+  server: 57.129.63.133
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 德国 22
+  server: 165.227.173.197
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳+@app_bedal
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 德国 23
+  type: vless
+  server: 49.13.154.236
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- name: 俄罗斯 02
+  type: vless
+  server: 193.233.21.238
+  port: 2096
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.jpmj.dev
+  client-fingerprint: chrome
+  servername: sni.jpmj.dev
+- type: vless
+  name: 德国 24
+  server: 91.107.171.251
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- name: 德国 25
+  type: vless
+  server: 89.58.26.175
+  port: 2083
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 26
+  server: 78.47.146.151
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 27
+  server: 188.95.65.36
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&telegram🇨🇳+@wangcai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 35
+  server: 51.158.206.86
+  port: 23576
+  uuid: 48ff2b70-e180-582f-8866-d9a2edeed5f5
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: 1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s
+    short-id: '01'
+  network: tcp
+  encryption: none
+  servername: fuck.rkn
+- type: vless
+  name: 德国 28
+  server: 89.58.34.230
+  port: 2012
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 29
+  server: 64.238.203.123
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 美国 46
+  server: 141.193.213.21
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: nameless-violet-d45c.anthony900.workers.dev
+    path: /sni.111000.dynv6.net/
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: nameless-violet-d45c.anthony900.workers.dev
+- name: 荷兰 36
+  type: vless
+  server: 86.107.197.161
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 168.107.5.23
+  port: 8443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: 14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 韩国 06
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 185.67.125.109
+  port: 11201
+  cipher: chacha20-ietf-poly1305
+  password: be4a6fd2209f62a7
+  name: 印度 01
+- type: vless
+  name: 英国 17
+  server: 57.128.176.37
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 荷兰 37
+  server: 194.87.134.130
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 荷兰 38
+  server: 167.71.5.29
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 法国 08
+  server: 141.94.77.169
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 法国 09
+  server: 54.36.98.4
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 法国 10
+  server: 51.91.249.22
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?Telegram%F0%9F%87%A8%F0%9F%87%B3+%40WangCai2=
+  encryption: none
+  servername: sni.111000.v6.navy
+- name: 德国 30
+  type: vless
+  server: 94.159.108.42
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  network: ws
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+    headers:
+      Host: sni.111000.indevs.in
+  client-fingerprint: chrome
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 美国 47
+  server: 45.15.125.8
+  port: 8443
+  uuid: b9e5c4b7-1e9b-4ca5-82dc-43f3a440484c
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  alpn:
+  - h2
+  - http/1.1
+  skip-cert-verify: false
+  reality-opts:
+    public-key: YF_Vfx9VdDFXKM4bL1RZx6vsUqlSMtT56wPt987Aul8
+    short-id: db49831a996244d8
+  network: tcp
+  encryption: none
+  servername: max.ru
+- type: vless
+  name: 德国 31
+  server: 57.129.63.37
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 德国 32
+  server: 192.46.239.191
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 德国 33
+  server: 195.133.44.199
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.dynv6.net
+- skip-cert-verify: true
+  type: trojan
+  password: M08tvzYWtUEJNtbpHp
+  server: 194.124.216.192
+  port: 443
+  name: 荷兰 39
+  network: tcp
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 212.192.215.229
+  port: 8443
+  cipher: none
+  password: 3e96ef7d-8637-42c2-ac73-75182196e755
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: mfvpn.fuchen.indevs.in
+    path: 3e96ef7d-8637-42c2-ac73-75182196e755/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 荷兰 40
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 94.159.98.140
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: /14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 德国 34
+- type: vless
+  name: 德国 35
+  server: 167.71.60.191
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 139.144.181.54
+  port: 443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: /14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 德国 36
+- type: ss
+  skip-cert-verify: false
+  udp: false
+  server: 49.13.85.76
+  port: 8443
+  cipher: none
+  password: 14b02e2a-8930-4afb-8412-ea4a4954ca5b
+  plugin: v2ray-plugin
+  plugin-opts:
+    mode: websocket
+    host: ylnhh.us.ci
+    path: /14b02e2a-8930-4afb-8412-ea4a4954ca5b/?ed=2560
+    tls: true
+    skip-cert-verify: false
+    mux: false
+  name: 德国 37
+- type: vless
+  name: 德国 38
+  server: 194.13.81.146
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- name: 香港 43
+  type: vless
+  server: 223.16.138.113
+  port: 10002
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  network: ws
+  tls: true
+  client-fingerprint: random
+  ws-opts:
+    path: /danfeng
+    headers:
+      Host: snippet.danfeng.com.cfd
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.danfeng.com.cfd
+- type: vless
+  name: 新加坡 09
+  server: 141.11.43.124
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 39
+  server: 165.22.18.18
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 韩国 07
+  server: 123.111.169.70
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 法国 11
+  server: 51.91.254.78
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 荷兰 41
+  server: 213.165.37.2
+  port: 443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.dynv6.net
+    path: /?ed=2560&Telegram🇨🇳+@WangCai2
+  servername: sni.111000.dynv6.net
+- type: vless
+  name: 法国 12
+  server: 89.208.97.50
+  port: 443
+  uuid: 1bc8a2e7-4c5d-4376-a24b-b877997fd997
+  tls: true
+  flow: xtls-rprx-vision
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: AQhB5LgVFJq87Kbavc9qYWwqYYnGx0Bj0ci4TXcboDw
+    short-id: a1b2c3d4
+  network: tcp
+  encryption: none
+  servername: www.google.com
+- type: vless
+  name: 韩国 08
+  server: 129.154.54.67
+  port: 19567
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 韩国 09
+  server: 144.24.83.227
+  port: 4443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳 @WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 德国 40
+  server: 57.129.47.59
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 韩国 10
+  server: 158.180.69.78
+  port: 12198
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.jpmj.dev
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.jpmj.dev
+- type: vless
+  name: 德国 41
+  server: 57.129.47.11
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?Telegram🇨🇳@WangCai2=
+  encryption: none
+  servername: sni.111000.indevs.in
+- name: 德国 42
+  server: 91.107.249.251
+  port: 6780
+  type: trojan
+  password: trojan
+  sni: jflsjlaf.pages.dev
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jflsjlaf.pages.dev
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  delay: 1491
+  client-fingerprint: chrome
+- type: vless
+  name: 法国 13
+  server: 51.91.251.43
+  port: 8443
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.v6.navy
+    path: /?Telegram%F0%9F%87%A8%F0%9F%87%B3+%40WangCai2=
+  encryption: none
+  servername: sni.111000.v6.navy
+- type: vless
+  name: 香港 44
+  server: 47.243.54.45
+  port: 18080
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: snippet.fgfw.loc.cc
+    path: /danfeng
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  encryption: none
+  servername: snippet.fgfw.loc.cc
+- name: 香港 45
+  network: ws
+  port: 7000
+  server: 202.85.53.77
+  tls: true
+  type: vless
+  uuid: 26524cce-d514-4014-a426-365fb266a14d
+  ws-opts:
+    headers:
+      Host: snippet.danfeng.com.cfd
+    path: /danfeng
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: snippet.danfeng.com.cfd
+- alterId: 2
+  cipher: auto
+  name: 香港 46
+  network: ws
+  port: 80
+  server: e542f5ac-t8pj40-td95qh-1isea.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  uuid: d6abdbda-fe9d-11ec-bb74-f23c9164ca5d
+  ws-opts:
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+    path: /
+- type: vless
+  name: 法国 14
+  server: 54.36.98.4
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?Telegram🇨🇳+@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- alterId: 2
+  cipher: auto
+  country: 🇭🇰HK
+  delay: 1069
+  h2-opts: {}
+  name: 香港 47
+  network: ws
+  port: 80
+  server: d0858561-t6r5s0-t9lc3n-z93q.hkt.gotochinatown.net
+  skip-cert-verify: true
+  type: vmess
+  uuid: 40639730-e027-11ea-87ad-f23c913c8d2b
+  ws-opts:
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+      Host: d0858561-t6r5s0-t9lc3n-z93q.hkt.gotochinatown.net
+    path: /
+  servername: broadcastlv.chat.bilibili.com
+- alterId: 2
+  cipher: auto
+  country: 🇭🇰HK
+  delay: 556
+  h2-opts: {}
+  name: 香港 48
+  network: ws
+  port: 80
+  server: 7c733709-t70f40-tcw58g-1p0be.hkt.gotochinatown.net
+  skip-cert-verify: true
+  type: vmess
+  uuid: 55cce5a4-56b7-11ee-af82-f23c9164ca5d
+  ws-opts:
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+      Host: 7c733709-t70f40-tcw58g-1p0be.hkt.gotochinatown.net
+    path: /
+  servername: broadcastlv.chat.bilibili.com
+- type: vless
+  name: 土耳其 02
+  server: 8adeefa1-96b4-42d4-b163-1e0bf13bae5d.quadzero.online
+  port: 443
+  uuid: b2f99930-7d48-4a22-8d67-539c440b6a7a
+  tls: true
+  alpn:
+  - http/1.1
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    headers:
+      Host: 8adeefa1-96b4-42d4-b163-1e0bf13bae5d.quadzero.online
+    path: /01119417
+  encryption: none
+  servername: 8adeefa1-96b4-42d4-b163-1e0bf13bae5d.quadzero.online
+- type: vless
+  name: 加拿大 36
+  server: fi.vpnhi.ru
+  port: 443
+  uuid: ea8d14d4-ca12-4cd1-bcad-f0fa72f6eadc
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: fi.vpnhi.ru
+    path: /vpnws
+  servername: fi.vpnhi.ru
+- alterId: 2
+  cipher: auto
+  country: 🇭🇰HK
+  delay: 436
+  h2-opts: {}
+  name: 香港 49
+  network: ws
+  port: 80
+  server: 256a53b2-t8pj40-tm3dx0-1r9dt.hkt.gotochinatown.net
+  skip-cert-verify: true
+  type: vmess
+  uuid: de003c72-0157-11ef-86da-f23c91cfbbc9
+  ws-opts:
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+      Host: 256a53b2-t8pj40-tm3dx0-1r9dt.hkt.gotochinatown.net
+    path: /
+  servername: broadcastlv.chat.bilibili.com
+- type: vless
+  name: 法国 15
+  server: 92.42.110.142
+  port: 2053
+  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    headers:
+      Host: sni.111000.indevs.in
+    path: /?ed=2560&Telegram🇨🇳@WangCai2
+  encryption: none
+  servername: sni.111000.indevs.in
+- type: vless
+  name: 土耳其 03
+  server: 77.92.145.222
+  port: 443
+  uuid: 53821f3c-5b03-456a-89f3-f8379f130752
+  tls: true
+  client-fingerprint: chrome
+  skip-cert-verify: false
+  reality-opts:
+    public-key: sSD0sNHv6R3VC1zy_etv-mOTLAurVq3xid4xWne3TxI
+    short-id: 4730242d
+  network: tcp
+  encryption: none
+  servername: www.vk.com
