@@ -37,116 +37,18 @@ URLS = [
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
-# 地区映射表 - 只保留需要的地区
-COUNTRY_NAMES = {
-    "HK": "香港", "JP": "日本", "KR": "韩国", "TW": "台湾", "US": "美国",
-    "GB": "英国", "DE": "德国", "SG": "新加坡",
-    "FR": "法国", "NL": "荷兰", "RU": "俄罗斯", "IT": "意大利",
-    "CA": "加拿大", "AU": "澳大利亚", "TR": "土耳其", "IN": "印度",
-    "TH": "泰国", "MY": "马来西亚", "VN": "越南", "PH": "菲律宾"
-}
-
-ALLOW_COUNTRIES = set(COUNTRY_NAMES.keys())
 # 使用国内可访问的测试目标，更贴近实际使用场景
 TEST_URL = "https://www.google.com/generate_204"  # Google 204 测试，更轻量
 MAX_DELAY_ROUND1 = 5000  # 第一轮最大延迟 (ms) - 较宽松
 MAX_DELAY_ROUND2 = 3000  # 第二轮最大延迟 (ms) - 更严格
 
-# 出口 IP 查询线程数（较少，因为需要代理访问）
-EXIT_IP_WORKERS = 20
-
 # 线程池配置
 FETCH_WORKERS = 10
 FETCH_TIMEOUT = 8
-IP_WORKERS = 15
 TEST_WORKERS = 80
 
 # 批次大小配置
 BATCH_SIZE = 500  # 每批次节点数
-
-# 线程安全的 IP 缓存
-import threading
-ip_cache = {}
-ip_cache_lock = threading.Lock()
-
-# 线程安全的出口 IP 缓存
-exit_ip_cache = {}
-exit_ip_cache_lock = threading.Lock()
-
-def get_country(ip):
-    with ip_cache_lock:
-        if ip in ip_cache:
-            return ip_cache[ip]
-    try:
-        r = requests.get(f"http://ip-api.com/json/{ip}", timeout=3)
-        code = r.json().get("countryCode")
-        with ip_cache_lock:
-            ip_cache[ip] = code
-        return code
-    except:
-        return None
-
-def get_country_batch(ip_list, max_workers=IP_WORKERS):
-    results = {}
-    def query(ip):
-        return (ip, get_country(ip))
-    with ThreadPoolExecutor(max_workers=max_workers) as ex:
-        for future in as_completed(ex.submit(query, ip) for ip in ip_list):
-            try:
-                ip, country = future.result()
-                if country:
-                    results[ip] = country
-            except:
-                pass
-    return results
-
-def get_exit_country_batch(proxies, max_workers=EXIT_IP_WORKERS):
-    """批量获取节点的出口位置（通过实际代理访问）"""
-    results = {}
-
-    def query(p):
-        name = p["name"]
-        # 通过节点代理访问 IP 查询服务
-        try:
-            # 1. 切换到指定节点
-            requests.put(
-                f"http://127.0.0.1:9090/proxies/test",
-                json={"name": name},
-                timeout=3
-            )
-            time.sleep(0.2)  # 等待切换生效
-            # 2. 访问 IP 查询服务
-            r = requests.get(
-                "http://ip-api.com/json/?lang=zh-CN",
-                proxies={"http": "http://127.0.0.1:7890", "https": "http://127.0.0.1:7890"},
-                timeout=5
-            )
-            country_code = r.json().get("countryCode")
-            if country_code:
-                with exit_ip_cache_lock:
-                    exit_ip_cache[name] = country_code
-                return (name, country_code)
-        except:
-            pass
-        return (name, None)
-
-    # 顺序执行，因为 Clash 一次只能使用一个节点
-    for i, p in enumerate(proxies):
-        if (i + 1) % 10 == 0:
-            print(f"  进度：{i + 1}/{len(proxies)}")
-        result = query(p)
-        if result[1]:
-            results[result[0]] = result[1]
-    return results
-
-def make_unique_name(country_code, index, exit_country=None):
-    """生成节点名称：server 位置 + 序号 + 出口位置（如果不同）"""
-    base_name = COUNTRY_NAMES.get(country_code, country_code)
-    name = f"{base_name} {index:02d}"
-    if exit_country and exit_country != country_code:
-        exit_name = COUNTRY_NAMES.get(exit_country, exit_country)
-        name = f"{name}->{exit_name}"
-    return name
 
 def manual_parse_proxies(text):
     proxies = []
@@ -368,55 +270,8 @@ def filter_proxies_round2(proxies, batch_size=None):
     return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND2, round_name="第二轮")
 
 
-def resolve_countries(proxies):
-    """第三步：查询通过测试的节点 IP 位置和真实出口位置"""
-    if not proxies:
-        return []
-
-    # 1. 先查询 server 的 IP 地理位置
-    server_to_resolve = list(set(p["server"] for p in proxies))
-    print(f"正在查询 {len(server_to_resolve)} 个通过节点的 Server IP 地理位置...")
-    server_country_map = get_country_batch(server_to_resolve, max_workers=IP_WORKERS)
-
-    # 2. 启动 Clash，通过代理获取出口位置
-    print("启动 Clash 以获取节点真实出口位置...")
-    save_for_clash(proxies)  # 使用全部通过测试的节点生成配置
-    clash_proc = start_clash()
-    if not wait_clash(clash_proc):
-        print("Clash 启动失败，使用 Server 位置命名")
-        clash_proc = None
-
-    # 3. 获取出口位置
-    exit_country_map = {}
-    if clash_proc:
-        print(f"正在获取 {len(proxies)} 个节点的真实出口位置...")
-        time.sleep(2)  # 等待 Clash 完全就绪
-        exit_country_map = get_exit_country_batch(proxies, max_workers=EXIT_IP_WORKERS)
-        print(f"获取到 {len(exit_country_map)} 个节点的出口位置")
-
-        # 关闭 Clash
-        clash_proc.terminate()
-        kill_clash()
-
-    # 4. 生成最终命名
-    country_counters = {c: 1 for c in ALLOW_COUNTRIES}
-    final_proxies = []
-    for p in proxies:
-        server = p.get("server")
-        country = server_country_map.get(server)
-        if not country or country not in ALLOW_COUNTRIES:
-            continue
-
-        exit_country = exit_country_map.get(p["name"])
-        p["name"] = make_unique_name(country, country_counters[country], exit_country)
-        country_counters[country] += 1
-        final_proxies.append(p)
-
-    print(f"地区筛选后剩余：{len(final_proxies)} 个节点")
-    return final_proxies
-
 def save_for_clash(proxies):
-    """生成 Clash 配置 - 只包含当前批次需要的节点"""
+    """生成 Clash 配置"""
     config = {
         "mixed-port": 7890,
         "allow-lan": False,
@@ -548,10 +403,6 @@ if __name__ == "__main__":
         print("未找到符合条件的节点")
         exit()
 
-    # 临时命名用于测试
-    for i, p in enumerate(raw):
-        p["name"] = f"temp_{i}"
-
     try:
         # 第二步：第一轮快速筛选（宽松条件）
         passed_round1 = filter_proxies_round1(raw)
@@ -567,16 +418,14 @@ if __name__ == "__main__":
             print("第二轮筛选无节点通过，退出")
             exit()
 
-        # 第四步：查询通过两轮测试的节点 IP 和出口位置
-        good_proxies = resolve_countries(passed_round2)
-
+        # 第四步：保存结果
         os.makedirs("output", exist_ok=True)
-        final_data = {"proxies": good_proxies}
+        final_data = {"proxies": passed_round2}
 
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
             yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-        print(f"成功筛选出 {len(good_proxies)} 个节点并保存。")
+        print(f"成功筛选出 {len(passed_round2)} 个节点并保存。")
     except Exception as e:
         print(f"运行出错：{e}")
         kill_clash()
