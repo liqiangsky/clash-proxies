@@ -214,16 +214,35 @@ def clean_proxy(p):
         elif not isinstance(val, list):
             p.pop("alpn")
 
-    # 深度清理空配置项
+    # 深度清理 ws-opts/grpc-opts/http-opts
     for opt_key in ["ws-opts", "grpc-opts", "http-opts"]:
         if opt_key in p:
             if not p[opt_key] or not isinstance(p[opt_key], dict):
                 p.pop(opt_key)
-            else:
-                if "headers" in p[opt_key] and not p[opt_key]["headers"]:
-                    p[opt_key].pop("headers")
-                if not p[opt_key]:
-                    p.pop(opt_key)
+                continue
+
+            # 清理 headers 中的无效 Host 字段
+            if "headers" in p[opt_key]:
+                headers = p[opt_key]["headers"]
+                if headers and isinstance(headers, dict):
+                    # 清理 Host 字段 - 必须是有效字符串
+                    if "Host" in headers:
+                        host_val = headers["Host"]
+                        if not host_val or not isinstance(host_val, str):
+                            headers.pop("Host")
+                        else:
+                            # 去除空格和不可见字符
+                            headers["Host"] = host_val.strip()
+                            # 验证 Host 格式（不能包含空格或特殊字符）
+                            if " " in headers["Host"] or headers["Host"] == "":
+                                headers.pop("Host")
+                    # 如果 headers 为空或只有空值，删除整个 headers
+                    headers = {k: v for k, v in headers.items() if v and isinstance(v, str)}
+                    if not headers:
+                        p[opt_key].pop("headers")
+
+            if not p[opt_key]:
+                p.pop(opt_key)
 
     # 强制端口为整数
     if "port" in p:
