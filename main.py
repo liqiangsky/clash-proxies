@@ -154,6 +154,9 @@ def update_config_api(proxies):
     }
     try:
         r = requests.put(url, json=payload, timeout=10)
+        if r.status_code not in [200, 204]:
+            print(f"API 更新失败：状态码 {r.status_code}")
+            print(f"响应：{r.text[:200]}")
         return r.status_code in [200, 204]
     except Exception as e:
         print(f"API 更新失败：{e}")
@@ -165,6 +168,8 @@ def test_delay(name, max_delay=MAX_DELAY_ROUND1):
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
     try:
         r = requests.get(url, params={"url": TEST_URL, "timeout": max_delay}, timeout=7)
+        if r.status_code != 200:
+            return None
         delay = r.json().get("delay", 0)
         if 0 < delay <= max_delay:
             return (name, delay)
@@ -372,7 +377,19 @@ def run_filter(proxies, max_delay, batch_size=500, all_proxies_dict=None):
         print(f">>> 批次 {i+1}/{batches} [{len(batch)} 节点] 更新中...")
 
         if update_config_api(batch):
-            time.sleep(1)  # 给 Clash 预留解析时间
+            time.sleep(2)  # 给 Clash 预留解析时间（增加到 2 秒）
+
+            # 第一批第一个节点后，检查配置是否真的生效了
+            if i == 0:
+                try:
+                    r = requests.get("http://127.0.0.1:9090/proxies", timeout=5)
+                    proxy_list = r.json().get("proxies", {})
+                    print(f"Clash 已加载节点数：{len(proxy_list)}")
+                    if len(proxy_list) < len(batch):
+                        print(f"警告：期望加载 {len(batch)} 个节点，实际只有 {len(proxy_list)} 个")
+                except Exception as e:
+                    print(f"无法获取 Clash 节点列表：{e}")
+
             batch_results = []
             with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
                 futures = {ex.submit(test_delay, p["name"], max_delay): p["name"] for p in batch}
