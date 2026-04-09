@@ -106,8 +106,45 @@ def fetch_single_url(url):
         print(f"获取失败：{url} -> {e}")
         return []
 
+def validate_reality_opts(p):
+    """验证 reality-opts 配置格式"""
+    reality_opts = p.get("reality-opts")
+    if not reality_opts or not isinstance(reality_opts, dict):
+        return False
+
+    # 验证 sid 格式：必须是 8 字节十六进制字符串（16 个字符）
+    sid = reality_opts.get("sid", "")
+    if not sid or not isinstance(sid, str) or len(sid) != 16:
+        return False
+    if not all(c in "0123456789abcdefABCDEF" for c in sid):
+        return False
+
+    # 验证 public-key 格式：必须是有效的 base64 公钥
+    pbk = reality_opts.get("public-key", "")
+    if not pbk or not isinstance(pbk, str) or len(pbk) < 32:
+        return False
+
+    return True
+
+
+def validate_hysteria_opts(p):
+    """验证 hysteria/hysteria2 配置格式"""
+    # Hysteria 节点需要验证 port-hopping、hop-interval 等字段
+    # TODO: 根据实际需求添加验证逻辑
+    pass
+
+
+def validate_tuic_opts(p):
+    """验证 TUIC 配置格式"""
+    # TUIC 节点需要验证 uuid、alpn 等字段
+    # TODO: 根据实际需求添加验证逻辑
+    pass
+
+
 def clean_proxy(p):
     """清洗单个节点配置"""
+    proxy_type = p.get("type", "")
+
     # 清洗 ALPN 格式
     if "alpn" in p:
         val = p["alpn"]
@@ -117,11 +154,20 @@ def clean_proxy(p):
             p.pop("alpn")
 
     # 深度清理空配置项
-    for opt_key in ["ws-opts", "grpc-opts", "http-opts"]:
+    for opt_key in ["ws-opts", "grpc-opts", "http-opts", "plugin-opts"]:
         if opt_key in p:
             if not p[opt_key] or not isinstance(p[opt_key], dict):
                 p.pop(opt_key)
             else:
+                # 特殊处理 plugin-opts 中的 mux 字段（必须是布尔值）
+                if opt_key == "plugin-opts" and "mux" in p[opt_key]:
+                    mux_val = p[opt_key]["mux"]
+                    # 将数字 0/1 转换为 false/true
+                    if isinstance(mux_val, int):
+                        p[opt_key]["mux"] = mux_val != 0
+                    elif not isinstance(mux_val, bool):
+                        p[opt_key].pop("mux", None)
+
                 if "headers" in p[opt_key]:
                     headers = p[opt_key]["headers"]
                     if not headers or not isinstance(headers, dict):
@@ -137,23 +183,27 @@ def clean_proxy(p):
                 if not p[opt_key]:
                     p.pop(opt_key)
 
-    # 移除所有 reality 相关配置（格式要求严格，容易出错）
-    p.pop("reality-opts", None)
+    # 按协议类型验证配置
+    if proxy_type == "reality" or "reality-opts" in p:
+        if not validate_reality_opts(p):
+            p.pop("reality-opts", None)
 
-    # 清理 reality 相关字段
-    for reality_key in ["sid", "fp", "pbk", "sni", "serverName"]:
-        p.pop(reality_key, None)
+    elif proxy_type in ["hysteria", "hysteria2"]:
+        validate_hysteria_opts(p)
+
+    elif proxy_type == "tuic":
+        validate_tuic_opts(p)
+
+    # 清理无意义字段（顶层）
+    for useless_key in ["fp", "pbk", "headerType", "sid"]:
+        p.pop(useless_key, None)
 
     # 强制端口为整数
     if "port" in p:
         try:
             p["port"] = int(p["port"])
-        except:
+        except (ValueError, TypeError):
             return None
-
-    # 清理无意义字段
-    for useless_key in ["fp", "pbk", "headerType", "sid"]:
-        p.pop(useless_key, None)
 
     server = p.get("server")
     port = p.get("port")
@@ -298,12 +348,6 @@ def save_batch_for_clash(batch):
     valid_batch = []
     seen_names = {}  # name -> count
     for p in batch:
-        # 跳过 reality 类型（sid 格式问题多）
-        if p.get("type") == "reality":
-            continue
-        # 跳过带有 reality-opts 的节点（格式要求严格）
-        if p.get("reality-opts"):
-            continue
         # 跳过没有必要字段的节点
         if not p.get("server") or not p.get("port"):
             continue
