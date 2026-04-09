@@ -251,13 +251,25 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
         # 为当前批次生成精简配置
         save_batch_for_clash(all_proxies_dict, batch)
 
-        # 启动 Clash 加载新配置
-        print("启动 Clash...")
-        global clash_process
-        clash_process = start_clash()
-        if not wait_clash():
-            print("Clash 启动失败")
-            return []
+        # 启动 Clash 加载新配置（最多重试 3 次）
+        clash_started = False
+        for retry in range(3):
+            if retry > 0:
+                print(f"重试启动 Clash ({retry + 1}/3)...")
+            print("启动 Clash...")
+            global clash_process
+            clash_process = start_clash()
+            if wait_clash():
+                clash_started = True
+                break
+            # 启动失败则清理后重试
+            if clash_process:
+                clash_process.terminate()
+            kill_clash()
+
+        if not clash_started:
+            print("Clash 启动失败，跳过本批次")
+            continue
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
@@ -300,13 +312,25 @@ def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
         # 为当前批次生成精简配置
         save_batch_for_clash(all_proxies_dict, batch)
 
-        # 启动 Clash 加载新配置
-        print("启动 Clash...")
-        global clash_process
-        clash_process = start_clash()
-        if not wait_clash():
-            print("Clash 启动失败")
-            return []
+        # 启动 Clash 加载新配置（最多重试 3 次）
+        clash_started = False
+        for retry in range(3):
+            if retry > 0:
+                print(f"重试启动 Clash ({retry + 1}/3)...")
+            print("启动 Clash...")
+            global clash_process
+            clash_process = start_clash()
+            if wait_clash():
+                clash_started = True
+                break
+            # 启动失败则清理后重试
+            if clash_process:
+                clash_process.terminate()
+            kill_clash()
+
+        if not clash_started:
+            print("Clash 启动失败，跳过本批次")
+            continue
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
@@ -389,14 +413,17 @@ def kill_clash():
     """强力清理 Clash 进程"""
     try:
         if os.name == 'nt':
+            # 执行两次确保清理
             subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(0.5)
             subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(0.5)
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except:
         pass
-    time.sleep(1)
+    time.sleep(0.5)
 
 def is_port_in_use(port):
     """检查端口是否被占用"""
