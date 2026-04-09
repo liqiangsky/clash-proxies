@@ -436,22 +436,23 @@ def kill_clash():
         else:
             # Linux 环境下更彻底的清理
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(1)
+            time.sleep(0.5)
             subprocess.run(["pkill", "-9", "mihomo"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(1)
-            # 额外确认：使用 fuser 释放端口
+            time.sleep(0.5)
+            # 使用 fuser 释放端口（如果可用）
             subprocess.run(["fuser", "-k", "9090/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(["fuser", "-k", "7890/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except:
         pass
-    # 等待端口释放
-    time.sleep(2)
 
-    # 确认端口已释放
-    for port in [9090, 7890]:
-        if is_port_in_use(port):
-            print(f"⚠️ 警告：{port} 端口仍被占用，继续等待...")
-            time.sleep(2)
+    # 等待并确保端口完全释放
+    for _ in range(5):
+        time.sleep(1)
+        port_9090_free = not is_port_in_use(9090)
+        port_7890_free = not is_port_in_use(7890)
+        if port_9090_free and port_7890_free:
+            break
+        print("等待端口释放...")
 
 def is_port_in_use(port):
     """检查端口是否被占用"""
@@ -496,15 +497,19 @@ def wait_clash(process):
             socket.create_connection(("127.0.0.1", 9090), timeout=1)
             print(f"Clash 启动成功，耗时 {i+1} 秒")
             return True
-        except:
-            if (i + 1) % 5 == 0:
-                print(f"已等待 {i+1} 秒...")
-                # 检查 Clash 进程是否还在运行
+        except Exception as e:
+            # 每 2 秒检查一次进程状态，更快发现问题
+            if (i + 1) % 2 == 0:
                 if process and process.poll() is not None:
                     stdout, stderr = process.communicate()
+                    print(f"Clash 进程已退出 (返回码：{process.returncode})")
                     if stderr:
-                        print(f"Clash 进程已退出，错误输出：{stderr[:500]}")
+                        print(f"错误输出：{stderr[:800]}")
+                    if stdout:
+                        print(f"标准输出：{stdout[:800]}")
                     return False
+            if (i + 1) % 5 == 0:
+                print(f"已等待 {i+1} 秒... (异常：{e})")
             time.sleep(1)
     print("Clash 启动超时")
     return False
