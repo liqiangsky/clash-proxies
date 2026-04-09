@@ -285,13 +285,13 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
         pass
     return None
 
-def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
-    """第一轮：快速筛选，宽松条件 - 分批测试避免 Clash 过载"""
+def filter_proxies_batch(proxies, batch_size=500, max_delay=MAX_DELAY_ROUND1, round_name="筛选轮"):
+    """通用分批测试函数 - 支持多轮筛选"""
     results = []
     total = len(proxies)
     batches = (total + batch_size - 1) // batch_size
 
-    print(f"第一轮筛选（快速测试），共 {batches} 批次...")
+    print(f"\n{round_name}筛选（延迟 ≤ {max_delay}ms），共 {batches} 批次...")
 
     for batch_idx in range(batches):
         start = batch_idx * batch_size
@@ -300,7 +300,7 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
         print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
         # 为当前批次生成精简配置
-        save_batch_for_clash(all_proxies_dict, batch)
+        save_batch_for_clash(batch)
 
         # 启动 Clash 加载新配置
         print("启动 Clash...")
@@ -312,7 +312,7 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-            futures = {ex.submit(test_google_access, p["name"]): p["name"] for p in batch}
+            futures = {ex.submit(test_google_access, p["name"], max_delay): p["name"] for p in batch}
             for i, future in enumerate(as_completed(futures), 1):
                 try:
                     r = future.result()
@@ -331,59 +331,21 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
-    print(f"\n第一轮总计通过：{len(out)}/{total} 个节点")
+    print(f"\n{round_name}总计通过：{len(out)}/{total} 个节点")
     return out
 
-def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
-    """第二轮：严格筛选，确保质量 - 分批测试"""
-    results = []
-    total = len(proxies)
-    batches = (total + batch_size - 1) // batch_size
 
-    print(f"\n第二轮筛选（严格测试），共 {batches} 批次...")
+def filter_proxies_round1(proxies, batch_size=500):
+    """第一轮：快速筛选，宽松条件"""
+    return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND1, round_name="第一轮")
 
-    for batch_idx in range(batches):
-        start = batch_idx * batch_size
-        end = min(start + batch_size, total)
-        batch = proxies[start:end]
-        print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
-        # 为当前批次生成精简配置
-        save_batch_for_clash(all_proxies_dict, batch)
+def filter_proxies_round2(proxies, batch_size=500):
+    """第二轮：严格筛选，确保质量"""
+    return filter_proxies_batch(proxies, batch_size=batch_size, max_delay=MAX_DELAY_ROUND2, round_name="第二轮")
 
-        # 启动 Clash 加载新配置
-        print("启动 Clash...")
-        global clash_process
-        clash_process = start_clash()
-        if not wait_clash():
-            print("Clash 启动失败")
-            return []
 
-        batch_results = []
-        with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-            futures = {ex.submit(test_google_access, p["name"], MAX_DELAY_ROUND2): p["name"] for p in batch}
-            for i, future in enumerate(as_completed(futures), 1):
-                try:
-                    r = future.result()
-                    if r:
-                        batch_results.append(r)
-                except:
-                    pass
-
-        results.extend(batch_results)
-        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
-
-        # 测试完当前批次后关闭 Clash - 使用强力清理
-        if clash_process:
-            clash_process.terminate()
-        kill_clash()
-
-    valid_names = {r[0] for r in results}
-    out = [p for p in proxies if p["name"] in valid_names]
-    print(f"\n第二轮总计通过：{len(out)}/{total} 个节点")
-    return out
-
-def resolve_countries(proxies, all_proxies_dict):
+def resolve_countries(proxies):
     """第三步：查询通过测试的节点 IP 位置和真实出口位置"""
     if not proxies:
         return []
@@ -452,15 +414,11 @@ def save_for_clash(proxies):
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-def save_batch_for_clash(all_proxies_dict, batch):
+def save_batch_for_clash(batch):
     """为当前批次生成精简的 Clash 配置"""
-    batch_names = {p["name"] for p in batch}
-    batch_proxies = [all_proxies_dict[name] for name in batch_names if name in all_proxies_dict]
-    save_for_clash(batch_proxies)
-
-    # 打印配置信息
+    save_for_clash(batch)
     file_size = os.path.getsize("run.yaml") / 1024
-    print(f"已生成 run.yaml，{len(batch_proxies)} 个节点，大小：{file_size:.1f} KB")
+    print(f"已生成 run.yaml，{len(batch)} 个节点，大小：{file_size:.1f} KB")
 
 def kill_clash():
     """强力清理 Clash 进程"""
@@ -534,25 +492,22 @@ if __name__ == "__main__":
     clash_process = None
 
     try:
-        # 保存全部节点用于后续 IP 查询
-        all_proxies_dict = {p["name"]: p for p in raw}
-
         # 第二步：第一轮快速筛选（宽松条件）- 每批 500 个
-        passed_round1 = filter_proxies_round1(raw, batch_size=500, all_proxies_dict=all_proxies_dict)
+        passed_round1 = filter_proxies_round1(raw, batch_size=500)
 
         if not passed_round1:
             print("第一轮筛选无节点通过，退出")
             exit()
 
         # 第三步：第二轮严格筛选（更严格条件）- 每批 500 个
-        passed_round2 = filter_proxies_round2(passed_round1, batch_size=500, all_proxies_dict=all_proxies_dict)
+        passed_round2 = filter_proxies_round2(passed_round1, batch_size=500)
 
         if not passed_round2:
             print("第二轮筛选无节点通过，退出")
             exit()
 
         # 第四步：查询通过两轮测试的节点 IP 和出口位置
-        good_proxies = resolve_countries(passed_round2, all_proxies_dict)
+        good_proxies = resolve_countries(passed_round2)
 
         os.makedirs("output", exist_ok=True)
         final_data = {"proxies": good_proxies}
