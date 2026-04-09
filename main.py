@@ -62,7 +62,7 @@ IP_WORKERS = 15
 TEST_WORKERS = 80
 
 # 批次大小配置
-BATCH_SIZE = 300  # 每批次节点数，避免配置文件过大导致 Clash 启动超时
+BATCH_SIZE = 500  # 每批次节点数
 
 # 线程安全的 IP 缓存
 import threading
@@ -440,7 +440,8 @@ def kill_clash():
             subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except:
         pass
-    time.sleep(1)
+    # 等待端口释放
+    time.sleep(2)
 
 def is_port_in_use(port):
     """检查端口是否被占用"""
@@ -453,10 +454,12 @@ def is_port_in_use(port):
             return False
 
 def start_clash():
-    # 启动前先确保 9090 端口可用
-    if is_port_in_use(9090):
-        print("9090 端口被占用，清理旧 Clash 进程...")
-        kill_clash()
+    # 启动前先确保 9090 和 7890 端口可用
+    for port in [9090, 7890]:
+        if is_port_in_use(port):
+            print(f"{port} 端口被占用，清理旧 Clash 进程...")
+            kill_clash()
+            time.sleep(1)
 
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
