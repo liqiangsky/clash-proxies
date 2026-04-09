@@ -445,6 +445,12 @@ def kill_clash():
     # 等待端口释放 - 增加等待时间确保端口完全释放
     time.sleep(3)
 
+    # 确认端口已释放
+    for port in [9090, 7890]:
+        if is_port_in_use(port):
+            print(f"⚠️ 警告：{port} 端口仍被占用，继续等待...")
+            time.sleep(2)
+
 def is_port_in_use(port):
     """检查端口是否被占用"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -468,10 +474,12 @@ def start_clash():
     if os.name != 'nt':
         subprocess.run(["chmod", "+x", "./clash"])
     try:
+        # 捕获 Clash 启动日志以便调试
         process = subprocess.Popen(
             ["./clash", "-f", "run.yaml"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
         )
         return process
     except Exception as e:
@@ -489,6 +497,12 @@ def wait_clash():
         except:
             if (i + 1) % 5 == 0:
                 print(f"已等待 {i+1} 秒...")
+                # 检查 Clash 进程是否还在运行
+                if clash_process and clash_process.poll() is not None:
+                    stdout, stderr = clash_process.communicate()
+                    if stderr:
+                        print(f"Clash 进程已退出，错误输出：{stderr[:500]}")
+                    return False
             time.sleep(1)
     print("Clash 启动超时")
     return False
