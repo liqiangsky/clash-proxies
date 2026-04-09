@@ -234,6 +234,20 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUND1):
         pass
     return None
 
+def reload_clash_config():
+    """通知 Clash 重新加载配置文件"""
+    try:
+        # 使用 PUT /configs 热重载配置
+        resp = requests.put(
+            "http://127.0.0.1:9090/configs",
+            json={"path": "run.yaml"},
+            timeout=10
+        )
+        return resp.status_code == 204
+    except Exception as e:
+        print(f"重载配置失败：{e}")
+        return False
+
 def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
     """第一轮：快速筛选，宽松条件 - 分批测试避免 Clash 过载"""
     results = []
@@ -242,34 +256,36 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
 
     print(f"第一轮筛选（快速测试），共 {batches} 批次...")
 
+    # 启动 Clash（只启动一次）
+    print("启动 Clash...")
+    global clash_process
+    clash_process = start_clash()
+    if not wait_clash():
+        print("Clash 启动失败，退出")
+        return []
+    print("Clash 启动成功，开始分批测试...\n")
+
     for batch_idx in range(batches):
         start = batch_idx * batch_size
         end = min(start + batch_size, total)
         batch = proxies[start:end]
-        print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
+        print(f">>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
         # 为当前批次生成精简配置
         save_batch_for_clash(all_proxies_dict, batch)
 
-        # 启动 Clash 加载新配置（最多重试 3 次）
-        clash_started = False
-        for retry in range(3):
-            if retry > 0:
-                print(f"重试启动 Clash ({retry + 1}/3)...")
-            print("启动 Clash...")
-            global clash_process
-            clash_process = start_clash()
-            if wait_clash():
-                clash_started = True
-                break
-            # 启动失败则清理后重试
-            if clash_process:
+        # 重载配置（第一批不需要重载，因为启动时已经加载）
+        if batch_idx > 0:
+            print("重载配置...")
+            if not reload_clash_config():
+                print("重载失败，重试启动 Clash...")
                 clash_process.terminate()
-            kill_clash()
-
-        if not clash_started:
-            print("Clash 启动失败，跳过本批次")
-            continue
+                kill_clash()
+                clash_process = start_clash()
+                if not wait_clash():
+                    print("Clash 重启失败，跳过本批次")
+                    continue
+            print("配置重载完成")
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
@@ -283,12 +299,7 @@ def filter_proxies_round1(proxies, batch_size=500, all_proxies_dict=None):
                     pass
 
         results.extend(batch_results)
-        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
-
-        # 测试完当前批次后关闭 Clash - 使用强力清理
-        if clash_process:
-            clash_process.terminate()
-        kill_clash()
+        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点\n")
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -303,34 +314,36 @@ def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
 
     print(f"\n第二轮筛选（严格测试），共 {batches} 批次...")
 
+    # 启动 Clash（只启动一次）
+    print("启动 Clash...")
+    global clash_process
+    clash_process = start_clash()
+    if not wait_clash():
+        print("Clash 启动失败，退出")
+        return []
+    print("Clash 启动成功，开始分批测试...\n")
+
     for batch_idx in range(batches):
         start = batch_idx * batch_size
         end = min(start + batch_size, total)
         batch = proxies[start:end]
-        print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
+        print(f">>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
         # 为当前批次生成精简配置
         save_batch_for_clash(all_proxies_dict, batch)
 
-        # 启动 Clash 加载新配置（最多重试 3 次）
-        clash_started = False
-        for retry in range(3):
-            if retry > 0:
-                print(f"重试启动 Clash ({retry + 1}/3)...")
-            print("启动 Clash...")
-            global clash_process
-            clash_process = start_clash()
-            if wait_clash():
-                clash_started = True
-                break
-            # 启动失败则清理后重试
-            if clash_process:
+        # 重载配置（第一批不需要重载，因为启动时已经加载）
+        if batch_idx > 0:
+            print("重载配置...")
+            if not reload_clash_config():
+                print("重载失败，重试启动 Clash...")
                 clash_process.terminate()
-            kill_clash()
-
-        if not clash_started:
-            print("Clash 启动失败，跳过本批次")
-            continue
+                kill_clash()
+                clash_process = start_clash()
+                if not wait_clash():
+                    print("Clash 重启失败，跳过本批次")
+                    continue
+            print("配置重载完成")
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
@@ -344,12 +357,7 @@ def filter_proxies_round2(proxies, batch_size=500, all_proxies_dict=None):
                     pass
 
         results.extend(batch_results)
-        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点")
-
-        # 测试完当前批次后关闭 Clash - 使用强力清理
-        if clash_process:
-            clash_process.terminate()
-        kill_clash()
+        print(f"本批次通过：{len(batch_results)}/{len(batch)} 个节点\n")
 
     valid_names = {r[0] for r in results}
     out = [p for p in proxies if p["name"] in valid_names]
@@ -493,6 +501,12 @@ if __name__ == "__main__":
         if not passed_round1:
             print("第一轮筛选无节点通过，退出")
             exit()
+
+        # 关闭 Clash，准备第二轮
+        if clash_process:
+            clash_process.terminate()
+        kill_clash()
+        clash_process = None
 
         # 第三步：第二轮严格筛选（更严格条件）- 每批 500 个
         passed_round2 = filter_proxies_round2(passed_round1, batch_size=500, all_proxies_dict=all_proxies_dict)
