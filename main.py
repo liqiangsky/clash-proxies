@@ -22,17 +22,6 @@ URLS = [
     "https://open.tidnotes.top:2083/clash/proxies",
     "http://xqz0.vip:15580/clash/proxies",
     "https://vahid.ehsandigik.ir/clash",
-    #"https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
-    #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
-    #"https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    #"https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
-    #"https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
-    #"https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
-    #"https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
-    #"https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
-    #"https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
-    #"https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
-    #"https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
@@ -74,6 +63,45 @@ TEST_WORKERS = 80
 
 # 批次大小配置
 BATCH_SIZE = 500  # 每批次节点数
+
+# ========== Globalping API 配置：从中国大陆探测 ==========
+
+# 启用 Globalping API 测试（在 GitHub Actions 上运行时建议启用）
+# 注：Globalping 探测会在 Clash 第 1 轮测试（访问 Google）之后执行，以节省 API 配额
+ENABLE_GLOBALPING = True
+
+# Globalping API 端点
+GLOBALPING_API_URL = "https://api.globalping.io/v1/measurements"
+
+# 中国大陆探测点数量（至少需要多少个 CN 探针测试通过）
+MIN_CN_PROBES = 2
+
+# Globalping 测试类型：ping, http, dns
+# ping: 测试 ICMP 连通性
+# http: 测试 HTTP 连接（需要指定端口）
+# dns: 测试 DNS 解析
+GLOBALPING_TEST_TYPE = "ping"
+
+# Globalping 测试超时（秒）
+GLOBALPING_TIMEOUT = 10
+
+# Globalping 限制：每个节点最多尝试的探测点数量（避免 API 限流）
+MAX_CN_PROBES_TO_TRY = 5
+
+# ========== Cloudflare Trace 检测：免费无限制 ==========
+
+# 启用 Cloudflare Trace 检测（通过节点访问 1.1.1.1/trace 判断出口位置）
+# 原理：如果节点返回的 colo 是 HKG/SGP/NRT 等亚洲机场，说明离中国近，可用性更高
+# 完全免费，无频率限制，走节点自己流量
+ENABLE_CF_TRACE = False
+
+# 检测节点出口位置（返回的机场代码）
+# 亚洲近岸机场：HKG(香港), TPE(台北), SIN(新加坡), NRT(东京), ICN(首尔)
+# 如果留空则只记录不筛选
+PREFERRED_COLOS = ["HKG", "TPE", "SIN", "NRT", "ICN", "KIX"]  # 留空则不过滤
+
+# Cloudflare Trace 检测 URL
+CF_TRACE_URL = "https://1.1.1.1/cdn-cgi/trace"
 
 def manual_parse_proxies(text):
     proxies = []
@@ -166,6 +194,190 @@ def validate_tuic_opts(p):
     pass
 
 
+def test_from_china_globalping(server, port):
+    """
+    使用 Globalping API 从中国大陆探测节点服务器是否可达
+
+    Args:
+        server: 服务器地址（域名或 IP）
+        port: 服务器端口
+
+    Returns:
+        bool: True 如果从中国大陆可以访问，False 否则
+    """
+    if not ENABLE_GLOBALPING:
+        return True  # 不启用则默认通过
+
+    try:
+        # 构建 API 请求
+        if GLOBALPING_TEST_TYPE == "http":
+            # HTTP 测试：测试从 CN 探针访问节点的 HTTP 端口
+            payload = {
+                "locations": [{"country": "CN", "limit": MAX_CN_PROBES_TO_TRY}],
+                "target": f"http://{server}:{port}/",
+                "type": "http",
+                "options": {
+                    "timeout": GLOBALPING_TIMEOUT,
+                    "method": "GET"
+                }
+            }
+        elif GLOBALPING_TEST_TYPE == "dns":
+            # DNS 测试：测试 DNS 解析
+            payload = {
+                "locations": [{"country": "CN", "limit": MAX_CN_PROBES_TO_TRY}],
+                "target": server,
+                "type": "dns",
+                "options": {
+                    "timeout": GLOBALPING_TIMEOUT
+                }
+            }
+        else:
+            # Ping 测试（默认）：测试 ICMP 连通性
+            payload = {
+                "locations": [{"country": "CN", "limit": MAX_CN_PROBES_TO_TRY}],
+                "target": server,
+                "type": "ping",
+                "options": {
+                    "timeout": GLOBALPING_TIMEOUT,
+                    "packets": 2
+                }
+            }
+
+        response = requests.post(GLOBALPING_API_URL, json=payload, timeout=15)
+        if response.status_code != 200:
+            print(f"  Globalping API 错误：{response.status_code}")
+            return False
+
+        result = response.json()
+        data = result.get("data", {})
+        results = data.get("results", [])
+
+        if not results:
+            print(f"  Globalping 无探测结果")
+            return False
+
+        # 统计成功的探测点数量
+        success_count = 0
+        total_probes = len(results)
+
+        for probe_result in results:
+            probe_status = probe_result.get("result", {})
+
+            if GLOBALPING_TEST_TYPE == "ping":
+                # Ping 测试：检查是否有丢包
+                status = probe_status.get("status")
+                if status == "finished":
+                    raw = probe_status.get("raw", {})
+                    stats = raw.get("stats", {})
+                    packet_loss = stats.get("packetLoss", 100)
+                    if packet_loss < 50:  # 丢包率小于 50% 算成功
+                        success_count += 1
+
+            elif GLOBALPING_TEST_TYPE == "http":
+                # HTTP 测试：检查状态码
+                status_code = probe_status.get("statusCode", 0)
+                if status_code and status_code < 500:  # 非 5xx 错误算成功
+                    success_count += 1
+
+            elif GLOBALPING_TEST_TYPE == "dns":
+                # DNS 测试：检查是否解析成功
+                status = probe_status.get("status")
+                if status == "finished":
+                    answers = probe_status.get("answers", [])
+                    if answers:
+                        success_count += 1
+
+        # 判断是否达到最小成功探针数
+        passed = success_count >= MIN_CN_PROBES
+        print(f"  中国大陆探测：{success_count}/{total_probes} 成功 {'✓' if passed else '✗'}")
+        return passed
+
+    except requests.exceptions.Timeout:
+        print(f"  Globalping API 超时")
+        return False
+    except Exception as e:
+        print(f"  Globalping 测试失败：{e}")
+        return False
+
+
+def get_node_colo(name):
+    """
+    通过 Cloudflare Trace 检测节点的出口位置（机场代码）
+
+    Args:
+        name: 节点名称
+
+    Returns:
+        str or None: 机场代码（如 HKG, SGP），如果检测失败则返回 None
+    """
+    if not ENABLE_CF_TRACE:
+        return None
+
+    safe_name = urllib.parse.quote(name)
+    url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
+
+    try:
+        # 通过节点访问 Cloudflare Trace
+        params = {"url": CF_TRACE_URL, "timeout": 5000}
+        r = requests.get(url, params=params, timeout=7)
+        result = r.json()
+        delay = result.get("delay", 0)
+
+        if delay <= 0 or delay > MAX_DELAY:
+            return None
+
+        # 解析返回的 trace 文本
+        trace_text = result.get("data", "")
+        if not trace_text or not isinstance(trace_text, str):
+            return None
+
+        # 查找 colo= 行
+        for line in trace_text.split("\n"):
+            if line.startswith("colo="):
+                colo = line.split("=")[1].strip()
+                return colo
+
+        return None
+
+    except Exception as e:
+        return None
+
+
+def filter_by_colo(proxies):
+    """
+    根据 Cloudflare Trace 检测结果筛选节点
+    只保留出口位置在优选机场代码列表中的节点
+    """
+    if not ENABLE_CF_TRACE or not PREFERRED_COLOS:
+        return proxies
+
+    print(f"\n========== Cloudflare Trace: 检测节点出口位置 ==========")
+    print(f"优选机场：{PREFERRED_COLOS}")
+
+    filtered = []
+    for i, p in enumerate(proxies, 1):
+        name = p.get("name")
+        if not name:
+            continue
+
+        colo = get_node_colo(name)
+        if colo:
+            match = any(pref_colo in colo for pref_colo in PREFERRED_COLOS)
+            status = "✓" if match else "✗"
+            print(f"[{i}/{len(proxies)}] {name} -> colo={colo} {status}")
+            if match:
+                filtered.append(p)
+        else:
+            print(f"[{i}/{len(proxies)}] {name} -> 检测失败，保留")
+            filtered.append(p)  # 检测失败也保留，避免误删
+
+        # 小延迟避免限流
+        time.sleep(0.1)
+
+    print(f"\nCloudflare Trace 过滤后：{len(filtered)}/{len(proxies)} 个节点")
+    return filtered
+
+
 def clean_proxy(p):
     """清洗单个节点配置"""
     proxy_type = p.get("type", "")
@@ -238,7 +450,7 @@ def clean_proxy(p):
     return p
 
 def fetch_proxies():
-    """第一步：获取并清洗节点（不查 IP）"""
+    """第一步：获取并清洗节点，统一重命名"""
     all_proxies = []
     seen_addr = set()
 
@@ -253,8 +465,10 @@ def fetch_proxies():
 
     print(f"获取完成，原始节点总数：{len(all_proxies)}")
 
-    # 清洗 + 去重
+    # 清洗 + 去重 + 统一重命名
     cleaned_proxies = []
+    name_counter = {}  # 记录每个基础名称的出现次数
+
     for p in all_proxies:
         p = clean_proxy(p)
         if not p:
@@ -263,9 +477,18 @@ def fetch_proxies():
         if addr in seen_addr:
             continue
         seen_addr.add(addr)
+
+        # 统一重命名：基于原始名称 + 序号
+        original_name = p.get("name", "Unnamed")
+        if original_name in name_counter:
+            name_counter[original_name] += 1
+            p["name"] = f"{original_name}_{name_counter[original_name]}"
+        else:
+            name_counter[original_name] = 0
+
         cleaned_proxies.append(p)
 
-    print(f"清洗去重后：{len(cleaned_proxies)} 个节点（待连通性测试）")
+    print(f"清洗去重后：{len(cleaned_proxies)} 个节点")
     return cleaned_proxies
 
 def test_proxy_continuous(name, test_url=FOREIGN_TEST_URL, count=CONTINUOUS_TEST_COUNT, max_delay=MAX_DELAY):
@@ -359,9 +582,6 @@ def filter_by_protocol_and_region(proxies):
 
 def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0], round_num=1):
     """通用单轮筛选函数"""
-    global GLOBAL_SEEN_NAMES
-    GLOBAL_SEEN_NAMES = set()  # 每轮筛选前重置全局名称集合
-
     # 第 1 轮前先做协议和地区过滤
     if round_num == 1:
         print(f"\n优选协议：{PREFERRED_PROTOCOLS if PREFERRED_PROTOCOLS else '不过滤'}")
@@ -386,7 +606,7 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
         print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
         # 为当前批次生成精简配置
-        save_batch_for_clash(batch, GLOBAL_SEEN_NAMES)
+        save_batch_for_clash(batch)
 
         # 启动 Clash 加载新配置
         print("启动 Clash...")
@@ -467,34 +687,10 @@ def save_for_clash(proxies, for_testing=False):
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-# 全局集合，用于跨批次追踪已使用的名称，确保名称唯一
-GLOBAL_SEEN_NAMES = set()
-
-def save_batch_for_clash(batch, global_seen_names=None):
+def save_batch_for_clash(batch):
     """为当前批次生成精简的 Clash 配置"""
-    global GLOBAL_SEEN_NAMES
-    if global_seen_names is None:
-        global_seen_names = GLOBAL_SEEN_NAMES
-
-    # 过滤掉可能导致 Clash 解析失败的节点，并确保名称唯一
-    valid_batch = []
-    for p in batch:
-        # 跳过没有必要字段的节点
-        if not p.get("server") or not p.get("port"):
-            continue
-
-        # 确保名称全局唯一，重复则添加时间戳后缀
-        name = p.get("name")
-        if name:
-            original_name = name
-            counter = 0
-            while name in global_seen_names:
-                counter += 1
-                name = f"{original_name}_{counter}"
-            p["name"] = name
-            global_seen_names.add(name)
-            valid_batch.append(p)
-
+    # 过滤掉无效节点（名称已在 fetch_proxies 中统一处理，保证唯一）
+    valid_batch = [p for p in batch if p.get("server") and p.get("port")]
     save_for_clash(valid_batch)
     file_size = os.path.getsize("run.yaml") / 1024
     skipped = len(batch) - len(valid_batch)
@@ -644,6 +840,44 @@ if __name__ == "__main__":
                 print(f"第{round_idx}轮筛选无节点通过，退出")
                 exit()
             current_proxies = passed
+
+            # ========== 优化：第 1 轮后插入 Globalping 探测 ==========
+            # 原因：先通过 Clash 粗筛（测通 Google），再对通过的节点调用 Globalping，节省 API 配额
+            if round_idx == 1 and ENABLE_GLOBALPING and current_proxies:
+                print(f"\n========== Globalping API: 从中国大陆探测（第 1 轮后）==========")
+                print(f"测试类型：{GLOBALPING_TEST_TYPE}, 最少成功探针数：{MIN_CN_PROBES}")
+                print(f"待测节点数：{len(current_proxies)}")
+
+                filtered_proxies = []
+                for i, p in enumerate(current_proxies, 1):
+                    server = p.get("server")
+                    port = p.get("port")
+                    if server and port:
+                        print(f"[{i}/{len(current_proxies)}] {server}:{port} ", end="")
+                        if test_from_china_globalping(server, port):
+                            filtered_proxies.append(p)
+                        else:
+                            print(f"  从中国大陆不可达，已过滤")
+                        # 添加小延迟避免触发 API 限流
+                        time.sleep(0.2)
+                    else:
+                        filtered_proxies.append(p)
+
+                current_proxies = filtered_proxies
+                print(f"\nGlobalping 过滤后剩余：{len(current_proxies)} 个节点")
+
+                if not current_proxies:
+                    print("Globalping 过滤后无节点剩余，退出")
+                    exit()
+
+            # ========== Cloudflare Trace: 检测节点出口位置（第 1 轮后） ==========
+            # 原因：与 Globalping 类似，在粗筛后执行，检测节点出口是否在亚洲近岸
+            if round_idx == 1 and ENABLE_CF_TRACE and current_proxies:
+                current_proxies = filter_by_colo(current_proxies)
+                if not current_proxies:
+                    print("Cloudflare Trace 过滤后无节点剩余，退出")
+                    exit()
+            # =================================================================
 
         # 第三步：保存结果
         os.makedirs("output", exist_ok=True)
