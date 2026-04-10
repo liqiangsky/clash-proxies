@@ -37,17 +37,24 @@ URLS = [
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
-# 多重测试：同时测试国外和国内目标，确保节点功能完整
-FOREIGN_TEST_URL = "https://www.google.com/generate_204"  # 测试能否访问外网
-DOMESTIC_TEST_URL = "https://www.baidu.com/"  # 测试能否回退访问国内（通过节点访问百度，验证直连/回退规则）
+# ========== 组合测试配置：提高中国大陆可用性 ==========
 
-# 通过阈值：国外延迟 (ms) - 宽松一些，提高通过率
-MAX_DELAY_FOREIGN = 3000
-# 国内延迟阈值 (ms) - 能访问即可，不要求太快
-MAX_DELAY_DOMESTIC = 5000
+# 测试目标：只测试访问外网能力
+FOREIGN_TEST_URL = "https://www.google.com/generate_204"
 
-# 重试次数 - 每个节点测试多次，提高稳定性
-RETRY_COUNT = 2
+# 连续测试次数 - 每次间隔 1 秒，全部成功才算通过（检测稳定性）
+CONTINUOUS_TEST_COUNT = 3
+
+# 延迟阈值 (ms)
+MAX_DELAY = 3000
+
+# 优选地区列表（近岸节点，延迟低且相对稳定）
+# 留空则不过滤地区
+PREFERRED_REGIONS = ["HK", "TW", "SG", "JP", "KR", "VN", "TH", "MY"]
+
+# 优选协议列表（抗封锁协议）
+# 留空则不过滤协议
+PREFERRED_PROTOCOLS = ["reality", "hysteria", "hysteria2", "tuic", "ss", "trojan"]
 
 # 5 轮过滤延迟阈值 (ms) - 逐步收紧
 MAX_DELAY_ROUNDS = [5000, 3000, 2000, 1000, 500]  # 从宽松到严格
@@ -253,43 +260,71 @@ def fetch_proxies():
     print(f"清洗去重后：{len(cleaned_proxies)} 个节点（待连通性测试）")
     return cleaned_proxies
 
-def test_proxy_connectivity(name, max_delay=MAX_DELAY_FOREIGN, test_url=None):
-    """单次连通性测试（支持重试）"""
-    if test_url is None:
-        test_url = FOREIGN_TEST_URL
-
+def test_proxy_continuous(name, test_url=FOREIGN_TEST_URL, count=CONTINUOUS_TEST_COUNT, max_delay=MAX_DELAY):
+    """连续连通性测试 - 多次请求全部成功才算通过"""
     safe_name = urllib.parse.quote(name)
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
 
-    for attempt in range(RETRY_COUNT):
+    success_count = 0
+    for attempt in range(count):
         try:
             params = {"url": test_url, "timeout": 5000}
             r = requests.get(url, params=params, timeout=7)
             delay = r.json().get("delay", 0)
             if delay > 0 and delay <= max_delay:
-                return (name, delay)
+                success_count += 1
+            else:
+                # 任何一次失败就提前结束
+                return None
         except:
-            pass
-        if attempt < RETRY_COUNT - 1:
-            time.sleep(0.3)  # 重试前短暂等待
+            return None
 
-    return None
+        # 每次请求间隔 1 秒，检测稳定性
+        if attempt < count - 1:
+            time.sleep(1)
+
+    # 全部成功才返回平均延迟
+    return (name, success_count * 100)  # 返回一个代表性延迟值
 
 
-def test_dual_connectivity(name, max_delay_foreign=MAX_DELAY_FOREIGN, max_delay_domestic=MAX_DELAY_DOMESTIC):
-    """双重测试：同时测试访问外网和国内的能力"""
-    # 测试外网访问
-    foreign_result = test_proxy_connectivity(name, max_delay_foreign, FOREIGN_TEST_URL)
-    if not foreign_result:
-        return None
+def filter_by_protocol_and_region(proxies):
+    """按协议和地区过滤节点"""
+    if not PREFERRED_PROTOCOLS and not PREFERRED_REGIONS:
+        return proxies
 
-    # 测试国内访问（通过节点访问百度，验证规则分流/回退功能）
-    domestic_result = test_proxy_connectivity(name, max_delay_domestic, DOMESTIC_TEST_URL)
-    if not domestic_result:
-        return None
+    filtered = []
+    for p in proxies:
+        proxy_type = p.get("type", "")
+        country = p.get("country", "")
 
-    # 两者都通过才返回
-    return (name, foreign_result[1])
+        # 协议过滤
+        if PREFERRED_PROTOCOLS:
+            # 检查是否匹配优选协议（支持模糊匹配）
+            type_match = False
+            for proto in PREFERRED_PROTOCOLS:
+                if proto in proxy_type.lower():
+                    type_match = True
+                    break
+            if not type_match:
+                continue
+
+        # 地区过滤
+        if PREFERRED_REGIONS:
+            # 检查 country 字段或 name 中是否包含优选地区代码
+            region_match = False
+            name = p.get("name", "").upper()
+            country_upper = country.upper()
+            for region in PREFERRED_REGIONS:
+                if region in country_upper or region in name:
+                    region_match = True
+                    break
+            if not region_match:
+                continue
+
+        filtered.append(p)
+
+    print(f"协议/地区过滤后：{len(filtered)} 个节点")
+    return filtered
 
 
 def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0], round_num=1):
@@ -297,13 +332,22 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
     global GLOBAL_SEEN_NAMES
     GLOBAL_SEEN_NAMES = set()  # 每轮筛选前重置全局名称集合
 
+    # 第 1 轮前先做协议和地区过滤
+    if round_num == 1:
+        print(f"\n优选协议：{PREFERRED_PROTOCOLS if PREFERRED_PROTOCOLS else '不过滤'}")
+        print(f"优选地区：{PREFERRED_REGIONS if PREFERRED_REGIONS else '不过滤'}")
+        proxies = filter_by_protocol_and_region(proxies)
+        if not proxies:
+            print("没有节点符合协议/地区要求")
+            return []
+
     if batch_size is None:
         batch_size = BATCH_SIZE
     results = []
     total = len(proxies)
     batches = (total + batch_size - 1) // batch_size
 
-    print(f"\n第{round_num}轮筛选（延迟 ≤ {max_delay}ms），共 {batches} 批次...")
+    print(f"\n第{round_num}轮筛选（延迟 ≤ {max_delay}ms，连续{CONTINUOUS_TEST_COUNT}次），共 {batches} 批次...")
 
     for batch_idx in range(batches):
         start = batch_idx * batch_size
@@ -323,7 +367,7 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-            futures = {ex.submit(test_dual_connectivity, p["name"]): p["name"] for p in batch}
+            futures = {ex.submit(test_proxy_continuous, p["name"]): p["name"] for p in batch}
             for i, future in enumerate(as_completed(futures), 1):
                 try:
                     r = future.result()
