@@ -16,10 +16,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 URLS = [
     "https://165.154.105.225/clash/proxies",
     "https://pp.dcd.one/clash/proxies",
-    "http://138.2.112.136:12580/clash/proxies",
-    "http://tmac.eu.org:12580/clash/proxies",
-    "http://ql.ethanyang.top:12580/clash/proxies",
-    "https://open.tidnotes.top:2083/clash/proxies",
+    #"http://138.2.112.136:12580/clash/proxies",
+    #"http://tmac.eu.org:12580/clash/proxies",
+    #"http://ql.ethanyang.top:12580/clash/proxies",
+    #"https://open.tidnotes.top:2083/clash/proxies",
     "http://xqz0.vip:15580/clash/proxies",
     "https://vahid.ehsandigik.ir/clash",
 ]
@@ -42,10 +42,10 @@ BLOCKED_CN_IP_PREFIXES = []  # 中国大陆 IP 段前缀（如果被节点出口
 # 示例：["103.", "104."] 等可根据实际情况添加
 
 # 优选地区（基于出口 IP 的 GeoIP 信息）
-PREFERRED_REGIONS = []  # 留空则不过滤，可填 ["HK", "TW", "SG", "JP", "KR"]
+PREFERRED_REGIONS = ["HK", "TW", "SG", "JP", "KR"]  # 留空则不过滤，可填 ["HK", "TW", "SG", "JP", "KR"]
 
 # 优选协议列表
-PREFERRED_PROTOCOLS = []  # 留空则不过滤，可填 ["reality", "hysteria2", "tuic", "ss", "trojan"]
+PREFERRED_PROTOCOLS = ["reality", "hysteria2", "tuic", "ss", "trojan"]  # 留空则不过滤，可填 ["reality", "hysteria2", "tuic", "ss", "trojan"]
 
 # 连续测试次数 - 检测稳定性（设置为 1 则只测一次）
 CONTINUOUS_TEST_COUNT = 1
