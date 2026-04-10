@@ -37,9 +37,17 @@ URLS = [
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
-# 使用国内可访问的测试目标，更贴近实际使用场景
-#TEST_URL = "https://www.google.com/generate_204"  # Google 204 测试，更轻量
-TEST_URL = "https://cp.cloudflare.com/generate_204"  # Google 204 测试，更轻量
+# 多重测试：同时测试国外和国内目标，确保节点功能完整
+FOREIGN_TEST_URL = "https://www.google.com/generate_204"  # 测试能否访问外网
+DOMESTIC_TEST_URL = "https://www.baidu.com/"  # 测试能否回退访问国内（通过节点访问百度，验证直连/回退规则）
+
+# 通过阈值：国外延迟 (ms) - 宽松一些，提高通过率
+MAX_DELAY_FOREIGN = 3000
+# 国内延迟阈值 (ms) - 能访问即可，不要求太快
+MAX_DELAY_DOMESTIC = 5000
+
+# 重试次数 - 每个节点测试多次，提高稳定性
+RETRY_COUNT = 2
 
 # 5 轮过滤延迟阈值 (ms) - 逐步收紧
 MAX_DELAY_ROUNDS = [5000, 3000, 2000, 1000, 500]  # 从宽松到严格
@@ -245,19 +253,43 @@ def fetch_proxies():
     print(f"清洗去重后：{len(cleaned_proxies)} 个节点（待连通性测试）")
     return cleaned_proxies
 
-def test_google_access(name, max_delay=MAX_DELAY_ROUNDS[0]):
-    """单次连通性测试"""
+def test_proxy_connectivity(name, max_delay=MAX_DELAY_FOREIGN, test_url=None):
+    """单次连通性测试（支持重试）"""
+    if test_url is None:
+        test_url = FOREIGN_TEST_URL
+
     safe_name = urllib.parse.quote(name)
     url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-    try:
-        params = {"url": TEST_URL, "timeout": 5000}
-        r = requests.get(url, params=params, timeout=7)
-        delay = r.json().get("delay", 0)
-        if delay > 0 and delay <= max_delay:
-            return (name, delay)
-    except:
-        pass
+
+    for attempt in range(RETRY_COUNT):
+        try:
+            params = {"url": test_url, "timeout": 5000}
+            r = requests.get(url, params=params, timeout=7)
+            delay = r.json().get("delay", 0)
+            if delay > 0 and delay <= max_delay:
+                return (name, delay)
+        except:
+            pass
+        if attempt < RETRY_COUNT - 1:
+            time.sleep(0.3)  # 重试前短暂等待
+
     return None
+
+
+def test_dual_connectivity(name, max_delay_foreign=MAX_DELAY_FOREIGN, max_delay_domestic=MAX_DELAY_DOMESTIC):
+    """双重测试：同时测试访问外网和国内的能力"""
+    # 测试外网访问
+    foreign_result = test_proxy_connectivity(name, max_delay_foreign, FOREIGN_TEST_URL)
+    if not foreign_result:
+        return None
+
+    # 测试国内访问（通过节点访问百度，验证规则分流/回退功能）
+    domestic_result = test_proxy_connectivity(name, max_delay_domestic, DOMESTIC_TEST_URL)
+    if not domestic_result:
+        return None
+
+    # 两者都通过才返回
+    return (name, foreign_result[1])
 
 
 def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0], round_num=1):
@@ -291,7 +323,7 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
 
         batch_results = []
         with ThreadPoolExecutor(max_workers=TEST_WORKERS) as ex:
-            futures = {ex.submit(test_google_access, p["name"], max_delay): p["name"] for p in batch}
+            futures = {ex.submit(test_dual_connectivity, p["name"]): p["name"] for p in batch}
             for i, future in enumerate(as_completed(futures), 1):
                 try:
                     r = future.result()
@@ -315,7 +347,7 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
 
 
 def save_for_clash(proxies):
-    """生成 Clash 配置"""
+    """生成 Clash 配置 - 使用 rule 模式，所有流量经代理"""
     config = {
         "mixed-port": 7890,
         "allow-lan": False,
@@ -329,7 +361,10 @@ def save_for_clash(proxies):
                 "proxies": [p["name"] for p in proxies]
             }
         ],
-        "rules": ["MATCH,test"]
+        # 所有流量都走 test 组（即所有节点），这样测试 domestic 和 foreign 都会通过代理
+        "rules": [
+            "MATCH,test"
+        ]
     }
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
