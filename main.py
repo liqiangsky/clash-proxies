@@ -22,17 +22,17 @@ URLS = [
     "https://open.tidnotes.top:2083/clash/proxies",
     "http://xqz0.vip:15580/clash/proxies",
     "https://vahid.ehsandigik.ir/clash",
-    #"https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
-    #"https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
-    #"https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
-    #"https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
-    #"https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
-    #"https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
-    #"https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
-    #"https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
-    #"https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
-    #"https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
-    #"https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
+    "https://chromego-sub.netlify.app/sub/merged_proxies_new.yaml",
+    "https://raw.githubusercontent.com/shaoyouvip/free/refs/heads/main/all.yaml",
+    "https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml",
+    "https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml",
+    "https://raw.githubusercontent.com/qjlxg/aggregator/main/data/clash.yaml",
+    "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml",
+    "https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml",
+    "https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml",
+    "https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.yaml",
+    "https://raw.githubusercontent.com/dongchengjie/airport/refs/heads/main/subs/merged/tested_within.yaml",
+    "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/refs/heads/master/list.meta.yml",
 ]
 
 HEADERS = {"User-Agent": "Clash/1.0.0"}
@@ -42,19 +42,27 @@ HEADERS = {"User-Agent": "Clash/1.0.0"}
 # 测试目标：只测试访问外网能力
 FOREIGN_TEST_URL = "https://www.google.com/generate_204"
 
-# 连续测试次数 - 每次间隔 1 秒，全部成功才算通过（检测稳定性）
-CONTINUOUS_TEST_COUNT = 3
+# 出口 IP 检测：查询节点的真实出口 IP，判断是否被 GFW 封锁
+# 原理：GFW 会封锁某些 IP 段，即使是海外节点，如果 IP 在被封锁段内也无法使用
+ENABLE_IP_CHECK = True  # 是否启用出口 IP 检测
+IP_CHECK_URL = "https://api.ip.sb/ip"  # 返回纯文本 IP 地址
+# IP_CHECK_URL = "https://api.ipify.org"  # 备选
+
+# 过滤规则：以下情况会被过滤
+BLOCKED_CN_IP_PREFIXES = []  # 中国大陆 IP 段前缀（如果被节点出口 IP 匹配则过滤）
+# 示例：["103.", "104."] 等可根据实际情况添加
+
+# 优选地区（基于出口 IP 的 GeoIP 信息）
+PREFERRED_REGIONS = []  # 留空则不过滤，可填 ["HK", "TW", "SG", "JP", "KR"]
+
+# 优选协议列表
+PREFERRED_PROTOCOLS = []  # 留空则不过滤，可填 ["reality", "hysteria2", "tuic", "ss", "trojan"]
+
+# 连续测试次数 - 检测稳定性（设置为 1 则只测一次）
+CONTINUOUS_TEST_COUNT = 1
 
 # 延迟阈值 (ms)
-MAX_DELAY = 3000
-
-# 优选地区列表（近岸节点，延迟低且相对稳定）
-# 留空则不过滤地区
-PREFERRED_REGIONS = ["HK", "TW", "SG", "JP", "KR", "VN", "TH", "MY"]
-
-# 优选协议列表（抗封锁协议）
-# 留空则不过滤协议
-PREFERRED_PROTOCOLS = ["reality", "hysteria", "hysteria2", "tuic", "ss", "trojan"]
+MAX_DELAY = 5000
 
 # 5 轮过滤延迟阈值 (ms) - 逐步收紧
 MAX_DELAY_ROUNDS = [5000, 3000, 2000, 1000, 500]  # 从宽松到严格
@@ -274,17 +282,43 @@ def test_proxy_continuous(name, test_url=FOREIGN_TEST_URL, count=CONTINUOUS_TEST
             if delay > 0 and delay <= max_delay:
                 success_count += 1
             else:
-                # 任何一次失败就提前结束
                 return None
         except:
             return None
 
-        # 每次请求间隔 1 秒，检测稳定性
         if attempt < count - 1:
             time.sleep(1)
 
-    # 全部成功才返回平均延迟
-    return (name, success_count * 100)  # 返回一个代表性延迟值
+    return (name, success_count * 100)
+
+
+def get_proxy_exit_ip(name):
+    """查询节点的出口 IP"""
+    safe_name = urllib.parse.quote(name)
+    url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
+
+    try:
+        # 通过节点访问 IP 查询服务
+        params = {"url": IP_CHECK_URL, "timeout": 5000}
+        r = requests.get(url, params=params, timeout=8)
+        result = r.json()
+        delay = result.get("delay", 0)
+        if delay > 0 and delay <= MAX_DELAY:
+            # 如果成功返回，说明节点可用
+            return True, delay
+        return False, 0
+    except:
+        return False, 0
+
+
+def is_ip_blocked(ip):
+    """检查 IP 是否在被封锁的段内"""
+    if not BLOCKED_CN_IP_PREFIXES:
+        return False
+    for prefix in BLOCKED_CN_IP_PREFIXES:
+        if ip.startswith(prefix):
+            return True
+    return False
 
 
 def filter_by_protocol_and_region(proxies):
@@ -297,9 +331,7 @@ def filter_by_protocol_and_region(proxies):
         proxy_type = p.get("type", "")
         country = p.get("country", "")
 
-        # 协议过滤
         if PREFERRED_PROTOCOLS:
-            # 检查是否匹配优选协议（支持模糊匹配）
             type_match = False
             for proto in PREFERRED_PROTOCOLS:
                 if proto in proxy_type.lower():
@@ -308,9 +340,7 @@ def filter_by_protocol_and_region(proxies):
             if not type_match:
                 continue
 
-        # 地区过滤
         if PREFERRED_REGIONS:
-            # 检查 country 字段或 name 中是否包含优选地区代码
             region_match = False
             name = p.get("name", "").upper()
             country_upper = country.upper()
@@ -390,26 +420,50 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
     return out
 
 
-def save_for_clash(proxies):
-    """生成 Clash 配置 - 使用 rule 模式，所有流量经代理"""
-    config = {
-        "mixed-port": 7890,
-        "allow-lan": False,
-        "mode": "rule",
-        "external-controller": "127.0.0.1:9090",
-        "proxies": proxies,
-        "proxy-groups": [
-            {
-                "name": "test",
-                "type": "select",
-                "proxies": [p["name"] for p in proxies]
-            }
-        ],
-        # 所有流量都走 test 组（即所有节点），这样测试 domestic 和 foreign 都会通过代理
-        "rules": [
-            "MATCH,test"
-        ]
-    }
+def save_for_clash(proxies, for_testing=False):
+    """生成 Clash 配置"""
+    if for_testing:
+        # 测试模式：所有节点放在一个组里
+        config = {
+            "mixed-port": 7890,
+            "allow-lan": False,
+            "mode": "rule",
+            "external-controller": "127.0.0.1:9090",
+            "proxies": proxies,
+            "proxy-groups": [
+                {
+                    "name": "test",
+                    "type": "select",
+                    "proxies": [p["name"] for p in proxies]
+                }
+            ],
+            "rules": ["MATCH,test"]
+        }
+    else:
+        # 最终输出模式：添加 url-test 自动选择组
+        config = {
+            "mixed-port": 7890,
+            "allow-lan": False,
+            "mode": "rule",
+            "external-controller": "127.0.0.1:9090",
+            "proxies": proxies,
+            "proxy-groups": [
+                {
+                    "name": "AUTO",
+                    "type": "url-test",
+                    "proxies": [p["name"] for p in proxies],
+                    "url": "https://www.google.com/generate_204",
+                    "interval": 300,
+                    "tolerance": 50
+                },
+                {
+                    "name": "手动选择",
+                    "type": "select",
+                    "proxies": [p["name"] for p in proxies]
+                }
+            ],
+            "rules": ["MATCH,AUTO"]
+        }
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
@@ -445,6 +499,46 @@ def save_batch_for_clash(batch, global_seen_names=None):
     file_size = os.path.getsize("run.yaml") / 1024
     skipped = len(batch) - len(valid_batch)
     print(f"已生成 run.yaml，{len(valid_batch)} 个节点{' (跳过 ' + str(skipped) + ' 个无效节点)' if skipped else ''}，大小：{file_size:.1f} KB")
+
+
+def save_final_config(proxies):
+    """生成带 url-test 自动选择的完整配置文件"""
+    config = {
+        "mixed-port": 7890,
+        "allow-lan": False,
+        "mode": "rule",
+        "log-level": "info",
+        "external-controller": "127.0.0.1:9090",
+        "proxies": proxies,
+        "proxy-groups": [
+            {
+                "name": "节点选择",
+                "type": "select",
+                "proxies": ["AUTO", "手动选择"] + [p["name"] for p in proxies[:20]]
+            },
+            {
+                "name": "AUTO",
+                "type": "url-test",
+                "proxies": [p["name"] for p in proxies],
+                "url": "https://www.google.com/generate_204",
+                "interval": 300,
+                "tolerance": 50
+            },
+            {
+                "name": "手动选择",
+                "type": "select",
+                "proxies": [p["name"] for p in proxies]
+            }
+        ],
+        "rules": [
+            "GEOIP,CN,DIRECT",
+            "MATCH,节点选择"
+        ]
+    }
+    with open("output/config.yaml", "w", encoding="utf-8") as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+    print(f"已生成完整配置文件：output/config.yaml")
+
 
 def kill_clash():
     """强力清理 Clash 进程"""
@@ -558,7 +652,11 @@ if __name__ == "__main__":
         with open("output/proxies.yaml", "w", encoding="utf-8") as f:
             yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
+        # 同时生成一个带 url-test 的完整配置文件
+        save_final_config(current_proxies)
+
         print(f"\n成功筛选出 {len(current_proxies)} 个节点并保存。")
+        print("已生成 output/proxies.yaml（原始节点）和 output/config.yaml（完整配置）")
     except Exception as e:
         print(f"运行出错：{e}")
         kill_clash()
