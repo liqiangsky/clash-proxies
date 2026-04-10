@@ -262,6 +262,9 @@ def test_google_access(name, max_delay=MAX_DELAY_ROUNDS[0]):
 
 def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0], round_num=1):
     """通用单轮筛选函数"""
+    global GLOBAL_SEEN_NAMES
+    GLOBAL_SEEN_NAMES = set()  # 每轮筛选前重置全局名称集合
+
     if batch_size is None:
         batch_size = BATCH_SIZE
     results = []
@@ -277,7 +280,7 @@ def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0]
         print(f"\n>>> 第 {batch_idx + 1}/{batches} 批次 [{start}:{end}]")
 
         # 为当前批次生成精简配置
-        save_batch_for_clash(batch)
+        save_batch_for_clash(batch, GLOBAL_SEEN_NAMES)
 
         # 启动 Clash 加载新配置
         print("启动 Clash...")
@@ -331,24 +334,32 @@ def save_for_clash(proxies):
     with open("run.yaml", "w", encoding="utf-8") as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-def save_batch_for_clash(batch):
+# 全局集合，用于跨批次追踪已使用的名称，确保名称唯一
+GLOBAL_SEEN_NAMES = set()
+
+def save_batch_for_clash(batch, global_seen_names=None):
     """为当前批次生成精简的 Clash 配置"""
+    global GLOBAL_SEEN_NAMES
+    if global_seen_names is None:
+        global_seen_names = GLOBAL_SEEN_NAMES
+
     # 过滤掉可能导致 Clash 解析失败的节点，并确保名称唯一
     valid_batch = []
-    seen_names = {}  # name -> count
     for p in batch:
         # 跳过没有必要字段的节点
         if not p.get("server") or not p.get("port"):
             continue
 
-        # 确保名称唯一，重复则添加后缀
+        # 确保名称全局唯一，重复则添加时间戳后缀
         name = p.get("name")
         if name:
-            if name in seen_names:
-                seen_names[name] += 1
-                p["name"] = f"{name}_{seen_names[name]}"
-            else:
-                seen_names[name] = 0
+            original_name = name
+            counter = 0
+            while name in global_seen_names:
+                counter += 1
+                name = f"{original_name}_{counter}"
+            p["name"] = name
+            global_seen_names.add(name)
             valid_batch.append(p)
 
     save_for_clash(valid_batch)
