@@ -38,7 +38,8 @@ URLS = [
 HEADERS = {"User-Agent": "Clash/1.0.0"}
 
 # 使用国内可访问的测试目标，更贴近实际使用场景
-TEST_URL = "https://www.google.com/generate_204"  # Google 204 测试，更轻量
+#TEST_URL = "https://www.google.com/generate_204"  # Google 204 测试，更轻量
+TEST_URL = "https://cp.cloudflare.com/generate_204"  # Google 204 测试，更轻量
 
 # 5 轮过滤延迟阈值 (ms) - 逐步收紧
 MAX_DELAY_ROUNDS = [5000, 3000, 2000, 1000, 500]  # 从宽松到严格
