@@ -1,27 +1,21 @@
 proxies:
-- name: 🇸🇬SG_20
+- name: 🇭🇰HK_20
+  server: 58.152.25.253
+  type: trojan
+  country: 🇭🇰HK
+  port: 443
+  password: BxceQaOe
+  skip-cert-verify: true
+  udp: true
+- name: 🇸🇬SG_22
   server: 156.59.243.6
   type: ss
   country: 🇸🇬SG
   port: 990
   password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
   cipher: chacha20-ietf-poly1305
-- name: Relay_🇹🇼TW-🇹🇼TW_21
-  server: r3mrcg007134n4g.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: Relay_🇹🇼TW-🇹🇼TW_22
-  server: n8mrcg005964vnc.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
 - name: Relay_🇹🇼TW-🇹🇼TW_23
-  server: r3mrcg00129437x.cybervena.com
+  server: r3mrcg001286ek2.cybervena.com
   type: ss
   country: 🇹🇼TW
   port: 50099
@@ -34,36 +28,35 @@ proxies:
   port: 50099
   password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
   cipher: chacha20-ietf-poly1305
-- name: Relay_🇹🇼TW-🇹🇼TW_25
+- name: Relay_🇹🇼TW-🇹🇼TW_27
+  server: n8mrcg005964vnc.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
+- name: Relay_🇹🇼TW-🇹🇼TW_28
+  server: r3mrcg00129437x.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
+- name: Relay_🇹🇼TW-🇹🇼TW_29
+  server: r3mrcg007134n4g.cybervena.com
+  type: ss
+  country: 🇹🇼TW
+  port: 50099
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  cipher: chacha20-ietf-poly1305
+- name: Relay_🇹🇼TW-🇹🇼TW_30
   server: nbmrcg0034686rw.cybervena.com
   type: ss
   country: 🇹🇼TW
   port: 50099
   password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
   cipher: chacha20-ietf-poly1305
-- name: Relay_🇹🇼TW-🇹🇼TW_26
-  server: r3mrcg001286ek2.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: Relay_🇹🇼TW-🇹🇼TW_27
-  server: r3mrcg007117fb8.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 🇨🇳 TW_140
-  server: 154.223.20.79
-  type: ss
-  country: 🇨🇳 TW
-  port: 989
-  udp: true
-  password: f8f7aCzcPKbsF8p3
-  cipher: aes-256-cfb
-- name: Relay_🇨🇳CN-🇸🇬SG_148
+- name: Relay_🇨🇳CN-🇸🇬SG_155
   server: v12.hdacd.com
   type: vmess
   country: 🇨🇳CN
@@ -75,150 +68,45 @@ proxies:
   servername: v12.hdacd.com
   h2-opts: {}
   skip-cert-verify: true
-- name: 🇭🇰 HK_213
-  server: 154.223.16.212
-  type: ss
-  country: 🇭🇰 HK
-  port: 989
-  password: f8f7aCzcPKbsF8p3
-  cipher: aes-256-cfb
-- name: 🇭🇰 HK_214
-  server: 216.250.97.82
-  type: ss
-  country: 🇭🇰 HK
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: Relay_🇭🇰 HK-🇭🇰HK_215
+- name: Relay_🇭🇰 HK-🇭🇰HK_232
   server: 103.149.182.105
   type: ss
   country: 🇭🇰 HK
   port: 8388
   password: asd123456
   cipher: chacha20-ietf
-- name: 🇭🇰HK_216
-  server: 203.23.128.33
+- name: 🇭🇰 HK_233
+  server: 154.223.16.212
   type: ss
-  country: 🇭🇰HK
+  country: 🇭🇰 HK
   port: 989
   password: f8f7aCzcPKbsF8p3
   cipher: aes-256-cfb
-- name: 🇭🇰HK_217
-  server: 112.213.102.188
-  type: ss
-  country: 🇭🇰HK
-  port: 41632
-  password: qwerREWQ@@
-  cipher: aes-256-cfb
-- name: 🇭🇰HK_218
-  server: 203.23.128.92
-  type: ss
-  country: 🇭🇰HK
-  port: 990
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  cipher: chacha20-ietf-poly1305
-- name: 🇭🇰HK_219
-  server: 103.141.221.101
-  type: ss
-  country: 🇭🇰HK
-  port: 8388
-  password: asd123456
-  cipher: chacha20-ietf
-- name: Relay_🇭🇰HK-🇹🇭TH_220
-  server: xgrr.sdnlv0.cn
-  type: ss
-  country: 🇭🇰HK
-  port: 51881
-  password: 8ba6a37d-8715-440d-942a-a3e6c23a9290
-  cipher: chacha20-ietf-poly1305
-- name: Pool_🇭🇰HK_221
+- name: Pool_🇭🇰HK_234
   server: 103.141.221.124
   type: ss
   country: 🇭🇰HK
   port: 8388
   password: asd123456
   cipher: chacha20-ietf
-- name: Relay_🇭🇰HK-🇭🇰HK_222
+- name: 🇭🇰HK_235
+  server: 203.23.128.33
+  type: ss
+  country: 🇭🇰HK
+  port: 989
+  password: f8f7aCzcPKbsF8p3
+  cipher: aes-256-cfb
+- name: Relay_🇭🇰HK-🇭🇰HK_240
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 6117
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_223
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6206
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: tls1.2_ticket_auth
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_224
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 3206
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_225
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6203
+  port: 6110
   password: di15PV
   cipher: rc4-md5
   protocol: auth_aes128_md5
-  obfs: plain
+  obfs: tls1.2_ticket_auth
   obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_226
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6303
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_227
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6111
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_228
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6004
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_229
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6016
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_230
+- name: Relay_🇭🇰HK-🇭🇰HK_241
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
@@ -228,127 +116,11 @@ proxies:
   protocol: auth_aes128_md5
   obfs: tls1.2_ticket_auth
   obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_231
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6114
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_232
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6115
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇯🇵JP_233
-  server: live.bilibilicloud01.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 54112
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
-  obfs: plain
-- name: Relay_🇭🇰HK-🇭🇰HK_234
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6010
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: tls1.2_ticket_auth
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇯🇵JP_235
-  server: live.bilibilicloud01.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 53845
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
-  obfs: plain
-- name: Relay_🇭🇰HK-🇯🇵JP_236
-  server: live.bilibilicloud01.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 54113
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
-  obfs: plain
-- name: Relay_🇭🇰HK-🇭🇰HK_237
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6006
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: tls1.2_ticket_auth
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_238
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6002
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: tls1.2_ticket_auth
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇯🇵JP_239
-  server: manga.bilibilicloud01.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 49434
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
-  obfs: plain
-- name: Relay_🇭🇰HK-🇭🇰HK_240
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6305
-  password: di15PV
-  cipher: rc4-md5
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_241
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6113
-  password: di15PV
-  cipher: rc4-md5
-  protocol: auth_aes128_md5
-  obfs: plain
-  obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_242
-  server: cdn02.0821.meituan88.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 6205
-  password: di15PV
-  cipher: chacha20-ietf
-  protocol: auth_aes128_md5
-  obfs: tls1.2_ticket_auth
-  obfs-param: 31d412757.douyin.com
 - name: Relay_🇭🇰HK-🇭🇰HK_243
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 6102
+  port: 6016
   password: di15PV
   cipher: chacha20-ietf
   protocol: auth_aes128_md5
@@ -358,13 +130,33 @@ proxies:
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 6012
+  port: 6206
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_245
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6203
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_246
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6115
   password: di15PV
   cipher: chacha20-ietf
   protocol: auth_aes128_md5
   obfs: plain
   obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇯🇵JP_245
+- name: Relay_🇭🇰HK-🇯🇵JP_247
   server: show.bilibilicloud01.com
   type: ssr
   country: 🇭🇰HK
@@ -373,33 +165,26 @@ proxies:
   cipher: chacha20-ietf
   protocol: auth_aes128_sha1
   obfs: plain
-- name: Relay_🇭🇰HK-🇯🇵JP_246
-  server: show.bilibilicloud01.com
+- name: Relay_🇭🇰HK-🇭🇰HK_248
+  server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 54101
-  password: Mv4e0QHWPwdbKiCF
+  port: 6116
+  password: di15PV
   cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
+  protocol: auth_aes128_md5
   obfs: plain
-- name: Relay_🇭🇰HK-🇯🇵JP_247
-  server: show.bilibilicloud01.com
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_249
+  server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 54102
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
-  obfs: plain
-- name: Relay_🇭🇰HK-🇯🇵JP_248
-  server: show.bilibilicloud01.com
-  type: ssr
-  country: 🇭🇰HK
-  port: 54103
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
-  obfs: plain
+  port: 6112
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
 - name: Relay_🇭🇰HK-🇭🇰HK_250
   server: cdn02.0821.meituan88.com
   type: ssr
@@ -410,22 +195,33 @@ proxies:
   protocol: auth_aes128_md5
   obfs: plain
   obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇯🇵JP_252
-  server: show.bilibilicloud01.com
+- name: Relay_🇭🇰HK-🇭🇰HK_251
+  server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 54114
-  password: Mv4e0QHWPwdbKiCF
-  cipher: chacha20-ietf
-  protocol: auth_aes128_sha1
+  port: 6202
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
   obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_252
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6502
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
 - name: Relay_🇭🇰HK-🇭🇰HK_253
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 6503
+  port: 6002
   password: di15PV
-  cipher: rc4-md5
+  cipher: chacha20-ietf
   protocol: auth_aes128_md5
   obfs: tls1.2_ticket_auth
   obfs-param: 31d412757.douyin.com
@@ -433,7 +229,7 @@ proxies:
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 6302
+  port: 6008
   password: di15PV
   cipher: chacha20-ietf
   protocol: auth_aes128_md5
@@ -443,9 +239,9 @@ proxies:
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 1004
+  port: 6302
   password: di15PV
-  cipher: rc4-md5
+  cipher: chacha20-ietf
   protocol: auth_aes128_md5
   obfs: plain
   obfs-param: 31d412757.douyin.com
@@ -453,7 +249,7 @@ proxies:
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 6501
+  port: 6504
   password: di15PV
   cipher: chacha20-ietf
   protocol: auth_aes128_md5
@@ -463,13 +259,13 @@ proxies:
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
-  port: 3202
+  port: 3210
   password: di15PV
-  cipher: chacha20-ietf
+  cipher: rc4-md5
   protocol: auth_aes128_md5
-  obfs: plain
+  obfs: tls1.2_ticket_auth
   obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇭🇰HK_258
+- name: Relay_🇭🇰HK-🇭🇰HK_259
   server: cdn02.0821.meituan88.com
   type: ssr
   country: 🇭🇰HK
@@ -479,7 +275,324 @@ proxies:
   protocol: auth_aes128_md5
   obfs: plain
   obfs-param: 31d412757.douyin.com
-- name: Relay_🇭🇰HK-🇺🇸US_259
+- name: Relay_🇭🇰HK-🇭🇰HK_260
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 3204
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_261
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6005
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_262
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6001
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇯🇵JP_263
+  server: show.bilibilicloud01.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 54102
+  password: Mv4e0QHWPwdbKiCF
+  cipher: chacha20-ietf
+  protocol: auth_aes128_sha1
+  obfs: plain
+- name: Relay_🇭🇰HK-🇭🇰HK_264
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 3205
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_265
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6004
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_266
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6101
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_267
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6010
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇯🇵JP_268
+  server: manga.bilibilicloud01.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 49434
+  password: Mv4e0QHWPwdbKiCF
+  cipher: chacha20-ietf
+  protocol: auth_aes128_sha1
+  obfs: plain
+- name: Relay_🇭🇰HK-🇭🇰HK_271
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6503
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_272
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6204
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_273
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6506
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_274
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6205
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_275
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6501
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇯🇵JP_276
+  server: live.bilibilicloud01.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 54112
+  password: Mv4e0QHWPwdbKiCF
+  cipher: chacha20-ietf
+  protocol: auth_aes128_sha1
+  obfs: plain
+- name: Relay_🇭🇰HK-🇭🇰HK_278
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6003
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇯🇵JP_279
+  server: show.bilibilicloud01.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 54114
+  password: Mv4e0QHWPwdbKiCF
+  cipher: chacha20-ietf
+  protocol: auth_aes128_sha1
+  obfs: plain
+- name: Relay_🇭🇰HK-🇭🇰HK_282
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6111
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇯🇵JP_283
+  server: live.bilibilicloud01.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 54113
+  password: Mv4e0QHWPwdbKiCF
+  cipher: chacha20-ietf
+  protocol: auth_aes128_sha1
+  obfs: plain
+- name: Relay_🇭🇰HK-🇭🇰HK_284
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 1004
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇯🇵JP_285
+  server: show.bilibilicloud01.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 54101
+  password: Mv4e0QHWPwdbKiCF
+  cipher: chacha20-ietf
+  protocol: auth_aes128_sha1
+  obfs: plain
+- name: Relay_🇭🇰HK-🇭🇰HK_286
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6013
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_287
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6006
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_288
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6305
+  password: di15PV
+  cipher: rc4-md5
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_289
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6012
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_290
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6009
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: tls1.2_ticket_auth
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_291
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6102
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_292
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6117
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_293
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6303
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: Relay_🇭🇰HK-🇭🇰HK_295
+  server: cdn02.0821.meituan88.com
+  type: ssr
+  country: 🇭🇰HK
+  port: 6505
+  password: di15PV
+  cipher: chacha20-ietf
+  protocol: auth_aes128_md5
+  obfs: plain
+  obfs-param: 31d412757.douyin.com
+- name: 🇭🇰HK_296
+  server: 47.244.120.197
+  type: vmess
+  country: 🇭🇰HK
+  port: 36703
+  uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
+  alterId: 0
+  cipher: auto
+  network: ws
+  h2-opts: {}
+  skip-cert-verify: true
+  ws-opts:
+    path: /arki?ed=2048
+- name: 🇭🇰HK_297
+  server: 165.154.195.38
+  type: vmess
+  country: 🇭🇰HK
+  port: 35034
+  uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
+  alterId: 0
+  cipher: auto
+  h2-opts: {}
+  skip-cert-verify: true
+- name: Relay_🇭🇰HK-🇺🇸US_298
   server: v24.hdacd.com
   type: vmess
   country: 🇭🇰HK
@@ -490,7 +603,7 @@ proxies:
   network: tcp
   h2-opts: {}
   skip-cert-verify: true
-- name: Relay_🇭🇰HK-🇭🇰HK_260
+- name: Relay_🇭🇰HK-🇭🇰HK_300
   server: n1761296878.4u9ma.icu
   type: vmess
   country: 🇭🇰HK
@@ -507,43 +620,7 @@ proxies:
     path: /
     headers:
       HOST: n1761296878.4u9ma.icu
-- name: 🇭🇰HK_261
-  server: 47.244.120.197
-  type: vmess
-  country: 🇭🇰HK
-  port: 36703
-  uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
-  alterId: 0
-  cipher: auto
-  network: ws
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /arki?ed=2048
-- name: 🇭🇰HK_262
-  server: 165.154.195.38
-  type: vmess
-  country: 🇭🇰HK
-  port: 35034
-  uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
-  alterId: 0
-  cipher: auto
-  h2-opts: {}
-  skip-cert-verify: true
-- name: 🇭🇰HK_263
-  server: 47.243.135.74
-  type: vmess
-  country: 🇭🇰HK
-  port: 55185
-  uuid: 1375985e-334a-4c25-8f64-52a182bc8037
-  alterId: 0
-  cipher: auto
-  network: ws
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /Notif_Chat
-- name: Relay_🇭🇰HK-🇭🇰HK_264
+- name: Relay_🇭🇰HK-🇭🇰HK_301
   server: tj.oopscat.com
   type: trojan
   country: 🇭🇰HK
@@ -552,7 +629,7 @@ proxies:
   sni: tj.oopscat.com
   skip-cert-verify: true
   udp: true
-- name: Relay_🇭🇰HK-🇸🇬SG_265
+- name: Relay_🇭🇰HK-🇸🇬SG_302
   server: v12026.lalakw.com
   type: trojan
   country: 🇭🇰HK
@@ -561,20 +638,7 @@ proxies:
   sni: v12026.lalakw.com
   skip-cert-verify: true
   udp: true
-- name: 🇯🇵JP_272
-  server: 172.111.146.64
-  type: vmess
-  country: 🇯🇵JP
-  port: 80
-  uuid: 05b8c783-7f59-47f9-9923-06a465679f6a
-  alterId: 0
-  cipher: auto
-  network: ws
-  h2-opts: {}
-  skip-cert-verify: true
-  ws-opts:
-    path: /vmess/
-- name: 🇯🇵JP_273
+- name: 🇯🇵JP_308
   server: 61.245.11.60
   type: vmess
   country: 🇯🇵JP
@@ -587,25 +651,7 @@ proxies:
   skip-cert-verify: true
   ws-opts:
     path: /vmess/
-- name: Relay_🇯🇵JP-🇺🇸US_274
-  server: 160.16.106.99
-  type: trojan
-  country: 🇯🇵JP
-  port: 3057
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
-  skip-cert-verify: true
-  udp: true
-- name: Relay_🇯🇵JP-🇯🇵JP_275
-  server: 160.16.72.205
-  type: trojan
-  country: 🇯🇵JP
-  port: 9201
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
-  skip-cert-verify: true
-  udp: true
-- name: Relay_🇯🇵JP-🇺🇸US_276
+- name: Relay_🇯🇵JP-🇺🇸US_309
   server: 160.16.124.17
   type: trojan
   country: 🇯🇵JP
@@ -614,25 +660,16 @@ proxies:
   sni: www.nintendogames.net
   skip-cert-verify: true
   udp: true
-- name: Relay_🇯🇵JP-🇯🇵JP_277
+- name: Relay_🇯🇵JP-🇺🇸US_310
   server: 160.16.124.17
   type: trojan
   country: 🇯🇵JP
-  port: 4380
+  port: 4674
   password: 187dda4498be9ac4f28db939d5940185
   sni: www.nintendogames.net
   skip-cert-verify: true
   udp: true
-- name: Relay_🇯🇵JP-🇺🇸US_278
-  server: 160.16.124.17
-  type: trojan
-  country: 🇯🇵JP
-  port: 4019
-  password: 187dda4498be9ac4f28db939d5940185
-  sni: www.nintendogames.net
-  skip-cert-verify: true
-  udp: true
-- name: Relay_🇯🇵JP-🇯🇵JP_279
+- name: Relay_🇯🇵JP-🇯🇵JP_312
   server: 160.16.132.38
   type: trojan
   country: 🇯🇵JP
@@ -641,136 +678,61 @@ proxies:
   sni: www.nintendogames.net
   skip-cert-verify: true
   udp: true
-- name: 🇰🇷 KR_280
+- name: Relay_🇯🇵JP-🇯🇵JP_313
+  server: 160.16.72.205
+  type: trojan
+  country: 🇯🇵JP
+  port: 9201
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
+- name: 🇯🇵JP_314
+  server: 103.231.73.181
+  type: trojan
+  country: 🇯🇵JP
+  port: 4443
+  password: strong-secret-pass-777
+  skip-cert-verify: true
+  udp: true
+- name: Relay_🇯🇵JP-🇺🇸US_315
+  server: 160.16.124.17
+  type: trojan
+  country: 🇯🇵JP
+  port: 4019
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
+- name: Relay_🇯🇵JP-🇺🇸US_316
+  server: 160.16.132.38
+  type: trojan
+  country: 🇯🇵JP
+  port: 4674
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
+- name: Relay_🇯🇵JP-🇺🇸US_317
+  server: 160.16.85.33
+  type: trojan
+  country: 🇯🇵JP
+  port: 4019
+  password: 187dda4498be9ac4f28db939d5940185
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  udp: true
+- name: 🇰🇷 KR_318
   server: 154.90.63.177
   type: ss
   country: 🇰🇷 KR
   port: 989
   password: f8f7aCzcPKbsF8p3
   cipher: aes-256-cfb
-- name: 🇰🇷 KR_281
-  server: 218.237.185.230
-  type: ss
-  country: 🇰🇷 KR
-  port: 4652
-  password: qwerREWQ@@
-  cipher: aes-256-cfb
-- name: 🇰🇷KR_282
+- name: 🇰🇷KR_319
   server: 141.164.45.187
   type: ss
   country: 🇰🇷KR
   port: 7001
   password: RexnBgU7EV5ADxG
   cipher: aes-256-gcm
-- name: 🇰🇷KR_283
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 6679
-  password: TEzjfAYq2IjtuoS
-  cipher: aes-256-gcm
-- name: 🇰🇷KR_284
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 2376
-  password: faBAoD54k87UJG7
-  cipher: aes-256-gcm
-- name: 🇰🇷KR_285
-  server: 141.164.45.187
-  type: ss
-  country: 🇰🇷KR
-  port: 6697
-  password: TEzjfAYq2IjtuoS
-  cipher: aes-256-gcm
-- name: 🇰🇷KR_286
-  server: 140.238.2.250
-  type: vmess
-  country: 🇰🇷KR
-  port: 443
-  uuid: 41a7089a-040b-4538-8b8d-010902405bde
-  alterId: 0
-  cipher: auto
-  network: none
-  h2-opts: {}
-  skip-cert-verify: true
-- name: Relay_🇰🇷KR-🇰🇷KR_287
-  server: chuncheon03.zgjok.com
-  type: vmess
-  country: 🇰🇷KR
-  port: 443
-  uuid: 81d5cac4-d039-4874-9a20-c391f580012d
-  alterId: 0
-  cipher: auto
-  network: ws
-  servername: chuncheon03.zgjok.com
-  h2-opts: {}
-  tls: true
-  skip-cert-verify: true
-  ws-opts:
-    path: /
-    headers:
-      HOST: chuncheon03.zgjok.com
-- name: Relay_🇵🇱PL-🇯🇵JP_327
-  server: xgrr.sdnlv0.cn
-  type: ss
-  country: 🇵🇱PL
-  port: 20600
-  password: 8ba6a37d-8715-440d-942a-a3e6c23a9290
-  cipher: chacha20-ietf-poly1305
-- name: 🇸🇬SG_387
-  server: 194.233.75.190
-  type: ss
-  country: 🇸🇬SG
-  port: 80
-  password: qKvfX7yQnT99OMu3
-  cipher: aes-256-gcm
-- name: 🇸🇬SG_388
-  server: 194.233.94.119
-  type: ss
-  country: 🇸🇬SG
-  port: 443
-  password: 8t2xeemUtyui4zAv
-  cipher: aes-256-gcm
-- name: 🇸🇬SG_390
-  server: 103.47.225.69
-  type: ss
-  country: 🇸🇬SG
-  port: 443
-  password: 899c7e30-50c7-4b63-a0a0-f26ac572d4f9
-  cipher: aes-256-gcm
-- name: 🇸🇬SG_391
-  server: 194.233.73.51
-  type: ss
-  country: 🇸🇬SG
-  port: 48801
-  password: 7afa39016d5a409c
-  cipher: chacha20-ietf-poly1305
-- name: 🇸🇬SG_392
-  server: 194.233.94.119
-  type: ss
-  country: 🇸🇬SG
-  port: 80
-  password: 8t2xeemUtyui4zAv
-  cipher: aes-256-gcm
-- name: 🇸🇬SG_393
-  server: 194.233.73.51
-  type: ss
-  country: 🇸🇬SG
-  port: 48803
-  password: 7afa39016d5a409c
-  cipher: chacha20-ietf-poly1305
-- name: Relay_🇹🇼TW-🇹🇼TW_396
-  server: r3mrcg001269pz2.cybervena.com
-  type: ss
-  country: 🇹🇼TW
-  port: 50099
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  cipher: chacha20-ietf-poly1305
-- name: 🇹🇼TW_397
-  server: 185.189.160.105
-  type: ss
-  country: 🇹🇼TW
-  port: 41632
-  password: qwerREWQ@@
-  cipher: aes-256-cfb
