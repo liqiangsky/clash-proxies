@@ -17,7 +17,7 @@ URLS = [
 ]
 
 TEST_URLS = ["https://www.google.com/generate_204", "https://1.1.1.1/generate_204", "https://youtube.com", "https://www.baidu.com"]
-TIMEOUT = 3000
+TIMEOUT = 1000
 CONCURRENCY = 30
 
 PREFERRED_PROTOCOLS = ["reality", "hysteria2", "tuic", "ss", "trojan"]
