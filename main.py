@@ -571,7 +571,7 @@ def save_for_clash(proxies, for_testing=False):
                     "proxies": [p["name"] for p in proxies]
                 }
             ],
-            "rules": ["MATCH，节点选择"]
+            "rules": ["MATCH,节点选择"]
         }
     else:
         # 最终输出模式：添加 url-test 自动选择组
