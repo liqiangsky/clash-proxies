@@ -1,834 +1,144 @@
-import re
-import requests
-import yaml
-import time
-import subprocess
-import socket
-import os
-import urllib3
-import urllib.parse
+import re, requests, yaml, time, subprocess, socket, os, urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 禁用 SSL 警告
+# 禁用警告
+import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# 订阅地址列表
+# 配置
 URLS = [
     "https://165.154.105.225/clash/proxies",
     "https://pp.dcd.one/clash/proxies",
     "http://138.2.112.136:12580/clash/proxies",
     #"http://tmac.eu.org:12580/clash/proxies",
     #"http://ql.ethanyang.top:12580/clash/proxies",
-    #"https://open.tidnotes.top:2083/clash/proxies",
-    #"http://xqz0.vip:15580/clash/proxies",
     #"https://vahid.ehsandigik.ir/clash",
 ]
 
-HEADERS = {"User-Agent": "Clash/1.0.0"}
+# 测试参数
+TEST_URLS = ["https://www.google.com/generate_204", "https://1.1.1.1/generate_204"]
+TIMEOUT = 3000 # 3秒超时，Actions 环境网络快，要求可以严一点
+CONCURRENCY = 30 # Actions 上可以跑很高的并发
 
-# ========== 组合测试配置：提高中国大陆可用性 ==========
-
-# 测试目标：只测试访问外网能力
-FOREIGN_TEST_URL = "https://www.google.com/generate_204"
-
-# 出口 IP 检测：查询节点的真实出口 IP，判断是否被 GFW 封锁
-# 原理：GFW 会封锁某些 IP 段，即使是海外节点，如果 IP 在被封锁段内也无法使用
-ENABLE_IP_CHECK = True  # 是否启用出口 IP 检测
-IP_CHECK_URL = "https://api.ip.sb/ip"  # 返回纯文本 IP 地址
-# IP_CHECK_URL = "https://api.ipify.org"  # 备选
-
-# 过滤规则：以下情况会被过滤
-BLOCKED_CN_IP_PREFIXES = []  # 中国大陆 IP 段前缀（如果被节点出口 IP 匹配则过滤）
-# 示例：["103.", "104."] 等可根据实际情况添加
-
-# 优选地区（基于出口 IP 的 GeoIP 信息）
-PREFERRED_REGIONS = ["HK", "TW", "SG", "JP", "KR"]  # 留空则不过滤，可填 ["HK", "TW", "SG", "JP", "KR"]
-
-# 优选协议列表
-PREFERRED_PROTOCOLS = ["reality", "hysteria2", "tuic", "ss", "trojan"]  # 留空则不过滤，可填 ["reality", "hysteria2", "tuic", "ss", "trojan"]
-
-# 连续测试次数 - 检测稳定性（设置为 1 则只测一次）
-CONTINUOUS_TEST_COUNT = 1  # 使用 Clash API 并发测试，不需要连续多次测试
-
-# 延迟阈值 (ms)
-MAX_DELAY = 5000
-
-# 2 轮过滤延迟阈值 (ms) - 快速筛选 + 稳定性筛选
-MAX_DELAY_ROUNDS = [2000, 1000]  # 第一轮快速筛选，第二轮稳定性筛选
-
-# 线程池配置
-FETCH_WORKERS = 10
-FETCH_TIMEOUT = 8
-TEST_WORKERS = 20  # 提高并发度，使用 Clash API 直接测试不会互相污染
-
-# 批次大小配置
-BATCH_SIZE = 500  # 每批次节点数
-
-# TCP 预检配置
-ENABLE_TCP_PREFILTER = True  # 启用 TCP 存活预检
-TCP_CHECK_TIMEOUT = 2  # TCP 握手超时时间 (秒)
-TCP_CHECK_SUCCESS_THRESHOLD = 0.5  # TCP 检查超时阈值 (秒)
-
-# ========== Cloudflare Trace 检测：免费无限制 ==========
-
-# 启用 Cloudflare Trace 检测（推荐启用）
-# 原理：让节点访问 1.1.1.1/cdn-cgi/trace，根据返回的机场代码（colo）判断节点位置
-# 亚洲近岸节点（HKG/SGP/NRT 等）通常比美西节点（LAX/SJC）在中国大陆可用性更高
-# 完全免费，无频率限制，走节点自己流量
-ENABLE_CF_TRACE = True
-
-# 优选机场代码列表（留空则不过滤）
-# 常见机场代码：
-#   亚洲近岸：HKG(香港), TPE(台北), SIN(新加坡), NRT(东京), KIX(大阪), ICN(首尔), MNL(马尼拉)
-#   美西（相对较好）：LAX(洛杉矶), SJC(圣何塞), SEA(西雅图), YVR(温哥华), SFO(旧金山)
-#   美东（通常较差）：JFK(纽约), EWR(纽瓦克), IAD(华盛顿), ORD(芝加哥)
-# 建议只保留亚洲近岸，因为美西节点虽然有时能用但不稳定
-PREFERRED_COLOS = ["HKG", "TPE", "SIN", "NRT", "KIX", "ICN"]
-
-# Cloudflare Trace 检测 URL
-# 如果 1.1.1.1 被当地网络封锁，可改用 cloudflare.com
-CF_TRACE_URL = "https://1.1.1.1/cdn-cgi/trace"
-# CF_TRACE_URL = "https://cloudflare.com/cdn-cgi/trace"
-
-def manual_parse_proxies(text):
-    proxies = []
-    pattern = re.compile(r'- name: (.*?)\n\s+server: (.*?)\n\s+port: (\d+)\n\s+type: vmess\n\s+uuid: (.*?)\n', re.S)
-    matches = pattern.findall(text)
-    for m in matches:
-        try:
-            name = m[0].strip()
-            search_range = text[text.find(name):text.find(name)+500]
-            path_match = re.search(r'path: (.*?)\n', search_range)
-            host_match = re.search(r'host: (.*?)\n', search_range)
-            p = {
-                "name": name,
-                "server": m[1].strip(),
-                "port": int(m[2]),
-                "type": "vmess",
-                "uuid": m[3].strip(),
-                "alterId": 0,
-                "cipher": "auto",
-                "tls": True,
-                "network": "ws",
-                "udp": True,
-                "ws-opts": {
-                    "path": path_match.group(1).strip() if path_match else "/",
-                    "headers": {"Host": host_match.group(1).strip() if host_match else m[1].strip()}
-                }
-            }
-            proxies.append(p)
-        except:
-            continue
-    return proxies
-
-def fetch_single_url(url):
-    print(f"正在获取：{url}")
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=FETCH_TIMEOUT, verify=False)
-        resp.encoding = 'utf-8'
-        text = resp.text
-        if "<html" in text.lower():
-            print(f"跳过（HTML 页面）: {url}")
-            return []
-        current_source_proxies = []
-        try:
-            data = yaml.safe_load(text)
-            if data and "proxies" in data:
-                current_source_proxies = data["proxies"]
-        except Exception as e:
-            print(f"⚠️ YAML 解析失败，启动暴力提取：{url}")
-            current_source_proxies = manual_parse_proxies(text)
-        if not current_source_proxies:
-            print(f"未能从源提取到任何节点：{url}")
-            return []
-        return current_source_proxies
-    except Exception as e:
-        print(f"获取失败：{url} -> {e}")
-        return []
-
-def validate_reality_opts(p):
-    """验证 reality-opts 配置格式"""
-    reality_opts = p.get("reality-opts")
-    if not reality_opts or not isinstance(reality_opts, dict):
-        return False
-
-    # 验证 sid 格式：必须是 8 字节十六进制字符串（16 个字符）
-    sid = reality_opts.get("sid", "")
-    if not sid or not isinstance(sid, str) or len(sid) != 16:
-        return False
-    if not all(c in "0123456789abcdefABCDEF" for c in sid):
-        return False
-
-    # 验证 public-key 格式：必须是有效的 base64 公钥
-    pbk = reality_opts.get("public-key", "")
-    if not pbk or not isinstance(pbk, str) or len(pbk) < 32:
-        return False
-
-    return True
-
-
-def validate_hysteria_opts(p):
-    """验证 hysteria/hysteria2 配置格式"""
-    # Hysteria 节点需要验证 port-hopping、hop-interval 等字段
-    # TODO: 根据实际需求添加验证逻辑
-    pass
-
-
-def validate_tuic_opts(p):
-    """验证 TUIC 配置格式"""
-    # TUIC 节点需要验证 uuid、alpn 等字段
-    # TODO: 根据实际需求添加验证逻辑
-    pass
-
-
-def get_node_colo_single(p, group_name="test"):
-    """
-    单节点 CF Trace 检测，用于线程池并发调用
-
-    Args:
-        p: 节点配置字典
-        group_name: Clash 中的代理组名称
-
-    Returns:
-        tuple: (name, colo) 节点名和机场代码，检测失败返回 (name, None)
-    """
-    name = p.get("name")
-    if not name:
-        return name, None
-
-    try:
-        # 1. 切换到目标节点
-        safe_name = urllib.parse.quote(name)
-        selector_url = f"http://127.0.0.1:9090/proxies/{urllib.parse.quote(group_name)}"
-        requests.put(selector_url, json={"name": name}, timeout=3)
-        time.sleep(0.2)  # 等待切换生效
-
-        # 2. 通过 Clash 代理访问 CF Trace
-        proxies_req = {"http": "http://127.0.0.1:7890", "https": "http://127.0.0.1:7890"}
-        r = requests.get(CF_TRACE_URL, proxies=proxies_req, timeout=5)
-
-        if r.status_code == 200:
-            # 解析 colo
-            for line in r.text.split("\n"):
-                if line.startswith("colo="):
-                    colo = line.split("=")[1].strip().upper()
-                    return name, colo
-
-        return name, None
-
-    except Exception as e:
-        return name, None
-
-
-def filter_by_colo_round(proxies):
-    """
-    CF Trace 检测轮次（在第 1 轮 Clash 测试后执行）
-    使用并发检测提高效率
-    """
-    if not ENABLE_CF_TRACE or not PREFERRED_COLOS:
-        return proxies
-
-    print(f"\n========== Cloudflare Trace: 检测节点出口位置 ==========")
-    print(f"优选机场：{PREFERRED_COLOS}")
-    print(f"待测节点数：{len(proxies)}，并发数：1（串行避免干扰）")
-
-    # 生成测试配置（组名为 "节点选择"）
-    print("生成测试配置...")
-    save_for_clash(proxies, for_testing=True)
-    group_name = "节点选择"
-
-    # 启动 Clash
-    print("启动 Clash...")
-    clash_proc = start_clash()
-    if not wait_clash(clash_proc):
-        print("Clash 启动失败，跳过 CF Trace 检测")
-        return proxies
-
-    # 并发检测（并发数设为 1，确保节点切换不互相干扰）
-    detected_map = {}
-    print(f"开始检测 {len(proxies)} 个节点的出口位置...")
-
-    with ThreadPoolExecutor(max_workers=1) as executor:
-        futures = [executor.submit(get_node_colo_single, p, group_name) for p in proxies]
-        for i, future in enumerate(as_completed(futures), 1):
-            try:
-                name, colo = future.result()
-                detected_map[name] = colo
-                if colo:
-                    status = "✓" if colo in PREFERRED_COLOS else "✗"
-                    print(f"  [{i}/{len(proxies)}] {name} -> {colo} {status}")
-                else:
-                    print(f"  [{i}/{len(proxies)}] {name} -> 检测失败")
-            except Exception as e:
-                pass
-
-    # 统计机场分布
-    colo_count = {}
-    for name, colo in detected_map.items():
-        if colo:
-            colo_count[colo] = colo_count.get(colo, 0) + 1
-
-    if colo_count:
-        print(f"\n机场分布统计：{dict(sorted(colo_count.items(), key=lambda x: -x[1]))}")
-
-    # 过滤节点：优选机场 + 检测失败（保留避免误删）
-    filtered = []
-    skipped = 0
-    for p in proxies:
-        name = p["name"]
-        colo = detected_map.get(name)
-        if colo:
-            if colo in PREFERRED_COLOS:
-                filtered.append(p)
-            else:
-                skipped += 1
-        else:
-            # 检测失败也保留
-            filtered.append(p)
-
-    print(f"\nCF Trace 过滤：{len(filtered)}/{len(proxies)} 个节点（跳过 {skipped} 个非优选机场）")
-
-    # 关闭 Clash
-    clash_proc.terminate()
-    kill_clash()
-
-    return filtered
-
-
-def clean_proxy(p):
-    """清洗单个节点配置"""
-    proxy_type = p.get("type", "")
-
-    # 清洗 ALPN 格式
-    if "alpn" in p:
-        val = p["alpn"]
-        if isinstance(val, str):
-            p["alpn"] = [x.strip() for x in val.split(',') if x.strip()]
-        elif not isinstance(val, list):
-            p.pop("alpn")
-
-    # 深度清理空配置项
-    for opt_key in ["ws-opts", "grpc-opts", "http-opts", "plugin-opts"]:
-        if opt_key in p:
-            if not p[opt_key] or not isinstance(p[opt_key], dict):
-                p.pop(opt_key)
-            else:
-                # 特殊处理 plugin-opts 中的 mux 字段（必须是布尔值）
-                if opt_key == "plugin-opts" and "mux" in p[opt_key]:
-                    mux_val = p[opt_key]["mux"]
-                    # 将数字 0/1 转换为 false/true
-                    if isinstance(mux_val, int):
-                        p[opt_key]["mux"] = mux_val != 0
-                    elif not isinstance(mux_val, bool):
-                        p[opt_key].pop("mux", None)
-
-                if "headers" in p[opt_key]:
-                    headers = p[opt_key]["headers"]
-                    if not headers or not isinstance(headers, dict):
-                        p[opt_key].pop("headers")
-                    else:
-                        # 清理 headers 中非字符串的值
-                        for k in list(headers.keys()):
-                            v = headers[k]
-                            if not v or not isinstance(v, str):
-                                headers.pop(k)
-                        if not headers:
-                            p[opt_key].pop("headers")
-                if not p[opt_key]:
-                    p.pop(opt_key)
-
-    # 按协议类型验证配置
-    if proxy_type == "reality" or "reality-opts" in p:
-        if not validate_reality_opts(p):
-            p.pop("reality-opts", None)
-
-    elif proxy_type in ["hysteria", "hysteria2"]:
-        validate_hysteria_opts(p)
-
-    elif proxy_type == "tuic":
-        validate_tuic_opts(p)
-
-    # 清理无意义字段（顶层）
-    for useless_key in ["fp", "pbk", "headerType", "sid"]:
-        p.pop(useless_key, None)
-
-    # 强制端口为整数
-    if "port" in p:
-        try:
-            p["port"] = int(p["port"])
-        except (ValueError, TypeError):
-            return None
-
-    server = p.get("server")
-    port = p.get("port")
-    if not server or not port:
-        return None
-
+def clean_node(p, index):
+    """深度清洗并标准化节点配置"""
+    if not isinstance(p, dict) or 'type' not in p: return None
+    
+    # 基础重命名，避免特殊字符导致 API 调用失败
+    p['name'] = f"{p['type']}_{index:03d}_{p['server'][-4:]}"
+    
+    # 强制开启核心功能
+    p['udp'] = True
+    p['skip-cert-verify'] = True
+    
+    # 某些 Reality/Hysteria 节点必须有 SNI，如果源码没写，尝试补全
+    if 'tls' in p and p['tls'] and not p.get('sni'):
+        p['sni'] = p['server']
+        
     return p
 
-def fetch_proxies():
-    """第一步：获取并清洗节点，统一重命名"""
-    all_proxies = []
-    seen_addr = set()
-
-    with ThreadPoolExecutor(max_workers=FETCH_WORKERS) as ex:
-        futures = [ex.submit(fetch_single_url, url) for url in URLS]
-        for future in as_completed(futures):
-            try:
-                proxies = future.result()
-                all_proxies.extend(proxies)
-            except:
-                pass
-
-    print(f"获取完成，原始节点总数：{len(all_proxies)}")
-
-    # 清洗 + 去重 + 统一重命名
-    cleaned_proxies = []
-    name_counter = {}  # 记录每个基础名称的出现次数
-
-    for p in all_proxies:
-        p = clean_proxy(p)
-        if not p:
-            continue
-        addr = f"{p['server']}:{p['port']}"
-        if addr in seen_addr:
-            continue
-        seen_addr.add(addr)
-
-        # 统一重命名：基于原始名称 + 序号
-        original_name = p.get("name", "Unnamed")
-        if original_name in name_counter:
-            name_counter[original_name] += 1
-            p["name"] = f"{original_name}_{name_counter[original_name]}"
-        else:
-            name_counter[original_name] = 0
-
-        cleaned_proxies.append(p)
-
-    print(f"清洗去重后：{len(cleaned_proxies)} 个节点")
-    return cleaned_proxies
-
-
-def get_proxy_exit_ip(name):
-    """查询节点的出口 IP"""
-    safe_name = urllib.parse.quote(name)
-    url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-
-    try:
-        # 通过节点访问 IP 查询服务
-        params = {"url": IP_CHECK_URL, "timeout": 5000}
-        r = requests.get(url, params=params, timeout=8)
-        result = r.json()
-        delay = result.get("delay", 0)
-        if delay > 0 and delay <= MAX_DELAY:
-            # 如果成功返回，说明节点可用
-            return True, delay
-        return False, 0
-    except:
-        return False, 0
-
-
-def is_ip_blocked(ip):
-    """检查 IP 是否在被封锁的段内"""
-    if not BLOCKED_CN_IP_PREFIXES:
-        return False
-    for prefix in BLOCKED_CN_IP_PREFIXES:
-        if ip.startswith(prefix):
-            return True
-    return False
-
-
-def filter_by_protocol_and_region(proxies):
-    """按协议和地区过滤节点"""
-    if not PREFERRED_PROTOCOLS and not PREFERRED_REGIONS:
-        return proxies
-
-    filtered = []
-    for p in proxies:
-        proxy_type = p.get("type", "")
-        country = p.get("country", "")
-
-        if PREFERRED_PROTOCOLS:
-            type_match = False
-            for proto in PREFERRED_PROTOCOLS:
-                if proto in proxy_type.lower():
-                    type_match = True
-                    break
-            if not type_match:
-                continue
-
-        if PREFERRED_REGIONS:
-            region_match = False
-            name = p.get("name", "").upper()
-            country_upper = country.upper()
-            for region in PREFERRED_REGIONS:
-                if region in country_upper or region in name:
-                    region_match = True
-                    break
-            if not region_match:
-                continue
-
-        filtered.append(p)
-
-    print(f"协议/地区过滤后：{len(filtered)} 个节点")
-    return filtered
-
-
-def test_proxies_with_clash_api(proxies, max_delay=MAX_DELAY_ROUNDS[0]):
-    """
-    使用 Clash API 并发测试节点延迟
-
-    原理：直接调用 Clash 核心的 /proxies/{name}/delay 接口
-    优势：Clash 内部并发执行，比切换节点更稳定且不会"张冠李戴"
-    """
-    print(f"并发测试 {len(proxies)} 个节点...")
-    results = []
-    timeout = max_delay
-
-    # 定义单个测试任务
-    def check_node(p):
-        name = p['name']
-        safe_name = urllib.parse.quote(name)
-        # 直接调用 Clash 核心的测速接口，它在内部是并发执行的
-        url = f"http://127.0.0.1:9090/proxies/{safe_name}/delay"
-        params = {"url": FOREIGN_TEST_URL, "timeout": timeout}
-        try:
-            r = requests.get(url, params=params, timeout=timeout/1000 + 2)
-            if r.status_code == 200:
-                delay = r.json().get("delay", 0)
-                if 0 < delay <= timeout:
-                    return (p, delay)
-        except:
-            pass
-        return None
-
-    # 并发测试，workers 可以调高到 20-50
-    with ThreadPoolExecutor(max_workers=TEST_WORKERS) as executor:
-        futures = [executor.submit(check_node, p) for p in proxies]
-        for i, future in enumerate(as_completed(futures), 1):
-            res = future.result()
-            if res:
-                results.append(res)
-            if i % 50 == 0 or i == len(proxies):
-                print(f"  进度：{i}/{len(proxies)}，通过：{len(results)}")
-
-    # 按延迟排序
-    results.sort(key=lambda x: x[1])
-    return [r[0] for r in results]
-
-
-def filter_proxies_round(proxies, batch_size=None, max_delay=MAX_DELAY_ROUNDS[0], round_num=1):
-    """通用单轮筛选函数 - 优化版：使用 Clash API 并发测试"""
-    # 第 1 轮前先做协议和地区过滤
-    if round_num == 1:
-        print(f"\n优选协议：{PREFERRED_PROTOCOLS if PREFERRED_PROTOCOLS else '不过滤'}")
-        print(f"优选地区：{PREFERRED_REGIONS if PREFERRED_REGIONS else '不过滤'}")
-        proxies = filter_by_protocol_and_region(proxies)
-        if not proxies:
-            print("没有节点符合协议/地区要求")
-            return []
-
-    print(f"\n第{round_num}轮筛选（延迟 ≤ {max_delay}ms）...")
-
-    # 生成测试配置（一次性注入所有节点）
-    print(f"生成测试配置：{len(proxies)} 个节点...")
-    save_for_clash(proxies, for_testing=True)
-
-    # 启动 Clash 加载所有节点
-    print("启动 Clash...")
-    clash_proc = start_clash()
-    if not wait_clash(clash_proc):
-        print("Clash 启动失败")
-        return []
-
-    # 使用 Clash API 并发测试所有节点
-    passed_proxies = test_proxies_with_clash_api(proxies, max_delay=max_delay)
-
-    # 测试完成后关闭 Clash
-    print("关闭 Clash...")
-    if clash_proc:
-        clash_proc.terminate()
-    kill_clash()
-
-    print(f"\n第{round_num}轮总计通过：{len(passed_proxies)}/{len(proxies)} 个节点")
-    return passed_proxies
-
-
-def save_for_clash(proxies, for_testing=False):
-    """生成 Clash 配置"""
-    if for_testing:
-        # 测试模式：所有节点放在一个组里
-        config = {
-            "mixed-port": 7890,
-            "allow-lan": False,
-            "mode": "rule",
-            "external-controller": "127.0.0.1:9090",
-            "proxies": proxies,
-            "proxy-groups": [
-                {
-                    "name": "节点选择",
-                    "type": "select",
-                    "proxies": [p["name"] for p in proxies]
-                }
-            ],
-            "rules": ["MATCH,节点选择"]
-        }
-    else:
-        # 最终输出模式：添加 url-test 自动选择组
-        config = {
-            "mixed-port": 7890,
-            "allow-lan": False,
-            "mode": "rule",
-            "external-controller": "127.0.0.1:9090",
-            "proxies": proxies,
-            "proxy-groups": [
-                {
-                    "name": "AUTO",
-                    "type": "url-test",
-                    "proxies": [p["name"] for p in proxies],
-                    "url": "https://www.google.com/generate_204",
-                    "interval": 300,
-                    "tolerance": 50
-                },
-                {
-                    "name": "手动选择",
-                    "type": "select",
-                    "proxies": [p["name"] for p in proxies]
-                }
-            ],
-            "rules": ["MATCH,AUTO"]
-        }
-    with open("run.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
-
-
-def save_final_config(proxies):
-    """生成带 url-test 自动选择的完整配置文件"""
+def save_run_config(proxies):
+    """生成测试专用的 Mihomo 配置"""
     config = {
         "mixed-port": 7890,
-        "allow-lan": False,
-        "mode": "rule",
-        "log-level": "info",
         "external-controller": "127.0.0.1:9090",
+        "mode": "rule",
+        "log-level": "silent",
         "proxies": proxies,
-        "proxy-groups": [
-            {
-                "name": "节点选择",
-                "type": "select",
-                "proxies": ["AUTO", "手动选择"] + [p["name"] for p in proxies[:20]]
-            },
-            {
-                "name": "AUTO",
-                "type": "url-test",
-                "proxies": [p["name"] for p in proxies],
-                "url": "https://www.google.com/generate_204",
-                "interval": 300,
-                "tolerance": 50
-            },
-            {
-                "name": "手动选择",
-                "type": "select",
-                "proxies": [p["name"] for p in proxies]
-            }
-        ],
-        "rules": [
-            "GEOIP,CN,DIRECT",
-            "MATCH,节点选择"
-        ]
+        "proxy-groups": [{"name": "GLOBAL", "type": "select", "proxies": [p['name'] for p in proxies]}],
+        "rules": ["MATCH,GLOBAL"]
     }
-    with open("output/config.yaml", "w", encoding="utf-8") as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
-    print(f"已生成完整配置文件：output/config.yaml")
+    with open("run.yaml", "w", encoding="utf-8") as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
-
-def kill_clash():
-    """强力清理 Clash 进程"""
+def check_node_via_api(p):
+    """通过 Mihomo API 进行并发测速"""
+    name_encoded = urllib.parse.quote(p['name'])
+    api_url = f"http://127.0.0.1:9090/proxies/{name_encoded}/delay"
+    
     try:
-        if os.name == 'nt':
-            subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(0.5)
-            subprocess.run(["taskkill", "/F", "/IM", "clash.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        else:
-            # Linux 环境下更彻底的清理
-            subprocess.run(["pkill", "-9", "clash"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(0.5)
-            subprocess.run(["pkill", "-9", "mihomo"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(0.5)
-            # 使用 fuser 释放端口（如果可用）
-            subprocess.run(["fuser", "-k", "9090/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            subprocess.run(["fuser", "-k", "7890/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # 必须通过两个 URL 的验证才算真有效
+        for t_url in TEST_URLS:
+            r = requests.get(api_url, params={"url": t_url, "timeout": TIMEOUT}, timeout=5)
+            if r.status_code != 200:
+                return None
+        
+        delay = r.json().get('delay', 0)
+        return p, delay
     except:
-        pass
-
-    # 等待并确保端口完全释放
-    for _ in range(5):
-        time.sleep(1)
-        port_9090_free = not is_port_in_use(9090)
-        port_7890_free = not is_port_in_use(7890)
-        if port_9090_free and port_7890_free:
-            break
-        print("等待端口释放...")
-
-def is_port_in_use(port):
-    """检查端口是否被占用"""
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        try:
-            s.settimeout(1)
-            result = s.connect_ex(('127.0.0.1', port))
-            return result == 0
-        except:
-            return False
-
-
-def tcp_ping(server, port, timeout=TCP_CHECK_TIMEOUT):
-    """
-    TCP 握手预检 - 快速过滤掉无法连接的服务器
-
-    原理：在启动 Clash 测速前，先用原生 TCP 握手测试服务器是否可达
-    优势：0.5-2 秒超时快速失败，避免卡在死节点上浪费时间
-    """
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(timeout)
-        s.connect((server, int(port)))
-        s.close()
-        return True
-    except:
-        return False
-
-
-def prefilter_dead_proxies(proxies):
-    """
-    批量预检 - 过滤死节点
-
-    使用并发 TCP 握手测试，快速筛选出可达的服务器
-    """
-    if not ENABLE_TCP_PREFILTER:
-        return proxies
-
-    print(f"\n========== TCP 预检：过滤死节点 ==========")
-    print(f"待测节点数：{len(proxies)}，超时：{TCP_CHECK_TIMEOUT}s")
-
-    def check_tcp(p):
-        return (p, tcp_ping(p['server'], p['port']))
-
-    alive_proxies = []
-    dead_count = 0
-
-    with ThreadPoolExecutor(max_workers=50) as executor:
-        futures = [executor.submit(check_tcp, p) for p in proxies]
-        for i, future in enumerate(as_completed(futures), 1):
-            try:
-                p, alive = future.result()
-                if alive:
-                    alive_proxies.append(p)
-                else:
-                    dead_count += 1
-                if i % 50 == 0 or i == len(proxies):
-                    print(f"  进度：{i}/{len(proxies)}，存活：{len(alive_proxies)}，死亡：{dead_count}")
-            except:
-                dead_count += 1
-
-    print(f"\nTCP 预检完成：{len(alive_proxies)}/{len(proxies)} 个节点存活（过滤 {dead_count} 个死节点）")
-    return alive_proxies
-
-def start_clash():
-    # 启动前先确保 9090 和 7890 端口可用
-    for port in [9090, 7890]:
-        if is_port_in_use(port):
-            print(f"{port} 端口被占用，清理旧 Clash 进程...")
-            kill_clash()
-
-    # 强制等待确保端口完全释放
-    time.sleep(1)
-
-    if os.name != 'nt':
-        subprocess.run(["chmod", "+x", "./clash"])
-    try:
-        # 捕获 Clash 启动日志以便调试
-        process = subprocess.Popen(
-            ["./clash", "-f", "run.yaml"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
-        return process
-    except Exception as e:
-        print(f"❌ 无法执行 Clash 命令：{e}")
         return None
 
-def wait_clash(process):
-    """等待 Clash 启动，最多等待 30 秒"""
-    print("等待 Clash 启动...")
-    for i in range(30):
+def main():
+    print(">>> 正在抓取订阅源...")
+    all_raw = []
+    for url in URLS:
+        try:
+            r = requests.get(url, timeout=10, verify=False)
+            data = yaml.safe_load(r.text)
+            if data and 'proxies' in data:
+                all_raw.extend(data['proxies'])
+        except: continue
+
+    # 清洗去重
+    cleaned = []
+    seen_ips = set()
+    for i, p in enumerate(all_raw):
+        node = clean_node(p, i)
+        if node:
+            key = f"{node['server']}:{node['port']}"
+            if key not in seen_ips:
+                seen_ips.add(key)
+                cleaned.append(node)
+
+    print(f">>> 共有 {len(cleaned)} 个节点进入测试阶段")
+    save_run_config(cleaned)
+
+    # 启动 Mihomo
+    print(">>> 启动内核测试...")
+    proc = subprocess.Popen(["./clash", "-f", "run.yaml"])
+    
+    # 等待内核初始化和端口开放
+    for _ in range(10):
         try:
             socket.create_connection(("127.0.0.1", 9090), timeout=1)
-            print(f"Clash 启动成功，耗时 {i+1} 秒")
-            return True
-        except Exception as e:
-            # 每 2 秒检查一次进程状态，更快发现问题
-            if (i + 1) % 2 == 0:
-                if process and process.poll() is not None:
-                    stdout, stderr = process.communicate()
-                    print(f"Clash 进程已退出 (返回码：{process.returncode})")
-                    if stderr:
-                        print(f"错误输出：{stderr[:800]}")
-                    if stdout:
-                        print(f"标准输出：{stdout[:800]}")
-                    return False
-            if (i + 1) % 5 == 0:
-                print(f"已等待 {i+1} 秒... (异常：{e})")
-            time.sleep(1)
-    print("Clash 启动超时")
-    return False
+            break
+        except: time.sleep(1)
+
+    # 并发测试
+    passed = []
+    with ThreadPoolExecutor(max_workers=CONCURRENCY) as executor:
+        futures = [executor.submit(check_node_via_api, p) for p in cleaned]
+        for f in as_completed(futures):
+            res = f.result()
+            if res:
+                p, delay = res
+                passed.append(p)
+                print(f"  [PASS] {p['name']} - {delay}ms")
+
+    # 善后处理
+    proc.terminate()
+    print(f">>> 测试完成，最终可用节点: {len(passed)}")
+
+    if passed:
+        os.makedirs("output", exist_ok=True)
+        # 再次处理最终导出的格式，确保兼容性
+        with open("output/proxies.yaml", "w", encoding="utf-8") as f:
+            yaml.dump({"proxies": passed}, f, allow_unicode=True, sort_keys=False)
+        
+        # 生成一个通用的 config.yaml 供客户端直接订阅
+        final_cfg = {
+            "mixed-port": 7890,
+            "external-controller": "127.0.0.1:9090",
+            "mode": "rule",
+            "proxies": passed,
+            "proxy-groups": [
+                {"name": "🚀 自动选择", "type": "url-test", "proxies": [p['name'] for p in passed], "url": "http://www.gstatic.com/generate_204", "interval": 300},
+                {"name": "手动切换", "type": "select", "proxies": [p['name'] for p in passed]}
+            ],
+            "rules": ["MATCH,🚀 自动选择"]
+        }
+        with open("output/config.yaml", "w", encoding="utf-8") as f:
+            yaml.dump(final_cfg, f, allow_unicode=True, sort_keys=False)
 
 if __name__ == "__main__":
-    # 第一步：获取并清洗节点
-    raw = fetch_proxies()
-    if not raw:
-        print("未找到符合条件的节点")
-        exit()
-
-    # ========== TCP 预检：过滤死节点 ==========
-    # 在 Clash 测试前先用 TCP 握手刷掉不可达的服务器
-    raw = prefilter_dead_proxies(raw)
-    if not raw:
-        print("TCP 预检后无节点剩余，退出")
-        exit()
-    # ===========================================
-
-    try:
-        # 第二步：2 轮递进筛选（延迟要求逐步收紧）
-        current_proxies = raw
-        for round_idx, max_delay in enumerate(MAX_DELAY_ROUNDS, 1):
-            passed = filter_proxies_round(current_proxies, max_delay=max_delay, round_num=round_idx)
-            if not passed:
-                print(f"第{round_idx}轮筛选无节点通过，退出")
-                exit()
-            current_proxies = passed
-
-            # ========== Cloudflare Trace: 检测节点出口位置（第 1 轮后） ==========
-            # 原因：先通过 Clash 粗筛（测通 Google），再对通过的节点做 CF Trace，节省时间
-            # 优势：免费无限制，走节点真实流量，结果准确
-            if round_idx == 1 and ENABLE_CF_TRACE and current_proxies:
-                current_proxies = filter_by_colo_round(current_proxies)
-                if not current_proxies:
-                    print("CF Trace 过滤后无节点剩余，退出")
-                    exit()
-            # ================================================================
-
-        # 第三步：保存结果
-        os.makedirs("output", exist_ok=True)
-        final_data = {"proxies": current_proxies}
-
-        with open("output/proxies.yaml", "w", encoding="utf-8") as f:
-            yaml.dump(final_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
-
-        # 同时生成一个带 url-test 的完整配置文件
-        save_final_config(current_proxies)
-
-        print(f"\n成功筛选出 {len(current_proxies)} 个节点并保存。")
-        print("已生成 output/proxies.yaml（原始节点）和 output/config.yaml（完整配置）")
-    except Exception as e:
-        print(f"运行出错：{e}")
-        kill_clash()
+    main()
