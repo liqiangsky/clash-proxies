@@ -16,7 +16,7 @@ URLS = [
     #"https://vahid.ehsandigik.ir/clash",
 ]
 
-TEST_URLS = ["https://www.google.com/generate_204", "https://1.1.1.1/generate_204", "https://youtube.com", "https://gemini.google.com"]
+TEST_URLS = ["https://www.google.com/generate_204", "https://1.1.1.1/generate_204", "https://youtube.com", "https://www.baidu.com"]
 TIMEOUT = 3000
 CONCURRENCY = 30
 
