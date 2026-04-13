@@ -16,7 +16,7 @@ URLS = [
 ]
 
 # 测试参数
-TEST_URLS = ["https://www.google.com/generate_204", "https://1.1.1.1/generate_204"]
+TEST_URLS = ["https://www.google.com/generate_204", "https://1.1.1.1/generate_204", "https://gemini.google.com/", "https://youtube.com"]
 TIMEOUT = 3000 # 3秒超时，Actions 环境网络快，要求可以严一点
 CONCURRENCY = 30 # Actions 上可以跑很高的并发
 
