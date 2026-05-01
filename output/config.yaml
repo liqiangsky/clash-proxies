@@ -4,34 +4,34 @@ mode: rule
 proxies:
 - cipher: aes-256-cfb
   country: 🇭🇰 HK
-  name: ss_259_212
+  name: ss_244_212
   password: f8f7aCzcPKbsF8p3
   port: 989
   server: 154.223.16.212
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: aes-256-cfb
-  country: 🇭🇰 HK
-  name: ss_260_82
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 216.250.97.82
-  skip-cert-verify: true
-  type: ss
-  udp: true
 - cipher: chacha20-ietf-poly1305
   country: 🇭🇰HK
-  name: ss_266_79
+  name: ss_246_79
   password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
   port: 990
   server: 154.223.20.79
   skip-cert-verify: true
   type: ss
   udp: true
+- cipher: aes-256-cfb
+  country: 🇨🇳 TW
+  name: ss_134_79
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 154.223.20.79
+  skip-cert-verify: true
+  type: ss
+  udp: true
 - cipher: aes-256-gcm
   country: 🇭🇰HK
-  name: ss_264_41
+  name: ss_250_41
   password: pKEW8JPByTVTLtM
   port: 4444
   server: 154.223.16.41
@@ -39,47 +39,38 @@ proxies:
   type: ss
   udp: true
 - cipher: aes-256-cfb
-  country: 🇨🇳 TW
-  name: ss_139_79
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 154.223.20.79
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf
   country: 🇭🇰HK
-  name: ss_265_113
-  password: asd123456
-  port: 8388
-  server: 103.149.183.113
+  name: ss_248_188
+  password: qwerREWQ@@
+  port: 41632
+  server: 112.213.102.188
   skip-cert-verify: true
   type: ss
   udp: true
 - alterId: 0
   cipher: auto
-  country: 🇫🇷FR
+  country: 🇬🇧GB
   h2-opts: {}
   http-opts: {}
-  name: vmess_190_net
+  name: vmess_236_net
   network: ws
-  port: 16632
-  server: m.cnmjin.net
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
+  port: 12890
+  server: gtm1.ktmwan.net
+  servername: baidu.com
   skip-cert-verify: true
   type: vmess
   udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
+  uuid: 6d5d1d83-b04e-4c5d-873e-b027d59e0b36
   ws-opts:
     headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
+      HOST: baidu.com
     path: /
 - alterId: 0
   cipher: auto
   country: 🇫🇷FR
   h2-opts: {}
   http-opts: {}
-  name: vmess_192_com
+  name: vmess_188_com
   network: ws
   port: 16632
   server: planb.mojcn.com
@@ -97,10 +88,10 @@ proxies:
   country: 🇫🇷FR
   h2-opts: {}
   http-opts: {}
-  name: vmess_191_cyou
+  name: vmess_191_net
   network: ws
   port: 16632
-  server: t.cnmjcn.cyou
+  server: m.cnmjin.net
   servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
   skip-cert-verify: true
   type: vmess
@@ -110,30 +101,21 @@ proxies:
     headers:
       HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
     path: /
-- alterId: 0
-  cipher: auto
-  country: 🇬🇧GB
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_254_net
-  network: ws
-  port: 12890
-  server: gtm1.ktmwan.net
-  servername: baidu.com
+- cipher: aes-256-cfb
+  country: 🇭🇰HK
+  name: ss_249_33
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 203.23.128.33
   skip-cert-verify: true
-  type: vmess
+  type: ss
   udp: true
-  uuid: 6d5d1d83-b04e-4c5d-873e-b027d59e0b36
-  ws-opts:
-    headers:
-      HOST: baidu.com
-    path: /
 - alterId: 0
   cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_315_196
+  name: vmess_289_196
   network: ws
   port: 21879
   server: 103.143.238.196
@@ -145,6 +127,33 @@ proxies:
   uuid: 1e1a6b3b-14b2-4ae4-9aa9-880ba5dff6fa
   ws-opts:
     path: /vmesswss
+- alterId: 1
+  cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_303_art
+  network: tcp
+  port: 444
+  server: 5v8bn-g01.jp04-1d-vm0.entry.fr0528.art
+  servername: 5v8bn-g01.jp04-1d-vm0.entry.fr0528.art
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 1a9f857f-9a07-3a8c-a155-f9ab3c457343
+- alterId: 0
+  cipher: auto
+  country: 🇭🇰HK
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_286_134
+  network: tcp
+  port: 9527
+  server: 45.192.101.134
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: ae862e1d-3b8c-443a-027b-37c6c69ef43c
 - alterId: 2
   cipher: auto
   country: 🇨🇳CN
@@ -164,33 +173,7 @@ proxies:
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_312_38
-  port: 35034
-  server: 165.154.195.38
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
-- alterId: 1
-  cipher: auto
-  country: 🇯🇵JP
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_325_art
-  network: tcp
-  port: 46482
-  server: 7vjur-g01.jp05-h6-vm0.entry.fr0528.art
-  servername: 7vjur-g01.jp05-h6-vm0.entry.fr0528.art
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 763e08a1-c289-3a41-aa80-e63a56bc1447
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_309_52
+  name: vmess_285_52
   network: tcp
   port: 22324
   server: 213.156.141.52
@@ -198,39 +181,12 @@ proxies:
   type: vmess
   udp: true
   uuid: 04621bae-ab36-11ec-b909-0242ac120002
-- cipher: aes-256-cfb
-  country: 🇭🇰HK
-  name: ss_262_33
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 203.23.128.33
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 0
-  cipher: auto
-  country: 🇯🇵JP
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_328_xyz
-  network: ws
-  port: 80
-  server: jp01.a0a.xyz
-  servername: jp01.a0a.xyz
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 11c3627f-31e8-4695-dfbd-34076e2f1f5d
-  ws-opts:
-    headers:
-      HOST: jp01.a0a.xyz
-    path: /cctv13.m3u8
 - alterId: 0
   cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_316_183
+  name: vmess_284_183
   network: tcp
   port: 57460
   server: 117.18.125.183
@@ -243,42 +199,40 @@ proxies:
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_329_art
+  name: vmess_305_art
   network: tcp
-  port: 21585
-  server: uirk9-g05.jp03-j7-vm0.entry.fr0528.art
+  port: 448
+  server: jnh9b-g05.jp04-1d-vm0.entry.fr0528.art
+  servername: jnh9b-g05.jp04-1d-vm0.entry.fr0528.art
   skip-cert-verify: true
-  sni: uirk9-g05.jp03-j7-vm0.entry.fr0528.art
-  tls: true
   type: vmess
   udp: true
   uuid: 8ee65c79-4487-32ff-b896-62c8dce05921
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_311_197
-  network: ws
-  port: 36703
-  server: 47.244.120.197
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
-  ws-opts:
-    path: /arki?ed=2048
 - cipher: aes-256-cfb
   country: 🇰🇷 KR
-  name: ss_334_230
-  password: qwerREWQ@@
-  port: 4652
-  server: 218.237.185.230
+  name: ss_308_177
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 154.90.63.177
   skip-cert-verify: true
   type: ss
   udp: true
+- alterId: 1
+  cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_299_art
+  network: tcp
+  port: 11777
+  server: r8f4n-g05.jp02-e3-vm0.entry.fr0528.art
+  servername: r8f4n-g05.jp02-e3-vm0.entry.fr0528.art
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 8ee65c79-4487-32ff-b896-62c8dce05921
 - country: 🇯🇵JP
-  name: trojan_331_181
+  name: trojan_306_181
   password: strong-secret-pass-777
   port: 4443
   server: 103.231.73.181
@@ -290,27 +244,32 @@ proxies:
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_313_icu
-  network: ws
-  port: 443
-  server: n1761296878.4u9ma.icu
-  servername: n1761296878.4u9ma.icu
+  name: vmess_287_38
+  port: 35034
+  server: 165.154.195.38
   skip-cert-verify: true
-  sni: n1761296878.4u9ma.icu
-  tls: true
   type: vmess
   udp: true
-  uuid: 78f61544-3393-4e6b-9c77-5deaa0c7471d
-  ws-opts:
-    headers:
-      HOST: n1761296878.4u9ma.icu
-    path: /
+  uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
+- alterId: 0
+  cipher: auto
+  country: 🇰🇷KR
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_316_250
+  network: none
+  port: 443
+  server: 140.238.2.250
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 41a7089a-040b-4538-8b8d-010902405bde
 - alterId: 0
   cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_310_74
+  name: vmess_288_74
   network: ws
   port: 55185
   server: 47.243.135.74
@@ -320,76 +279,99 @@ proxies:
   uuid: 1375985e-334a-4c25-8f64-52a182bc8037
   ws-opts:
     path: /Notif_Chat
-- cipher: aes-256-cfb
-  country: 🇰🇷 KR
-  name: ss_333_net
-  password: qwerREWQ@@
-  port: 4652
-  server: p141.panda001.net
+- cipher: chacha20-ietf-poly1305
+  country: 🇸🇬SG
+  name: ss_389_top
+  password: e2164557-02b5-4a3e-abea-2124f7368ae1
+  port: 10002
+  server: ix.nekocloud.top
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: aes-256-cfb
-  country: 🇰🇷 KR
-  name: ss_332_177
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 154.90.63.177
+- cipher: chacha20-ietf-poly1305
+  country: 🇸🇬SG
+  name: ss_390_top
+  password: e2164557-02b5-4a3e-abea-2124f7368ae1
+  port: 10001
+  server: ix.nekocloud.top
   skip-cert-verify: true
   type: ss
   udp: true
-- alterId: 0
-  cipher: auto
-  country: 🇰🇷KR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_340_250
-  network: none
-  port: 443
-  server: 140.238.2.250
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 41a7089a-040b-4538-8b8d-010902405bde
-- cipher: chacha20-ietf
-  country: 🇸🇬 SG
-  name: ss_413_23
-  password: asd123456
-  port: 8388
-  server: 103.36.91.23
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 0
-  cipher: auto
-  country: 🇰🇷KR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_341_xyz
-  network: ws
-  port: 80
-  server: kr02.a0a.xyz
-  servername: kr02.a0a.xyz
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 5155860e-d07d-46c3-9128-3afbd84626c7
-  ws-opts:
-    headers:
-      HOST: kr02.a0a.xyz
-    path: /cctv13.m3u8
 - cipher: chacha20-ietf-poly1305
   country: 🇹🇼TW
-  name: ss_429_com
+  name: ss_405_com
   password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  port: 50099
+  server: r3mrcg001286ek2.cybervena.com
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_311_187
+  password: TEzjfAYq2IjtuoS
+  port: 6697
+  server: 141.164.45.187
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇸🇬SG
+  name: ss_391_119
+  password: 8t2xeemUtyui4zAv
+  port: 80
+  server: 194.233.94.119
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-cfb
+  country: 🇰🇷KR
+  name: ss_313_134
+  password: qwerREWQ@@
+  port: 6123
+  server: 211.178.105.134
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: chacha20-ietf-poly1305
+  country: 🇹🇼TW
+  name: ss_406_com
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  port: 50099
+  server: nbmrcg0034686rw.cybervena.com
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: chacha20-ietf-poly1305
+  country: 🇹🇼TW
+  name: ss_410_com
+  password: a9a0d092-6f0e-4701-81ee-454643d6d506
   port: 50099
   server: r3mrcg0011499tl.cybervena.com
   skip-cert-verify: true
   type: ss
   udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_310_187
+  password: lGqs95QkFHo2NV
+  port: 5498
+  server: 141.164.45.187
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇸🇬SG
+  name: ss_397_119
+  password: 8t2xeemUtyui4zAv
+  port: 443
+  server: 194.233.94.119
+  skip-cert-verify: true
+  type: ss
+  udp: true
 - cipher: chacha20-ietf-poly1305
   country: 🇹🇼TW
-  name: ss_430_168
+  name: ss_409_168
   password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
   port: 50099
   server: 1.161.245.168
@@ -397,57 +379,17 @@ proxies:
   type: ss
   udp: true
 - cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_432_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: r3mrcg007134n4g.cybervena.com
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_317_134
-  network: tcp
-  port: 9527
-  server: 45.192.101.134
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: ae862e1d-3b8c-443a-027b-37c6c69ef43c
-- cipher: aes-256-gcm
   country: 🇸🇬SG
-  name: ss_415_119
-  password: 8t2xeemUtyui4zAv
-  port: 443
-  server: 194.233.94.119
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_435_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: nbmrcg0034686rw.cybervena.com
+  name: ss_393_6
+  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
+  port: 990
+  server: 156.59.243.6
   skip-cert-verify: true
   type: ss
   udp: true
 - cipher: aes-256-gcm
   country: 🇸🇬SG
-  name: ss_417_119
-  password: 8t2xeemUtyui4zAv
-  port: 80
-  server: 194.233.94.119
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇸🇬SG
-  name: ss_414_190
+  name: ss_394_190
   password: qKvfX7yQnT99OMu3
   port: 80
   server: 194.233.75.190
@@ -455,17 +397,39 @@ proxies:
   type: ss
   udp: true
 - cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_439_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: r3mrcg007117fb8.cybervena.com
+  country: 🇸🇬SG
+  name: ss_395_top
+  password: e2164557-02b5-4a3e-abea-2124f7368ae1
+  port: 10004
+  server: ix.nekocloud.top
   skip-cert-verify: true
   type: ss
   udp: true
 - cipher: chacha20-ietf-poly1305
   country: 🇹🇼TW
-  name: ss_440_31
+  name: ss_412_com
+  password: a9a0d092-6f0e-4701-81ee-454643d6d506
+  port: 50099
+  server: ncmrcg000139ss7.cybervena.com
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- alterId: 2
+  cipher: auto
+  country: 🇭🇰HK
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_290_com
+  network: tcp
+  port: 30824
+  server: v24.hdacd.com
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+- cipher: chacha20-ietf-poly1305
+  country: 🇹🇼TW
+  name: ss_418_31
   password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
   port: 50099
   server: 114.45.175.31
@@ -474,74 +438,34 @@ proxies:
   udp: true
 - cipher: chacha20-ietf-poly1305
   country: 🇹🇼TW
-  name: ss_438_com
+  name: ss_416_com
   password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
   port: 50099
-  server: r3mrcg001269pz2.cybervena.com
+  server: r3mrcg007134n4g.cybervena.com
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_441_102
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: 111.248.87.102
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_442_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: r3mrcg007147vhp.cybervena.com
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 2
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_314_com
-  network: tcp
-  port: 30824
-  server: v24.hdacd.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_337_187
-  password: lGqs95QkFHo2NV
-  port: 5498
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_903_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: r3mrcg00129437x.cybervena.com
+- cipher: aes-256-cfb
+  country: 🇰🇷 KR
+  name: ss_307_net
+  password: qwerREWQ@@
+  port: 4652
+  server: p141.panda001.net
   skip-cert-verify: true
   type: ss
   udp: true
 - cipher: chacha20-ietf-poly1305
   country: 🇸🇬SG
-  name: ss_416_6
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 156.59.243.6
+  name: ss_388_top
+  password: e2164557-02b5-4a3e-abea-2124f7368ae1
+  port: 10006
+  server: ix.nekocloud.top
   skip-cert-verify: true
   type: ss
   udp: true
 - cipher: aes-256-cfb
   country: 🇹🇼TW
-  name: ss_436_105
+  name: ss_414_105
   password: qwerREWQ@@
   port: 41632
   server: 185.189.160.105
@@ -550,438 +474,35 @@ proxies:
   udp: true
 - cipher: chacha20-ietf-poly1305
   country: 🇸🇬SG
-  name: ss_418_51
-  password: 7afa39016d5a409c
-  port: 48803
-  server: 194.233.73.51
+  name: ss_396_top
+  password: e2164557-02b5-4a3e-abea-2124f7368ae1
+  port: 10005
+  server: ix.nekocloud.top
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_335_187
-  password: TEzjfAYq2IjtuoS
-  port: 6679
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 0
+- alpn:
+  - h2
+  alterId: 2
   cipher: auto
-  country: 🇺🇸US
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_562_org
-  network: ws
-  port: 443
-  server: cfn.cdn.moe233.org
-  servername: d232fuc3xd1vzm.cloudfront.net
-  skip-cert-verify: true
-  sni: cfn.cdn.moe233.org
-  tls: true
-  type: vmess
-  udp: true
-  uuid: 36989e03-b3b9-4e85-8a96-6d02de7c4f3a
-  ws-opts:
-    headers:
-      HOST: d232fuc3xd1vzm.cloudfront.net
-    path: /riolu/4
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_339_187
-  password: faBAoD54k87UJG7
-  port: 2376
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_338_187
-  password: TEzjfAYq2IjtuoS
-  port: 6697
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  country: 🇸🇬SG
-  name: ss_419_51
-  password: 7afa39016d5a409c
-  port: 48801
-  server: 194.233.73.51
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- country: 🇧🇪BE
-  name: hysteria2_1060_world
-  password: qQe1z5kU8kN6SlKnDt9Ru3Qp
-  port: 443
-  server: vpn-jp-001.fastervpn.world
-  skip-cert-verify: true
-  sni: vpn-jp-001.fastervpn.world
-  type: hysteria2
-  udp: true
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1049_com
-  network: tcp
-  port: 11105
-  server: cp.paeadiy.com
+  name: vmess_1122_com
+  port: 30809
+  server: v9.hdacd.com
   skip-cert-verify: true
   type: vmess
   udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- cipher: chacha20-ietf-poly1305
-  name: ss_1032_com
-  password: t0srmdxrm3xyjnvqz9ewlxb2myq7rjuv
-  plugin: obfs
-  plugin-opts:
-    host: 403880e.default.nintendo.eu:164892
-    mode: tls
-  port: 2377
-  server: 403880e.r8.gladns.com
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- name: trojan_1056_54
-  password: 69ecb45889d99f31b8ccc10bf8f76a72
-  port: 53018
-  server: 18.163.99.54
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  udp: true
-- alterId: 0
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+- alpn:
+  - http/1.1
+  alterId: 2
   cipher: auto
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1042_com
-  network: tcp
-  port: 2301
-  server: cp.paeadiy.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1053_com
-  network: tcp
-  port: 1032
-  server: cp.paeadiy.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- alterId: 2
-  cipher: auto
-  country: 🇨🇳CN
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1061_com
-  network: tcp
+  name: vmess_1118_com
   port: 30845
   server: v45.hdacd.com
   skip-cert-verify: true
   type: vmess
   udp: true
   uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1108_com
-  network: tcp
-  port: 2103
-  server: cp.paeadiy.com
-  servername: <nil>
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1074_cyou
-  network: ws
-  port: 16622
-  server: t.cnmjcn.cyou
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1079_net
-  network: ws
-  port: 16618
-  server: m.cnmjin.net
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1080_cyou
-  network: ws
-  port: 16618
-  server: t.cnmjcn.cyou
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1076_net
-  network: ws
-  port: 16622
-  server: m.cnmjin.net
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- country: 🇯🇵JP
-  name: hysteria2_1116_photos
-  password: f8af73ed-363a-4dfb-b99f-65bd8ad1a329
-  port: 52348
-  server: jpaws.ccwink.photos
-  skip-cert-verify: true
-  sni: sgdigital.ccwink.cc
-  type: hysteria2
-  udp: true
-- cipher: chacha20-ietf
-  country: 🇭🇰HK
-  name: ss_1107_12
-  password: asd123456
-  port: 8388
-  server: 103.149.183.12
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1071_com
-  network: ws
-  port: 16617
-  server: planb.mojcn.com
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1077_com
-  network: ws
-  port: 16622
-  server: planb.mojcn.com
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1072_cyou
-  network: ws
-  port: 16617
-  server: t.cnmjcn.cyou
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1110_com
-  network: tcp
-  port: 11106
-  server: cp.paeadiy.com
-  servername: <nil>
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1073_net
-  network: ws
-  port: 16617
-  server: m.cnmjin.net
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_1127_com
-  password: t0srmdxrm3xyjnvqz9ewlxb2myq7rjuv
-  plugin: obfs
-  plugin-opts:
-    host: 403880e.default.epicgames.com:164892
-    mode: tls
-  port: 2377
-  server: 403880e.k4.gladns.com
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- country: 🇺🇸US
-  name: hysteria2_1141_photos
-  password: f8af73ed-363a-4dfb-b99f-65bd8ad1a329
-  port: 52348
-  server: hkaws.ccwink.photos
-  skip-cert-verify: true
-  sni: sgdigital.ccwink.cc
-  type: hysteria2
-  udp: true
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts:
-    method: GET
-    path:
-    - /ABCDE
-  name: vmess_1043_49
-  network: http
-  port: 53224
-  server: 103.127.243.49
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 4f47e6cc-659d-4588-8155-21d2782f1b91
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1082_com
-  network: ws
-  port: 16618
-  server: planb.mojcn.com
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1111_com
-  network: tcp
-  port: 10003
-  server: cp.paeadiy.com
-  servername: <nil>
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- alterId: 0
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1113_com
-  network: tcp
-  port: 1402
-  server: cp.paeadiy.com
-  servername: <nil>
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 7f3dbc61-f140-37c4-9fbd-ec649ea2d792
-- alterId: 0
-  cipher: auto
-  country: 🇫🇷FR
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_1081_net
-  network: ws
-  port: 16616
-  server: m.cnmjin.net
-  servername: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: a27d5683-4319-4e0d-b476-708ceac9ae05
-  ws-opts:
-    headers:
-      HOST: e35f90811b45f78e13b04357ef766c24.mobgslb.tbcache.com
-    path: /
 proxy-groups:
 - name: 节点选择
   proxies:
@@ -991,168 +512,102 @@ proxy-groups:
 - interval: 300
   name: 自动选优
   proxies:
-  - ss_259_212
-  - ss_260_82
-  - ss_266_79
-  - ss_264_41
-  - ss_139_79
-  - ss_265_113
-  - vmess_190_net
-  - vmess_192_com
-  - vmess_191_cyou
-  - vmess_254_net
-  - vmess_315_196
+  - ss_244_212
+  - ss_246_79
+  - ss_134_79
+  - ss_250_41
+  - ss_248_188
+  - vmess_236_net
+  - vmess_188_com
+  - vmess_191_net
+  - ss_249_33
+  - vmess_289_196
+  - vmess_303_art
+  - vmess_286_134
   - vmess_164_com
-  - vmess_312_38
-  - vmess_325_art
-  - vmess_309_52
-  - ss_262_33
-  - vmess_328_xyz
-  - vmess_316_183
-  - vmess_329_art
-  - vmess_311_197
-  - ss_334_230
-  - trojan_331_181
-  - vmess_313_icu
-  - vmess_310_74
-  - ss_333_net
-  - ss_332_177
-  - vmess_340_250
-  - ss_413_23
-  - vmess_341_xyz
-  - ss_429_com
-  - ss_430_168
-  - ss_432_com
-  - vmess_317_134
-  - ss_415_119
-  - ss_435_com
-  - ss_417_119
-  - ss_414_190
-  - ss_439_com
-  - ss_440_31
-  - ss_438_com
-  - ss_441_102
-  - ss_442_com
-  - vmess_314_com
-  - ss_337_187
-  - ss_903_com
-  - ss_416_6
-  - ss_436_105
-  - ss_418_51
-  - ss_335_187
-  - vmess_562_org
-  - ss_339_187
-  - ss_338_187
-  - ss_419_51
-  - hysteria2_1060_world
-  - vmess_1049_com
-  - ss_1032_com
-  - trojan_1056_54
-  - vmess_1042_com
-  - vmess_1053_com
-  - vmess_1061_com
-  - vmess_1108_com
-  - vmess_1074_cyou
-  - vmess_1079_net
-  - vmess_1080_cyou
-  - vmess_1076_net
-  - hysteria2_1116_photos
-  - ss_1107_12
-  - vmess_1071_com
-  - vmess_1077_com
-  - vmess_1072_cyou
-  - vmess_1110_com
-  - vmess_1073_net
-  - ss_1127_com
-  - hysteria2_1141_photos
-  - vmess_1043_49
-  - vmess_1082_com
-  - vmess_1111_com
-  - vmess_1113_com
-  - vmess_1081_net
+  - vmess_285_52
+  - vmess_284_183
+  - vmess_305_art
+  - ss_308_177
+  - vmess_299_art
+  - trojan_306_181
+  - vmess_287_38
+  - vmess_316_250
+  - vmess_288_74
+  - ss_389_top
+  - ss_390_top
+  - ss_405_com
+  - ss_311_187
+  - ss_391_119
+  - ss_313_134
+  - ss_406_com
+  - ss_410_com
+  - ss_310_187
+  - ss_397_119
+  - ss_409_168
+  - ss_393_6
+  - ss_394_190
+  - ss_395_top
+  - ss_412_com
+  - vmess_290_com
+  - ss_418_31
+  - ss_416_com
+  - ss_307_net
+  - ss_388_top
+  - ss_414_105
+  - ss_396_top
+  - vmess_1122_com
+  - vmess_1118_com
   type: url-test
   url: http://www.gstatic.com/generate_204
 - name: 手动切换
   proxies:
-  - ss_259_212
-  - ss_260_82
-  - ss_266_79
-  - ss_264_41
-  - ss_139_79
-  - ss_265_113
-  - vmess_190_net
-  - vmess_192_com
-  - vmess_191_cyou
-  - vmess_254_net
-  - vmess_315_196
+  - ss_244_212
+  - ss_246_79
+  - ss_134_79
+  - ss_250_41
+  - ss_248_188
+  - vmess_236_net
+  - vmess_188_com
+  - vmess_191_net
+  - ss_249_33
+  - vmess_289_196
+  - vmess_303_art
+  - vmess_286_134
   - vmess_164_com
-  - vmess_312_38
-  - vmess_325_art
-  - vmess_309_52
-  - ss_262_33
-  - vmess_328_xyz
-  - vmess_316_183
-  - vmess_329_art
-  - vmess_311_197
-  - ss_334_230
-  - trojan_331_181
-  - vmess_313_icu
-  - vmess_310_74
-  - ss_333_net
-  - ss_332_177
-  - vmess_340_250
-  - ss_413_23
-  - vmess_341_xyz
-  - ss_429_com
-  - ss_430_168
-  - ss_432_com
-  - vmess_317_134
-  - ss_415_119
-  - ss_435_com
-  - ss_417_119
-  - ss_414_190
-  - ss_439_com
-  - ss_440_31
-  - ss_438_com
-  - ss_441_102
-  - ss_442_com
-  - vmess_314_com
-  - ss_337_187
-  - ss_903_com
-  - ss_416_6
-  - ss_436_105
-  - ss_418_51
-  - ss_335_187
-  - vmess_562_org
-  - ss_339_187
-  - ss_338_187
-  - ss_419_51
-  - hysteria2_1060_world
-  - vmess_1049_com
-  - ss_1032_com
-  - trojan_1056_54
-  - vmess_1042_com
-  - vmess_1053_com
-  - vmess_1061_com
-  - vmess_1108_com
-  - vmess_1074_cyou
-  - vmess_1079_net
-  - vmess_1080_cyou
-  - vmess_1076_net
-  - hysteria2_1116_photos
-  - ss_1107_12
-  - vmess_1071_com
-  - vmess_1077_com
-  - vmess_1072_cyou
-  - vmess_1110_com
-  - vmess_1073_net
-  - ss_1127_com
-  - hysteria2_1141_photos
-  - vmess_1043_49
-  - vmess_1082_com
-  - vmess_1111_com
-  - vmess_1113_com
-  - vmess_1081_net
+  - vmess_285_52
+  - vmess_284_183
+  - vmess_305_art
+  - ss_308_177
+  - vmess_299_art
+  - trojan_306_181
+  - vmess_287_38
+  - vmess_316_250
+  - vmess_288_74
+  - ss_389_top
+  - ss_390_top
+  - ss_405_com
+  - ss_311_187
+  - ss_391_119
+  - ss_313_134
+  - ss_406_com
+  - ss_410_com
+  - ss_310_187
+  - ss_397_119
+  - ss_409_168
+  - ss_393_6
+  - ss_394_190
+  - ss_395_top
+  - ss_412_com
+  - vmess_290_com
+  - ss_418_31
+  - ss_416_com
+  - ss_307_net
+  - ss_388_top
+  - ss_414_105
+  - ss_396_top
+  - vmess_1122_com
+  - vmess_1118_com
   type: select
 rules:
 - MATCH,节点选择
