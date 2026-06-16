@@ -1,22 +1,10 @@
 proxies:
-- alterId: 1
-  cipher: auto
-  country: 🇯🇵JP
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_180_66
-  port: 22324
-  server: 172.104.80.66
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 04621bae-ab36-11ec-b909-0242ac120002
 - alterId: 0
   cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_139_196
+  name: vmess_136_196
   network: ws
   port: 21879
   server: 103.143.238.196
@@ -28,24 +16,24 @@ proxies:
   uuid: 1e1a6b3b-14b2-4ae4-9aa9-880ba5dff6fa
   ws-opts:
     path: /vmesswss
-- alterId: 0
+- alterId: 1
   cipher: auto
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_185_175
-  port: 49803
-  server: 153.121.73.175
+  name: vmess_178_66
+  port: 22324
+  server: 172.104.80.66
   skip-cert-verify: true
   type: vmess
   udp: true
-  uuid: cd3dacbc-2b7b-4718-83ad-ab870f87e12e
+  uuid: 04621bae-ab36-11ec-b909-0242ac120002
 - alterId: 0
   cipher: auto
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_179_175
+  name: vmess_177_175
   port: 32221
   server: 153.121.73.175
   skip-cert-verify: true
@@ -54,22 +42,58 @@ proxies:
   uuid: b06054ae-f249-438e-998a-8e67bd8df653
 - alterId: 0
   cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_181_175
+  port: 49803
+  server: 153.121.73.175
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: cd3dacbc-2b7b-4718-83ad-ab870f87e12e
+- alterId: 0
+  cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_141_38
+  name: vmess_138_197
+  network: ws
+  port: 36703
+  server: 47.244.120.197
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
+  ws-opts:
+    path: /arki?ed=2048
+- alterId: 0
+  cipher: auto
+  country: 🇭🇰HK
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_137_38
   port: 35034
   server: 165.154.195.38
   skip-cert-verify: true
   type: vmess
   udp: true
   uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
+- cipher: aes-256-cfb
+  country: 🇰🇷 KR
+  name: ss_183_230
+  password: qwerREWQ@@
+  port: 4652
+  server: 218.237.185.230
+  skip-cert-verify: true
+  type: ss
+  udp: true
 - alterId: 0
   cipher: auto
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_183_161
+  name: vmess_179_161
   network: ws
   port: 25686
   server: 140.83.51.161
@@ -82,12 +106,21 @@ proxies:
     headers:
       HOST: jp02.a0a.xyz
     path: /cctv13.m3u8
+- cipher: aes-256-cfb
+  country: 🇰🇷 KR
+  name: ss_184_net
+  password: qwerREWQ@@
+  port: 4652
+  server: p141.panda001.net
+  skip-cert-verify: true
+  type: ss
+  udp: true
 - alterId: 0
   cipher: auto
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_184_75
+  name: vmess_176_75
   network: ws
   port: 80
   server: 168.138.43.75
@@ -100,22 +133,12 @@ proxies:
     headers:
       HOST: jp01.a0a.xyz
     path: /cctv13.m3u8
-- cipher: chacha20-ietf-poly1305
-  country: 🇹🇼TW
-  name: ss_253_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  port: 50099
-  server: r3mrcg001269pz2.cybervena.com
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  name: ss_426_com
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-  plugin: ''
-  plugin-opts: {}
-  port: 50099
-  server: r3mrcg001286ek2.cybervena.com
+- cipher: aes-256-cfb
+  country: 🇭🇰HK
+  name: ss_126_188
+  password: qwerREWQ@@
+  port: 41632
+  server: 112.213.102.188
   skip-cert-verify: true
   type: ss
   udp: true
@@ -124,7 +147,7 @@ proxies:
   country: 🇰🇷KR
   h2-opts: {}
   http-opts: {}
-  name: vmess_196_250
+  name: vmess_192_250
   network: none
   port: 443
   server: 140.238.2.250
@@ -134,27 +157,32 @@ proxies:
   uuid: 41a7089a-040b-4538-8b8d-010902405bde
 - cipher: aes-128-gcm
   country: 🇸🇬SG
-  name: ss_250_183
+  name: ss_240_183
   password: 2bc77a3a-1a6a-49bd-987f-5368cca0f930
   port: 8881
   server: 96.9.211.183
   skip-cert-verify: true
   type: ss
   udp: true
-- country: 🇯🇵JP
-  name: trojan_186_70
-  password: s75Gtmy56sptTA39hmBH965YYx4ZgfQR_I
-  port: 443
-  server: 103.125.219.70
-  skip-cert-verify: true
-  type: trojan
-  udp: true
 - alterId: 0
   cipher: auto
   country: 🇰🇷KR
   h2-opts: {}
   http-opts: {}
-  name: vmess_195_230
+  name: vmess_193_110
+  network: tcp
+  port: 8888
+  server: 146.56.112.110
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: e7c302f3-90d6-42dd-9d7d-94a3683a3707
+- alterId: 0
+  cipher: auto
+  country: 🇰🇷KR
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_191_230
   network: ws
   port: 80
   server: 132.145.80.230
@@ -167,48 +195,56 @@ proxies:
     headers:
       HOST: kr02.a0a.xyz
     path: /cctv13.m3u8
-- cipher: aes-256-cfb
-  country: 🇰🇷 KR
-  name: ss_187_net
-  password: qwerREWQ@@
-  port: 4652
-  server: p141.panda001.net
+- country: 🇯🇵JP
+  name: trojan_182_70
+  password: s75Gtmy56sptTA39hmBH965YYx4ZgfQR_I
+  port: 443
+  server: 103.125.219.70
   skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf
-  country: 🇭🇰HK
-  name: ss_444_113
-  password: asd123456
-  port: 8388
-  server: 103.149.183.113
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- country: 🇧🇩BD
-  name: trojan_028_cab
-  password: 63df07f8-4275-4ab5-8d7b-5eec18a3a25a
-  port: 47530
-  server: a4748f99b0835933fde1d4051b43e634.node.tro.cac.cab
-  skip-cert-verify: true
-  sni: th.01.naiun.bilibili.com
   type: trojan
   udp: true
-- cipher: aes-256-cfb
-  country: 🇰🇷 KR
-  name: ss_188_230
-  password: qwerREWQ@@
-  port: 4652
-  server: 218.237.185.230
+- country: 🇭🇰HK
+  name: trojan_139_143
+  password: BxceQaOe
+  port: 443
+  server: 119.246.1.143
+  skip-cert-verify: true
+  sni: t.me/ripaojiedian
+  type: trojan
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_188_187
+  password: faBAoD54k87UJG7
+  port: 2376
+  server: 141.164.45.187
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: aes-256-cfb
+- cipher: aes-256-gcm
   country: 🇰🇷KR
-  name: ss_194_134
-  password: qwerREWQ@@
-  port: 6123
-  server: 211.178.105.134
+  name: ss_190_187
+  password: TEzjfAYq2IjtuoS
+  port: 6679
+  server: 141.164.45.187
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_186_187
+  password: lGqs95QkFHo2NV
+  port: 5498
+  server: 141.164.45.187
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_187_187
+  password: TEzjfAYq2IjtuoS
+  port: 6697
+  server: 141.164.45.187
   skip-cert-verify: true
   type: ss
   udp: true
@@ -221,57 +257,40 @@ proxies:
   skip-cert-verify: true
   type: ss
   udp: true
-- country: 🇭🇰HK
-  name: trojan_142_143
-  password: BxceQaOe
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: vless_634_xyz
+  network: tcp
+  packet-encoding: xudp
+  port: 8443
+  reality-opts:
+    public-key: L3IbrhYgXNRkRHYFtjkrXxQz48WxoaD77TIHJj-QS2I
+    short-id: 1ddd60e384
+  server: nb.381209.xyz
+  servername: www.kisrating.com
+  skip-cert-verify: true
+  sni: nb.381209.xyz
+  tls: true
+  type: vless
+  udp: true
+  uuid: e9ba40f7-4ab8-4885-8a2d-f7decff555cb
+- alterId: 0
+  cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_180_30
+  network: ws
   port: 443
-  server: 119.246.1.143
+  server: 8.211.149.30
+  servername: polartime.link
   skip-cert-verify: true
-  sni: t.me/ripaojiedian
-  type: trojan
+  sni: 8.211.149.30
+  tls: true
+  type: vmess
   udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_193_187
-  password: faBAoD54k87UJG7
-  port: 2376
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_191_187
-  password: TEzjfAYq2IjtuoS
-  port: 6697
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_190_187
-  password: lGqs95QkFHo2NV
-  port: 5498
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_192_187
-  password: TEzjfAYq2IjtuoS
-  port: 6679
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-cfb
-  country: 🇭🇰HK
-  name: ss_129_188
-  password: qwerREWQ@@
-  port: 41632
-  server: 112.213.102.188
-  skip-cert-verify: true
-  type: ss
-  udp: true
+  uuid: bc82b8e0-026b-4b7e-8fa7-69977b6d9dc0
+  ws-opts:
+    headers:
+      HOST: polartime.link
+    path: /ws/
