@@ -1,46 +1,10 @@
 proxies:
-- alterId: 1
-  cipher: auto
-  country: 🇯🇵JP
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_171_66
-  port: 22324
-  server: 172.104.80.66
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 04621bae-ab36-11ec-b909-0242ac120002
-- alterId: 0
-  cipher: auto
-  country: 🇯🇵JP
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_170_175
-  port: 49803
-  server: 153.121.73.175
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: cd3dacbc-2b7b-4718-83ad-ab870f87e12e
-- alterId: 0
-  cipher: auto
-  country: 🇯🇵JP
-  h2-opts: {}
-  http-opts: {}
-  name: vmess_172_175
-  port: 32221
-  server: 153.121.73.175
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: b06054ae-f249-438e-998a-8e67bd8df653
 - alterId: 0
   cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_130_196
+  name: vmess_144_196
   network: ws
   port: 21879
   server: 103.143.238.196
@@ -54,22 +18,67 @@ proxies:
     path: /vmesswss
 - alterId: 0
   cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_191_175
+  port: 49803
+  server: 153.121.73.175
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: cd3dacbc-2b7b-4718-83ad-ab870f87e12e
+- alterId: 0
+  cipher: auto
   country: 🇭🇰HK
   h2-opts: {}
   http-opts: {}
-  name: vmess_129_38
+  name: vmess_143_38
   port: 35034
   server: 165.154.195.38
   skip-cert-verify: true
   type: vmess
   udp: true
   uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
+- alterId: 1
+  cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_192_66
+  port: 22324
+  server: 172.104.80.66
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 04621bae-ab36-11ec-b909-0242ac120002
 - alterId: 0
   cipher: auto
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_173_161
+  name: vmess_193_175
+  port: 32221
+  server: 153.121.73.175
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: b06054ae-f249-438e-998a-8e67bd8df653
+- country: 🇭🇰HK
+  name: trojan_147_143
+  password: BxceQaOe
+  port: 443
+  server: 119.246.1.143
+  skip-cert-verify: true
+  sni: t.me/ripaojiedian
+  type: trojan
+  udp: true
+- alterId: 0
+  cipher: auto
+  country: 🇯🇵JP
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_196_161
   network: ws
   port: 25686
   server: 140.83.51.161
@@ -82,12 +91,30 @@ proxies:
     headers:
       HOST: jp02.a0a.xyz
     path: /cctv13.m3u8
+- country: 🇭🇰HK
+  name: trojan_149_252
+  password: BxceQaOe
+  port: 11035
+  server: 18.162.50.252
+  skip-cert-verify: true
+  sni: t.me/ripaojiedian
+  type: trojan
+  udp: true
+- cipher: aes-256-cfb
+  country: 🇭🇰HK
+  name: ss_128_188
+  password: qwerREWQ@@
+  port: 41632
+  server: 112.213.102.188
+  skip-cert-verify: true
+  type: ss
+  udp: true
 - alterId: 0
   cipher: auto
   country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_174_75
+  name: vmess_194_75
   network: ws
   port: 80
   server: 168.138.43.75
@@ -100,21 +127,82 @@ proxies:
     headers:
       HOST: jp01.a0a.xyz
     path: /cctv13.m3u8
+- country: 🇯🇵JP
+  name: trojan_201_38
+  password: e0195c73018d597b1c2f0ea89d8676ae
+  port: 5701
+  server: 35.77.34.38
+  skip-cert-verify: true
+  sni: www.nintendogames.net
+  type: trojan
+  udp: true
 - alterId: 0
   cipher: auto
-  country: 🇰🇷KR
+  country: 🇯🇵JP
   h2-opts: {}
   http-opts: {}
-  name: vmess_188_250
-  network: none
+  name: vmess_195_30
+  network: ws
   port: 443
-  server: 140.238.2.250
+  server: 8.211.149.30
+  servername: polartime.link
   skip-cert-verify: true
+  sni: 8.211.149.30
+  tls: true
   type: vmess
   udp: true
-  uuid: 41a7089a-040b-4538-8b8d-010902405bde
+  uuid: bc82b8e0-026b-4b7e-8fa7-69977b6d9dc0
+  ws-opts:
+    headers:
+      HOST: polartime.link
+    path: /ws/
+- cipher: aes-256-gcm
+  country: 🇭🇰HK
+  name: ss_130_192
+  password: 7e1dd4c55bf85da5
+  port: 30129
+  server: 103.136.150.192
+  skip-cert-verify: true
+  type: ss
+  udp: true
 - country: 🇯🇵JP
-  name: trojan_175_38
+  name: trojan_202_119
+  password: BxceQaOe
+  port: 5408
+  server: 54.65.32.119
+  skip-cert-verify: true
+  sni: t.me/ripaojiedian
+  type: trojan
+  udp: true
+- country: 🇯🇵JP
+  name: trojan_198_38
+  password: e0195c73018d597b1c2f0ea89d8676ae
+  port: 53012
+  server: 35.77.34.38
+  skip-cert-verify: true
+  sni: www.nintendogames.net
+  type: trojan
+  udp: true
+- country: 🇭🇰HK
+  name: trojan_150_252
+  password: BxceQaOe
+  port: 9149
+  server: 18.162.50.252
+  skip-cert-verify: true
+  sni: t.me/ripaojiedian
+  type: trojan
+  udp: true
+- country: 🇭🇰HK
+  name: trojan_145_154
+  password: BxceQaOe
+  port: 9149
+  server: 16.162.118.154
+  skip-cert-verify: true
+  sni: t.me/ripaojiedian
+  type: trojan
+  udp: true
+- country: 🇯🇵JP
+  name: trojan_197_38
   password: e0195c73018d597b1c2f0ea89d8676ae
   port: 29642
   server: 35.77.34.38
@@ -122,12 +210,83 @@ proxies:
   sni: www.nintendogames.net
   type: trojan
   udp: true
+- alterId: 0
+  cipher: auto
+  country: 🇭🇰HK
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_140_197
+  network: ws
+  port: 36703
+  server: 47.244.120.197
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
+  ws-opts:
+    path: /arki?ed=2048
+- country: 🇯🇵JP
+  name: trojan_200_70
+  password: s75Gtmy56sptTA39hmBH965YYx4ZgfQR_I
+  port: 443
+  server: 103.125.219.70
+  skip-cert-verify: true
+  type: trojan
+  udp: true
 - cipher: aes-256-cfb
-  country: 🇰🇷KR
-  name: ss_187_134
+  country: 🇰🇷 KR
+  name: ss_204_230
   password: qwerREWQ@@
-  port: 6123
-  server: 211.178.105.134
+  port: 4652
+  server: 218.237.185.230
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- country: 🇯🇵JP
+  name: trojan_203_169
+  password: s75Gtmy56sptTA39hmBH965YYx4ZgfQR_I
+  port: 443
+  server: 103.125.216.169
+  skip-cert-verify: true
+  type: trojan
+  udp: true
+- alterId: 0
+  cipher: auto
+  country: 🇰🇷KR
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_214_250
+  network: none
+  port: 443
+  server: 140.238.2.250
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: 41a7089a-040b-4538-8b8d-010902405bde
+- cipher: chacha20-ietf-poly1305
+  country: 🇹🇼TW
+  name: ss_270_com
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  port: 50099
+  server: r3mrcg001269pz2.cybervena.com
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-cfb
+  country: 🇰🇷 KR
+  name: ss_205_net
+  password: qwerREWQ@@
+  port: 4652
+  server: p141.panda001.net
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-128-gcm
+  country: 🇸🇬SG
+  name: ss_268_183
+  password: 2bc77a3a-1a6a-49bd-987f-5368cca0f930
+  port: 8881
+  server: 96.9.211.183
   skip-cert-verify: true
   type: ss
   udp: true
@@ -136,7 +295,56 @@ proxies:
   country: 🇰🇷KR
   h2-opts: {}
   http-opts: {}
-  name: vmess_189_230
+  name: vmess_213_110
+  network: tcp
+  port: 8888
+  server: 146.56.112.110
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: e7c302f3-90d6-42dd-9d7d-94a3683a3707
+- cipher: chacha20-ietf-poly1305
+  country: 🇹🇼TW
+  name: ss_271_com
+  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  port: 50099
+  server: r3mrcg001286ek2.cybervena.com
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-cfb
+  country: 🇰🇷KR
+  name: ss_208_134
+  password: qwerREWQ@@
+  port: 6123
+  server: 211.178.105.134
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- country: 🇯🇵JP
+  name: trojan_199_38
+  password: e0195c73018d597b1c2f0ea89d8676ae
+  port: 49277
+  server: 35.77.34.38
+  skip-cert-verify: true
+  sni: www.nintendogames.net
+  type: trojan
+  udp: true
+- cipher: aes-128-gcm
+  country: 🇸🇬SG
+  name: ss_269_92
+  password: JVSuuib4ydvY8m7u6jElTYbeRO8ygJ4Hi8Iq733BqAkF
+  port: 9888
+  server: 168.138.175.92
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- alterId: 0
+  cipher: auto
+  country: 🇰🇷KR
+  h2-opts: {}
+  http-opts: {}
+  name: vmess_215_230
   network: ws
   port: 80
   server: 132.145.80.230
@@ -150,73 +358,127 @@ proxies:
       HOST: kr02.a0a.xyz
     path: /cctv13.m3u8
 - country: 🇭🇰HK
-  name: trojan_131_252
-  password: BxceQaOe
-  port: 9149
-  server: 18.162.50.252
+  name: trojan_146_157
+  password: e0195c73018d597b1c2f0ea89d8676ae
+  port: 17005
+  server: 18.162.190.157
   skip-cert-verify: true
-  sni: t.me/ripaojiedian
-  type: trojan
-  udp: true
-- country: 🇯🇵JP
-  name: trojan_176_169
-  password: s75Gtmy56sptTA39hmBH965YYx4ZgfQR_I
-  port: 443
-  server: 103.125.216.169
-  skip-cert-verify: true
+  sni: www.nintendogames.net
   type: trojan
   udp: true
 - cipher: aes-256-cfb
   country: 🇭🇰 HK
-  name: ss_116_82
+  name: ss_125_82
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
   server: 216.250.97.82
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: aes-128-gcm
-  country: 🇸🇬SG
-  name: ss_240_183
-  password: 2bc77a3a-1a6a-49bd-987f-5368cca0f930
-  port: 8881
-  server: 96.9.211.183
+- country: 🇺🇸US
+  name: trojan_338_201
+  password: e0195c73018d597b1c2f0ea89d8676ae
+  port: 2008
+  server: 43.198.206.201
   skip-cert-verify: true
-  type: ss
+  sni: www.nintendogames.net
+  type: trojan
   udp: true
-- country: 🇯🇵JP
-  name: trojan_178_70
-  password: s75Gtmy56sptTA39hmBH965YYx4ZgfQR_I
-  port: 443
-  server: 103.125.219.70
+- country: 🇭🇰HK
+  name: trojan_148_94
+  password: BxceQaOe
+  port: 17801
+  server: 18.163.80.94
   skip-cert-verify: true
+  sni: t.me/ripaojiedian
   type: trojan
   udp: true
 - alterId: 0
   cipher: auto
-  country: 🇰🇷KR
   h2-opts: {}
-  http-opts: {}
-  name: vmess_190_110
-  network: tcp
-  port: 8888
-  server: 146.56.112.110
+  http-opts:
+    method: GET
+    path:
+    - /QQqun-737805443
+  name: vmess_444_25
+  network: http
+  port: 52080
+  server: 154.37.223.25
   skip-cert-verify: true
   type: vmess
   udp: true
-  uuid: e7c302f3-90d6-42dd-9d7d-94a3683a3707
+  uuid: 065c9832-3869-44c6-8883-b80013cb6397
+- alterId: 0
+  cipher: auto
+  h2-opts: {}
+  http-opts:
+    method: GET
+    path:
+    - /
+  name: vmess_447_25
+  network: http
+  port: 11685
+  server: 154.37.223.25
+  skip-cert-verify: true
+  type: vmess
+  udp: true
+  uuid: db35e047-9b1d-4f8a-b0ca-21318018fec2
+- country: 🇺🇸US
+  name: trojan_469_201
+  password: e0195c73018d597b1c2f0ea89d8676ae
+  port: 48738
+  server: 43.198.206.201
+  skip-cert-verify: true
+  sni: www.nintendogames.net
+  type: trojan
+  udp: true
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: vless_733_139
+  network: tcp
+  port: '443'
+  reality-opts:
+    public-key: IOO3P6BDqBjUA0gB4tgpvxrXL6Fit88QgpJ1y6GYyz0
+    short-id: 0f4dacf88202e05f
+  server: 142.91.108.139
+  servername: jp.api-yandex.net
+  skip-cert-verify: true
+  sni: 142.91.108.139
+  tls: true
+  type: vless
+  udp: true
+  uuid: 7e6d3393-bb84-45c7-9eef-35de95805b7e
+  xudp: true
 - cipher: aes-256-gcm
   country: 🇰🇷KR
-  name: ss_182_187
-  password: faBAoD54k87UJG7
-  port: 2376
+  name: ss_206_187
+  password: XKFKl2rULjIp74
+  port: 8008
   server: 141.164.45.187
   skip-cert-verify: true
   type: ss
   udp: true
 - cipher: aes-256-gcm
   country: 🇰🇷KR
-  name: ss_186_187
+  name: ss_209_187
+  password: TEzjfAYq2IjtuoS
+  port: 6697
+  server: 141.164.45.187
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_207_187
+  password: lGqs95QkFHo2NV
+  port: 5498
+  server: 141.164.45.187
+  skip-cert-verify: true
+  type: ss
+  udp: true
+- cipher: aes-256-gcm
+  country: 🇰🇷KR
+  name: ss_211_187
   password: TEzjfAYq2IjtuoS
   port: 6679
   server: 141.164.45.187
@@ -225,27 +487,9 @@ proxies:
   udp: true
 - cipher: aes-256-gcm
   country: 🇰🇷KR
-  name: ss_184_187
-  password: RexnBgU7EV5ADxG
-  port: 7001
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇭🇰HK
-  name: ss_392_192
-  password: 7e1dd4c55bf85da5
-  port: 30129
-  server: 103.136.150.192
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_183_187
-  password: TEzjfAYq2IjtuoS
-  port: 6697
+  name: ss_212_187
+  password: faBAoD54k87UJG7
+  port: 2376
   server: 141.164.45.187
   skip-cert-verify: true
   type: ss
@@ -257,46 +501,7 @@ proxies:
     method: GET
     path:
     - /
-  name: vmess_376_25
-  network: http
-  port: 11685
-  server: 154.37.223.25
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: db35e047-9b1d-4f8a-b0ca-21318018fec2
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts:
-    method: GET
-    path:
-    - /QQqun-737805443
-  name: vmess_377_25
-  network: http
-  port: 52080
-  server: 154.37.223.25
-  skip-cert-verify: true
-  type: vmess
-  udp: true
-  uuid: 065c9832-3869-44c6-8883-b80013cb6397
-- cipher: aes-256-gcm
-  country: 🇰🇷KR
-  name: ss_181_187
-  password: XKFKl2rULjIp74
-  port: 8008
-  server: 141.164.45.187
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts:
-    method: GET
-    path:
-    - /
-  name: vmess_375_56
+  name: vmess_448_56
   network: http
   port: 35115
   server: 154.37.223.56
@@ -304,78 +509,22 @@ proxies:
   type: vmess
   udp: true
   uuid: b95adf02-8d54-482f-8b26-e49450c873ce
-- country: 🇯🇵JP
-  name: trojan_177_38
-  password: e0195c73018d597b1c2f0ea89d8676ae
-  port: 49277
-  server: 35.77.34.38
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  udp: true
 - cipher: aes-256-gcm
   country: 🇰🇷KR
-  name: ss_185_187
-  password: lGqs95QkFHo2NV
-  port: 5498
+  name: ss_210_187
+  password: RexnBgU7EV5ADxG
+  port: 7001
   server: 141.164.45.187
   skip-cert-verify: true
   type: ss
   udp: true
-- cipher: aes-128-gcm
-  country: 🇸🇬SG
-  name: ss_239_92
-  password: JVSuuib4ydvY8m7u6jElTYbeRO8ygJ4Hi8Iq733BqAkF
-  port: 9888
-  server: 168.138.175.92
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  country: 🇸🇬SG
-  name: ss_400_68
-  password: CTpCTsn295rfKvu9Ua9FYe
-  port: 51490
-  server: 118.27.150.68
-  skip-cert-verify: true
-  type: ss
-  udp: true
-- country: 🇺🇸US
-  name: trojan_298_201
-  password: e0195c73018d597b1c2f0ea89d8676ae
-  port: 2008
-  server: 43.198.206.201
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  udp: true
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: vless_1343_com
-  port: 443
-  server: assets.trorays.com
-  servername: assets.trorays.com
-  skip-cert-verify: true
-  sni: assets.trorays.com
-  tls: true
-  type: vless
-  udp: true
-  uuid: b69a71ef-51dc-48c6-b3df-4c3533062606
-- country: 🇺🇸US
-  name: trojan_404_201
-  password: e0195c73018d597b1c2f0ea89d8676ae
-  port: 37973
-  server: 43.198.206.201
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  udp: true
 - alpn:
+  - h2
   - http/1.1
   alterId: 2
   cipher: auto
   host: v9.hdacd.com
-  name: vmess_574_com
+  name: vmess_643_com
   network: tcp
   path: /
   port: 30809
@@ -390,3 +539,15 @@ proxies:
     headers:
       Host: v9.hdacd.com
     path: /
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: vless_1421_com
+  port: 443
+  server: assets.trorays.com
+  servername: assets.trorays.com
+  skip-cert-verify: true
+  sni: assets.trorays.com
+  tls: true
+  type: vless
+  udp: true
+  uuid: b69a71ef-51dc-48c6-b3df-4c3533062606
